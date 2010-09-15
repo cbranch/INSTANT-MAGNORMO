@@ -19,5 +19,7 @@ HEADERS += mainwindow.h \
     conversationwidget.h \
     accountdialog.h \
     MAGNORMOBOT.h \
-    imthread.h
+    imthread.h \
+    Contact.h
 FORMS += accountdialog.ui
+RESOURCES += resources.qrc

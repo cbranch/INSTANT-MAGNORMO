@@ -1,5 +1,9 @@
 #include "MAGNORMOBOT.h"
 #include "imthread.h"
+#include <gloox/rostermanager.h>
+#include <gloox/rosteritem.h>
+#include "Contact.h"
+#include <QSharedPointer>
 
 MAGNORMOBOT::MAGNORMOBOT(IMThread *thread) :
         m_session( 0 ),
@@ -45,7 +49,15 @@ void MAGNORMOBOT::start(std::string username, std::string password)
 
 void MAGNORMOBOT::onConnect()
 {
-  printf( "connected!!!\n" );
+    Roster *roster = j->rosterManager()->roster();
+    for (Roster::const_iterator i = roster->begin(); i != roster->end(); i++) {
+        QSharedPointer<Contact> x(new Contact);
+        x->jid = i->first;
+        RosterItem *item = i->second;
+        x->name = QString::fromUtf8(item->name().c_str());
+        x->online = item->online();
+        thread->discoverContact(x);
+    }
 }
 
 void MAGNORMOBOT::onDisconnect( ConnectionError e )

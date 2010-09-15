@@ -8,6 +8,8 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    qRegisterMetaType<QSharedPointer<Contact> >("QSharedPointer<Contact>");
+
     AccountDialog *account = new AccountDialog();
     switch (account->exec()) {
     case QDialog::Accepted:
@@ -20,6 +22,7 @@ int main(int argc, char *argv[])
     }
     MainWindow w;
     w.imThread = new IMThread(account->username, account->password);
+    w.connectThread();
     w.show();
     w.imThread->start();
     return a.exec();

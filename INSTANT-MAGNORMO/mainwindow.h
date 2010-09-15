@@ -21,6 +21,7 @@ protected:
 
 public:
     IMThread *imThread;
+    void connectThread();
 };
 
 #endif // MAINWINDOW_H

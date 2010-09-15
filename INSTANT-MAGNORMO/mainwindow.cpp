@@ -2,6 +2,8 @@
 #include <QDockWidget>
 #include "contactlist.h"
 #include "MAGNORMOBOT.h"
+#include "Contact.h"
+#include "imthread.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -15,4 +17,9 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
+}
+
+void MainWindow::connectThread()
+{
+    connect(imThread, SIGNAL(contactDiscovered(QSharedPointer<Contact>)), contactList, SLOT(plantContact(QSharedPointer<Contact>)));
 }

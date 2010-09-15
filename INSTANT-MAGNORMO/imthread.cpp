@@ -12,3 +12,8 @@ void IMThread::run()
     bot = new MAGNORMOBOT(this);
     bot->start(username, password);
 }
+
+void IMThread::discoverContact(QSharedPointer<Contact> contact)
+{
+    emit contactDiscovered(contact);
+}

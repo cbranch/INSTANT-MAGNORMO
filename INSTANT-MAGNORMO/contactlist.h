@@ -3,6 +3,8 @@
 
 #include <QWidget>
 class QTreeWidget;
+#include "Contact.h"
+#include <QSharedPointer>
 
 class ContactList : public QWidget
 {
@@ -13,6 +15,7 @@ public:
 signals:
 
 public slots:
+    void plantContact(QSharedPointer<Contact> contact);
 
 protected:
     QTreeWidget *contactTree;
