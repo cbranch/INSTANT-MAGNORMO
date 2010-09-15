@@ -1,0 +1,8 @@
+# qmake generated files
+Makefile
+# Qt MOC generated files
+moc_*
+# object files
+*.o
+# Built binaries
+INSTANT-MAGNORMO/INSTANT-MAGNORMO
