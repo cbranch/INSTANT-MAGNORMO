@@ -3,6 +3,9 @@
 
 #include <QtGui/QMainWindow>
 
+class ContactList;
+class QDockWidget;
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -10,6 +13,10 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
+protected:
+    ContactList *contactList;
+    QDockWidget *contactListDock;
 };
 
 #endif // MAINWINDOW_H
