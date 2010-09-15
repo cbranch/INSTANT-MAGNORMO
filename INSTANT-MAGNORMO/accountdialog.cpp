@@ -31,7 +31,10 @@ void AccountDialog::on_buttonBox_accepted()
     switch (ui->serverList->currentIndex()) {
 
     case 0: // GTalk
-        username = ui->usernameEdit->text() + QString("@gmail.com/");
+        if (ui->usernameEdit->text().endsWith(QString("@gmail.com")))
+            username = ui->usernameEdit->text() + QString("/");
+        else
+            username = ui->usernameEdit->text() + QString("@gmail.com/");
         break;
 
     case 1: // Google Talk for apps
