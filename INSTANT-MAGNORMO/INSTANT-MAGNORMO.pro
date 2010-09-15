@@ -12,7 +12,8 @@ SOURCES += main.cpp \
     contactlist.cpp \
     conversationwidget.cpp \
     accountdialog.cpp \
-    imthread.cpp
+    imthread.cpp \
+    MAGNORMOBOT.cpp
 HEADERS += mainwindow.h \
     contactlist.h \
     conversationwidget.h \

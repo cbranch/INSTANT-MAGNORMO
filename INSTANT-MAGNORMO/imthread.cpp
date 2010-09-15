@@ -9,6 +9,6 @@ IMThread::IMThread(QString username, QString password) :
 
 void IMThread::run()
 {
-    bot = new MAGNORMOBOT();
+    bot = new MAGNORMOBOT(this);
     bot->start(username, password);
 }
