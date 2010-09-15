@@ -8,6 +8,7 @@ class ContactList;
 class StatusWidget;
 class QDockWidget;
 class MAGNORMOBOT;
+class ConversationWidget;
 
 typedef QHash<QString, QDockWidget*> ConversationDict;
 
@@ -35,6 +36,7 @@ public slots:
     void disconnected();
 
     void startConversation(QString jid);
+    void handleConversationDestroyed(QObject* list);
 };
 
 #endif // MAINWINDOW_H

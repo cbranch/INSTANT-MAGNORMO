@@ -25,7 +25,7 @@ public slots:
 private:
     Ui::ConversationWidget *ui;
 
-protected:
+public:
     QString jid;
 
 };
