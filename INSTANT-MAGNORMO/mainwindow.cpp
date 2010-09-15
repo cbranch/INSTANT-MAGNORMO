@@ -7,7 +7,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     setDockOptions(QMainWindow::AllowNestedDocks | QMainWindow::AllowTabbedDocks | QMainWindow::AnimatedDocks);
     contactListDock = new QDockWidget(tr("Contacts"), this);
-    contactList = new ContactList(contactListDock);
+    contactList = new ContactList();
+    contactListDock->setWidget(contactList);
     addDockWidget(Qt::LeftDockWidgetArea, contactListDock);
 }
 

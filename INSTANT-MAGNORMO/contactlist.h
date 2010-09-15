@@ -2,6 +2,7 @@
 #define CONTACTLIST_H
 
 #include <QWidget>
+class QTreeWidget;
 
 class ContactList : public QWidget
 {
@@ -12,6 +13,9 @@ public:
 signals:
 
 public slots:
+
+protected:
+    QTreeWidget *contactTree;
 
 };
 
