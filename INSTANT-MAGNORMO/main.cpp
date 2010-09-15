@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
         break;
     case QDialog::Rejected:
         {
-        printf("You suck balls");
+        printf("You suck balls\n");
         return 0;
         }
     }

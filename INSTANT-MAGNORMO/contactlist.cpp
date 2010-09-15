@@ -10,6 +10,8 @@ ContactList::ContactList(QWidget *parent) :
     QVBoxLayout *layout = new QVBoxLayout();
     this->setLayout(layout);
     contactTree = new QTreeWidget();
+    contactTree->setRootIsDecorated(false);
+    contactTree->setHeaderHidden(true);
     layout->addWidget(contactTree);
     contactTree->setColumnCount(1);
 }
