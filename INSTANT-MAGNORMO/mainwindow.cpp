@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include <QDockWidget>
 #include "contactlist.h"
+#include "MAGNORMOBOT.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -14,5 +15,4 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-
 }

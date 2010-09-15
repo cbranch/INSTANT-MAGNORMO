@@ -5,6 +5,7 @@
 
 class ContactList;
 class QDockWidget;
+class IMThread;
 
 class MainWindow : public QMainWindow
 {
@@ -17,6 +18,9 @@ public:
 protected:
     ContactList *contactList;
     QDockWidget *contactListDock;
+
+public:
+    IMThread *imThread;
 };
 
 #endif // MAINWINDOW_H

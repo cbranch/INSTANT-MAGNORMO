@@ -3,12 +3,20 @@
 # -------------------------------------------------
 QT += network \
     multimedia
+LIBS = -L/usr/local/lib \
+    -lgloox
 TARGET = INSTANT-MAGNORMO
 TEMPLATE = app
 SOURCES += main.cpp \
     mainwindow.cpp \
     contactlist.cpp \
-    conversationwidget.cpp
+    conversationwidget.cpp \
+    accountdialog.cpp \
+    imthread.cpp
 HEADERS += mainwindow.h \
     contactlist.h \
-    conversationwidget.h
+    conversationwidget.h \
+    accountdialog.h \
+    MAGNORMOBOT.h \
+    imthread.h
+FORMS += accountdialog.ui

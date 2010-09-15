@@ -1,7 +1,9 @@
 # qmake generated files
 Makefile
+*.pro.user
 # Qt MOC generated files
 moc_*
+ui_*
 # object files
 *.o
 # Built binaries
