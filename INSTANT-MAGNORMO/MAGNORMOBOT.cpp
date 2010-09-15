@@ -17,11 +17,13 @@ MAGNORMOBOT::~MAGNORMOBOT()
 {
 }
 
-void MAGNORMOBOT::start(std::string username, std::string password)
+void MAGNORMOBOT::start(std::string username, std::string password, std::string server, int port)
 {
 
   JID jid( username );
-  j = new Client( jid, password );
+  j = new Client( jid, password, port );
+  if (!server.empty())
+      j->setServer(server);
   j->registerConnectionListener( this );
   j->registerMessageSessionHandler( this, 0 );
   j->disco()->setVersion( "MAGNORMOBOT", GLOOX_VERSION, "Linux" );
@@ -31,7 +33,7 @@ void MAGNORMOBOT::start(std::string username, std::string password)
   ca.push_back( "/path/to/cacert.crt" );
   j->setCACerts( ca );
 
-  //j->logInstance().registerLogHandler( LogLevelDebug, LogAreaAll, this );
+  j->logInstance().registerLogHandler( LogLevelDebug, LogAreaAll, this );
 
 
   if( j->connect( false ) )

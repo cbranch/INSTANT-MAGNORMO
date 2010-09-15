@@ -13,12 +13,14 @@ class IMThread : public QThread
     Q_OBJECT
 
 public:
-    explicit IMThread(QString username, QString password);
+    explicit IMThread(QString username, QString password, QString server, int port);
 
     void run();
 
     std::string username;
     std::string password;
+    std::string server;
+    int port;
     MAGNORMOBOT *bot;
 
 signals:

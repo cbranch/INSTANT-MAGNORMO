@@ -15,6 +15,8 @@ public:
 
     QString username;
     QString password;
+    QString server;
+    int port;
 
 protected:
     void changeEvent(QEvent *e);

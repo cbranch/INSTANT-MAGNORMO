@@ -27,7 +27,25 @@ void AccountDialog::changeEvent(QEvent *e)
 
 void AccountDialog::on_buttonBox_accepted()
 {
-    username = ui->usernameEdit->text() + QString("@chat.facebook.com/");
+    switch (ui->serverList->currentIndex()) {
+
+    case 0: // GTalk
+        username = ui->usernameEdit->text() + QString("@gmail.com/");
+        break;
+
+    case 1: // Google Talk for apps
+        username = ui->usernameEdit->text() + QString("/");
+        server = QString("talk.google.com");
+        port = 5222;
+        break;
+
+    case 2: // Facebook
+        username = ui->usernameEdit->text() + QString("@chat.facebook.com/");
+        port = 5222;
+        break;
+    }
+
+
     password = ui->passwordEdit->text();
     this->accept();
 }

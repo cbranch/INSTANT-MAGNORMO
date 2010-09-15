@@ -3,8 +3,7 @@
 # -------------------------------------------------
 QT += network \
     multimedia
-LIBS = -L/usr/local/lib \
-    -lgloox
+LIBS = -lgloox -lgnutls -lresolv -pthread
 TARGET = INSTANT-MAGNORMO
 TEMPLATE = app
 SOURCES += main.cpp \

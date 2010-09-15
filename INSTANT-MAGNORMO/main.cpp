@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
         }
     }
     MainWindow w;
-    w.imThread = new IMThread(account->username, account->password);
+    w.imThread = new IMThread(account->username, account->password, account->server, account->port);
     w.connectThread();
     w.show();
     w.imThread->start();

@@ -43,7 +43,7 @@ class MAGNORMOBOT : public MessageSessionHandler, ConnectionListener, LogHandler
 
     virtual ~MAGNORMOBOT();
 
-    void start(std::string username, std::string password);
+    void start(std::string username, std::string password, std::string server, int port);
 
     virtual void onConnect();
 
