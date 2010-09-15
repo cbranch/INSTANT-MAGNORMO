@@ -8,7 +8,9 @@
 #include <QSharedPointer>
 #include <gloox/presence.h>
 #include "Contact.h"
+#include <map>
 
+using namespace std;
 using namespace gloox;
 
 class QTreeWidget;
@@ -32,7 +34,7 @@ private slots:
 
 protected:
     QTreeWidget *contactTree;
-
+    map<string,QSharedPointer<Contact> > contactMap;
 };
 
 #endif // CONTACTLIST_H

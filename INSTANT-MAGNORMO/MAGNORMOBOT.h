@@ -68,7 +68,7 @@ private:
 signals:
     void connected();
     void disconnected();
-    void contactDiscovered(QSharedPointer<Contact> contact);
+    void contactPresenceUpdate(QSharedPointer<Contact> contact);
 };
 
 #endif // MAGNORMOBOT_H

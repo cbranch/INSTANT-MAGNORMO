@@ -180,14 +180,6 @@ void MAGNORMOBOT::handleItemUnsubscribed (const JID &jid)
 
 void MAGNORMOBOT::handleRoster (const Roster &roster)
 {
-    //for (Roster::const_iterator i = roster.begin(); i != roster.end(); i++) {
-    //    QSharedPointer<Contact> x(new Contact);
-    //    x->jid = i->first;
-    //    RosterItem *item = i->second;
-    //    x->name = QString::fromUtf8(item->name().c_str());
-    //    x->online = item->online();
-    //    emit contactDiscovered(x);
-    //}
 }
 
 void MAGNORMOBOT::handleRosterPresence (const RosterItem &item, const std::string &resource, Presence::PresenceType presence, const std::string &msg)
@@ -199,7 +191,7 @@ void MAGNORMOBOT::handleRosterPresence (const RosterItem &item, const std::strin
         x->jid = item.jid();
         x->name = QString::fromUtf8(item.name().c_str());
         x->presence = presence;
-        emit contactDiscovered(x);
+        emit contactPresenceUpdate(x);
     } else {
         printf( "presence received: %s : ", item.name().c_str() );
         printf("OFFLINE\n");

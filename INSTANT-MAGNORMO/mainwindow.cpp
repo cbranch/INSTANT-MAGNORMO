@@ -34,7 +34,7 @@ void MainWindow::connectAccount(QString username, QString password, QString serv
     bot = new MAGNORMOBOT(username, password, server, port);
     connect(bot, SIGNAL(connected()), SLOT(connected()));
     connect(bot, SIGNAL(disconnected()), SLOT(disconnected()));
-    connect(bot, SIGNAL(contactDiscovered(QSharedPointer<Contact>)), contactList, SLOT(plantContact(QSharedPointer<Contact>)));
+    connect(bot, SIGNAL(contactPresenceUpdate(QSharedPointer<Contact>)), contactList, SLOT(plantContact(QSharedPointer<Contact>)));
     statusWidget->label->setText(tr("Connecting"));
     statusWidget->progress->setMinimum(0);
     statusWidget->progress->setMaximum(0);

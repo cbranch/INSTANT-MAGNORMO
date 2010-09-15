@@ -16,13 +16,32 @@ ContactList::ContactList(QWidget *parent) :
 
 void ContactList::plantContact(QSharedPointer<Contact> contact)
 {
-    QTreeWidgetItem *item = new QTreeWidgetItem(contactTree);
-    item->setText(0, contact->name);
-    item->setData(0, Qt::UserRole, QString::fromUtf8(contact->jid.c_str()));
-    if (contact->presence==Presence::Available) {
-        item->setIcon(0, QIcon(":/icons/user-online"));
-    } else if(contact->presence==Presence::Away) {
-        item->setIcon(0, QIcon(":/icons/user-away"));
+    map<string,QSharedPointer<Contact> >::iterator it;
+    it = contactMap.find(contact->jid);
+    if(it==contactMap.end()) {
+        // Add a new contact to our current list
+        contactMap[contact->jid]=contact;
+    } else {
+        // Update the existing contacts presence value
+        if(contact->presence==Presence::Unavailable) {
+            contactMap.erase(it);
+        } else {
+            it->second->presence = contact->presence;
+        }
+    }
+
+    // Clear the whole tree and redraw it
+    contactTree->clear();
+
+    for(it=contactMap.begin();it!=contactMap.end();it++) {
+        QTreeWidgetItem *item = new QTreeWidgetItem(contactTree);
+        item->setText(0, it->second->name);
+        item->setData(0, Qt::UserRole, QString::fromUtf8(it->second->jid.c_str()));
+        if (it->second->presence==Presence::Available) {
+            item->setIcon(0, QIcon(":/icons/user-online"));
+        } else if(it->second->presence==Presence::Away) {
+            //item->setIcon(0, QIcon(":/icons/user-away"));
+        }
     }
 }
 
