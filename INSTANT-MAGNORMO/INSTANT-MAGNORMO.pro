@@ -3,7 +3,10 @@
 # -------------------------------------------------
 QT += network \
     multimedia
-LIBS = -lgloox -lgnutls -lresolv -pthread
+LIBS = -lgloox \
+    -lgnutls \
+    -lresolv \
+    -pthread
 TARGET = INSTANT-MAGNORMO
 TEMPLATE = app
 SOURCES += main.cpp \
@@ -12,13 +15,15 @@ SOURCES += main.cpp \
     conversationwidget.cpp \
     accountdialog.cpp \
     imthread.cpp \
-    MAGNORMOBOT.cpp
+    MAGNORMOBOT.cpp \
+    statuswidget.cpp
 HEADERS += mainwindow.h \
     contactlist.h \
     conversationwidget.h \
     accountdialog.h \
     MAGNORMOBOT.h \
     imthread.h \
-    Contact.h
+    Contact.h \
+    statuswidget.h
 FORMS += accountdialog.ui
 RESOURCES += resources.qrc

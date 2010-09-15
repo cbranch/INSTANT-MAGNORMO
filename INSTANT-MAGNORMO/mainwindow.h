@@ -4,6 +4,7 @@
 #include <QtGui/QMainWindow>
 
 class ContactList;
+class StatusWidget;
 class QDockWidget;
 class IMThread;
 
@@ -18,6 +19,8 @@ public:
 protected:
     ContactList *contactList;
     QDockWidget *contactListDock;
+    StatusWidget *statusWidget;
+    QDockWidget *statusWidgetDock;
 
 public:
     IMThread *imThread;

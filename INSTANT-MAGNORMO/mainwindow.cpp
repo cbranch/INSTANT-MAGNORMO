@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include <QDockWidget>
 #include "contactlist.h"
+#include "statuswidget.h"
 #include "MAGNORMOBOT.h"
 #include "Contact.h"
 #include "imthread.h"
@@ -13,6 +14,11 @@ MainWindow::MainWindow(QWidget *parent)
     contactList = new ContactList();
     contactListDock->setWidget(contactList);
     addDockWidget(Qt::LeftDockWidgetArea, contactListDock);
+
+    statusWidgetDock = new QDockWidget(tr("Status"), this);
+    statusWidget = new StatusWidget();
+    statusWidgetDock->setWidget(statusWidget);
+    addDockWidget(Qt::LeftDockWidgetArea, statusWidgetDock);
 }
 
 MainWindow::~MainWindow()
