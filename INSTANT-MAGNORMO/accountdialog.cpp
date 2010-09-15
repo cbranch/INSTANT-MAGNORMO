@@ -3,6 +3,7 @@
 
 AccountDialog::AccountDialog(QWidget *parent) :
     QDialog(parent),
+    port(-1),
     ui(new Ui::AccountDialog)
 {
     ui->setupUi(this);
