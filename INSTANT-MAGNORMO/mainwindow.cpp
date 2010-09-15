@@ -69,9 +69,15 @@ void MainWindow::startConversation(QString jid)
         // Is there an existing conversation?
         if (conversationDict.empty()) {
             addDockWidget(Qt::LeftDockWidgetArea, dock);
-            conversationDict.insert(jid, dock);
         } else {
             tabifyDockWidget(conversationDict.begin().value(), dock);
         }
+        conversationDict.insert(jid, dock);
+        connect(convo, SIGNAL(destroyed(QObject*)), SLOT(handleConversationDestroyed(QObject*)));
     }
+}
+
+void MainWindow::handleConversationDestroyed(QObject *list)
+{
+    conversationDict.remove(qobject_cast<ConversationWidget*>(list)->jid);
 }
