@@ -50,6 +50,7 @@ void MAGNORMOBOT::run()
       j->setServer(server);
   j->registerConnectionListener( this );
   j->registerMessageSessionHandler( this, 0 );
+  j->rosterManager()->registerRosterListener(this);
   j->disco()->setVersion( "MAGNORMOBOT", GLOOX_VERSION, "Linux" );
   j->disco()->setIdentity( "client", "bot" );
   j->disco()->addFeature( XMLNS_CHAT_STATES );
@@ -76,15 +77,6 @@ void MAGNORMOBOT::run()
 void MAGNORMOBOT::onConnect()
 {
     emit connected();
-    Roster *roster = j->rosterManager()->roster();
-    for (Roster::const_iterator i = roster->begin(); i != roster->end(); i++) {
-        QSharedPointer<Contact> x(new Contact);
-        x->jid = i->first;
-        RosterItem *item = i->second;
-        x->name = QString::fromUtf8(item->name().c_str());
-        x->online = item->online();
-        emit contactDiscovered(x);
-    }
 }
 
 void MAGNORMOBOT::onDisconnect( ConnectionError e )
@@ -187,6 +179,14 @@ void MAGNORMOBOT::handleItemUnsubscribed (const JID &jid)
 
 void MAGNORMOBOT::handleRoster (const Roster &roster)
 {
+    for (Roster::const_iterator i = roster.begin(); i != roster.end(); i++) {
+        QSharedPointer<Contact> x(new Contact);
+        x->jid = i->first;
+        RosterItem *item = i->second;
+        x->name = QString::fromUtf8(item->name().c_str());
+        x->online = item->online();
+        emit contactDiscovered(x);
+    }
 }
 
 void MAGNORMOBOT::handleRosterPresence (const RosterItem &item, const std::string &resource, Presence::PresenceType presence, const std::string &msg)
