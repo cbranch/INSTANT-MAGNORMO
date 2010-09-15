@@ -66,7 +66,12 @@ void MainWindow::startConversation(QString jid)
         ConversationWidget *convo = new ConversationWidget(jid);
         QDockWidget *dock = new QDockWidget(contactName);
         dock->setWidget(convo);
-        addDockWidget(Qt::LeftDockWidgetArea, dock);
-        conversationDict.insert(jid, dock);
+        // Is there an existing conversation?
+        if (conversationDict.empty()) {
+            addDockWidget(Qt::LeftDockWidgetArea, dock);
+            conversationDict.insert(jid, dock);
+        } else {
+            tabifyDockWidget(conversationDict.begin().value(), dock);
+        }
     }
 }
