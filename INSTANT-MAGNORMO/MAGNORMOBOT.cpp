@@ -13,6 +13,7 @@
 #include <gloox/connectionhttpproxy.h>
 #include <gloox/rosteritem.h>
 #include <gloox/rostermanager.h>
+#include <gloox/presence.h>
 
 #ifndef _WIN32
 # include <unistd.h>
@@ -191,13 +192,13 @@ void MAGNORMOBOT::handleRoster (const Roster &roster)
 
 void MAGNORMOBOT::handleRosterPresence (const RosterItem &item, const std::string &resource, Presence::PresenceType presence, const std::string &msg)
 {
-    if(presence==0 || presence==2) {
+    if(presence==Presence::Available || presence==Presence::Away) {
         printf( "presence received: %s : ", item.name().c_str() );
         printf("ONLINE OR AWAY\n");
         QSharedPointer<Contact> x(new Contact);
         x->jid = item.jid();
         x->name = QString::fromUtf8(item.name().c_str());
-        if(presence==2) x->name+=QString(" (AWAY)");
+        if(presence==Presence::Away) x->name+=QString(" (AWAY)");
         x->online = true;
         emit contactDiscovered(x);
     } else {
