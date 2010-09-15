@@ -2,9 +2,10 @@
 #define CONTACTLIST_H
 
 #include <QWidget>
-class QTreeWidget;
 #include "Contact.h"
 #include <QSharedPointer>
+
+class QTreeWidget;
 
 class ContactList : public QWidget
 {
