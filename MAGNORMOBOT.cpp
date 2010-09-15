@@ -30,13 +30,13 @@ using namespace gloox;
 # include <windows.h>
 #endif
 
-class MessageTest : public MessageSessionHandler, ConnectionListener, LogHandler,
+class MAGNORMOBOT : public MessageSessionHandler, ConnectionListener, LogHandler,
                     MessageEventHandler, MessageHandler, ChatStateHandler
 {
   public:
-    MessageTest() : m_session( 0 ), m_messageEventFilter( 0 ), m_chatStateFilter( 0 ) {}
+    MAGNORMOBOT() : m_session( 0 ), m_messageEventFilter( 0 ), m_chatStateFilter( 0 ) {}
 
-    virtual ~MessageTest() {}
+    virtual ~MAGNORMOBOT() {}
 
     void start(std::string username, std::string password)
     {
@@ -163,7 +163,7 @@ int main( int argc, char** argv)
       printf("YOU SUCK AT USING THE COMMANDLINE YOU FUCKING NOOB\n");
       return 666;
   }
-  MessageTest *r = new MessageTest();
+  MAGNORMOBOT *r = new MAGNORMOBOT();
   r->start(argv[1],argv[2]);
   delete( r );
   return 0;
