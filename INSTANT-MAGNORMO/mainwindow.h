@@ -2,11 +2,14 @@
 #define MAINWINDOW_H
 
 #include <QtGui/QMainWindow>
+#include <QHash>
 
 class ContactList;
 class StatusWidget;
 class QDockWidget;
 class MAGNORMOBOT;
+
+typedef QHash<QString, QDockWidget*> ConversationDict;
 
 class MainWindow : public QMainWindow
 {
@@ -21,6 +24,7 @@ protected:
     QDockWidget *contactListDock;
     StatusWidget *statusWidget;
     QDockWidget *statusWidgetDock;
+    ConversationDict conversationDict;
 
 public:
     MAGNORMOBOT *bot;
@@ -29,6 +33,8 @@ public:
 public slots:
     void connected();
     void disconnected();
+
+    void startConversation(QString jid);
 };
 
 #endif // MAINWINDOW_H

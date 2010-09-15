@@ -23,5 +23,6 @@ HEADERS += mainwindow.h \
     MAGNORMOBOT.h \
     Contact.h \
     statuswidget.h
-FORMS += accountdialog.ui
+FORMS += accountdialog.ui \
+    conversationwidget.ui
 RESOURCES += resources.qrc

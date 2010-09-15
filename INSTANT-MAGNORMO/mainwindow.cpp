@@ -2,10 +2,12 @@
 #include <QDockWidget>
 #include "contactlist.h"
 #include "statuswidget.h"
+#include "conversationwidget.h"
 #include "MAGNORMOBOT.h"
 #include "Contact.h"
 #include <QProgressBar>
 #include <QLabel>
+#include <QTreeWidget>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -15,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
     contactList = new ContactList();
     contactListDock->setWidget(contactList);
     addDockWidget(Qt::LeftDockWidgetArea, contactListDock);
+    connect(contactList, SIGNAL(conversationInitiated(QString)), SLOT(startConversation(QString)));
 
     statusWidgetDock = new QDockWidget(tr("Status"), this);
     statusWidget = new StatusWidget();
@@ -48,4 +51,22 @@ void MainWindow::disconnected()
 {
     statusWidget->label->setText(tr("Disconnected"));
     statusWidgetDock->setVisible(true);
+}
+
+void MainWindow::startConversation(QString jid)
+{
+    QString contactName("Conversation");
+    ConversationDict::const_iterator iter = conversationDict.find(jid);
+    if (iter != conversationDict.end()) {
+        // Select already existing conversation
+        iter.value()->setVisible(true);
+        statusWidgetDock->setFocus(Qt::OtherFocusReason);
+    } else {
+        // Open new conversation
+        ConversationWidget *convo = new ConversationWidget(jid);
+        QDockWidget *dock = new QDockWidget(contactName);
+        dock->setWidget(convo);
+        addDockWidget(Qt::LeftDockWidgetArea, dock);
+        conversationDict.insert(jid, dock);
+    }
 }
