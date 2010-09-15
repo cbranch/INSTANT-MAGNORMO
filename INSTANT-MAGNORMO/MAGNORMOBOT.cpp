@@ -1,8 +1,31 @@
 #include "MAGNORMOBOT.h"
-#include <gloox/rostermanager.h>
+
+#include <gloox/client.h>
+#include <gloox/messageeventfilter.h>
+#include <gloox/chatstatefilter.h>
+#include <gloox/disco.h>
+#include <gloox/message.h>
+#include <gloox/gloox.h>
+#include <gloox/lastactivity.h>
+#include <gloox/logsink.h>
+#include <gloox/connectiontcpclient.h>
+#include <gloox/connectionsocks5proxy.h>
+#include <gloox/connectionhttpproxy.h>
 #include <gloox/rosteritem.h>
-#include "Contact.h"
-#include <QSharedPointer>
+#include <gloox/rostermanager.h>
+
+#ifndef _WIN32
+# include <unistd.h>
+#endif
+
+#include <stdio.h>
+#include <string>
+
+#include <cstdio> // [s]print[f]
+
+#if defined( WIN32 ) || defined( _WIN32 )
+# include <windows.h>
+#endif
 
 MAGNORMOBOT::MAGNORMOBOT(QString username, QString password, QString server = QString(), int port = -1) :
     m_session(0),
@@ -140,4 +163,54 @@ void MAGNORMOBOT::handleMessageSession( MessageSession *session )
 void MAGNORMOBOT::handleLog( LogLevel level, LogArea area, const std::string& message )
 {
   printf("log: level: %d, area: %d, %s\n", level, area, message.c_str() );
+}
+
+void MAGNORMOBOT::handleItemAdded (const JID &jid)
+{
+}
+
+void MAGNORMOBOT::handleItemSubscribed (const JID &jid)
+{
+}
+
+void MAGNORMOBOT::handleItemRemoved (const JID &jid)
+{
+}
+
+void MAGNORMOBOT::handleItemUpdated (const JID &jid)
+{
+}
+
+void MAGNORMOBOT::handleItemUnsubscribed (const JID &jid)
+{
+}
+
+void MAGNORMOBOT::handleRoster (const Roster &roster)
+{
+}
+
+void MAGNORMOBOT::handleRosterPresence (const RosterItem &item, const std::string &resource, Presence::PresenceType presence, const std::string &msg)
+{
+}
+
+void MAGNORMOBOT::handleSelfPresence (const RosterItem &item, const std::string &resource, Presence::PresenceType presence, const std::string &msg)
+{
+}
+
+bool MAGNORMOBOT::handleSubscriptionRequest (const JID &jid, const std::string &msg)
+{
+    return true;
+}
+
+bool MAGNORMOBOT::handleUnsubscriptionRequest (const JID &jid, const std::string &msg)
+{
+    return true;
+}
+
+void MAGNORMOBOT::handleNonrosterPresence (const Presence &presence)
+{
+}
+
+void MAGNORMOBOT::handleRosterError (const IQ &iq)
+{
 }

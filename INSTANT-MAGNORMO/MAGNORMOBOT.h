@@ -1,45 +1,28 @@
 #ifndef MAGNORMOBOT_H
 #define MAGNORMOBOT_H
 
-#include <gloox/client.h>
 #include <gloox/messagesessionhandler.h>
 #include <gloox/messageeventhandler.h>
-#include <gloox/messageeventfilter.h>
 #include <gloox/chatstatehandler.h>
-#include <gloox/chatstatefilter.h>
-#include <gloox/connectionlistener.h>
-#include <gloox/disco.h>
-#include <gloox/message.h>
-#include <gloox/gloox.h>
-#include <gloox/lastactivity.h>
 #include <gloox/loghandler.h>
-#include <gloox/logsink.h>
-#include <gloox/connectiontcpclient.h>
-#include <gloox/connectionsocks5proxy.h>
-#include <gloox/connectionhttpproxy.h>
+#include <gloox/connectionlistener.h>
 #include <gloox/messagehandler.h>
+#include <gloox/rosterlistener.h>
 using namespace gloox;
-
-#ifndef _WIN32
-# include <unistd.h>
-#endif
-
-#include <stdio.h>
-#include <string>
-
-#include <cstdio> // [s]print[f]
-
-#if defined( WIN32 ) || defined( _WIN32 )
-# include <windows.h>
-#endif
 
 #include <QThread>
 #include <QString>
 #include <QSharedPointer>
 #include "Contact.h"
 
+namespace gloox {
+    class Client;
+    class MessageEventFilter;
+    class ChatStateFilter;
+}
+
 class MAGNORMOBOT : public QThread, MessageSessionHandler, ConnectionListener, LogHandler,
-                           MessageEventHandler, MessageHandler, ChatStateHandler
+                           MessageEventHandler, MessageHandler, ChatStateHandler, RosterListener
 {
     Q_OBJECT
  public:
@@ -57,6 +40,18 @@ class MAGNORMOBOT : public QThread, MessageSessionHandler, ConnectionListener, L
     virtual void handleChatState( const JID& from, ChatStateType state );
     virtual void handleMessageSession( MessageSession *session );
     virtual void handleLog( LogLevel level, LogArea area, const std::string& message );
+    virtual void handleItemAdded (const JID &jid);
+    virtual void handleItemSubscribed (const JID &jid);
+    virtual void handleItemRemoved (const JID &jid);
+    virtual void handleItemUpdated (const JID &jid);
+    virtual void handleItemUnsubscribed (const JID &jid);
+    virtual void handleRoster (const Roster &roster);
+    virtual void handleRosterPresence (const RosterItem &item, const std::string &resource, Presence::PresenceType presence, const std::string &msg);
+    virtual void handleSelfPresence (const RosterItem &item, const std::string &resource, Presence::PresenceType presence, const std::string &msg);
+    virtual bool handleSubscriptionRequest (const JID &jid, const std::string &msg);
+    virtual bool handleUnsubscriptionRequest (const JID &jid, const std::string &msg);
+    virtual void handleNonrosterPresence (const Presence &presence);
+    virtual void handleRosterError (const IQ &iq);
 
 private:
     Client *j;
