@@ -8,9 +8,9 @@ MAGNORMOBOT::MAGNORMOBOT(QString username, QString password, QString server = QS
     m_session(0),
     m_messageEventFilter(0),
     m_chatStateFilter(0),
-    username(username.toStdString()),
-    password(password.toStdString()),
-    server(server.toStdString()),
+    username(username.toUtf8().data()),
+    password(password.toUtf8().data()),
+    server(server.toUtf8().data()),
     port(port)
 {
 }
