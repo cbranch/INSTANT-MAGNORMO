@@ -3,11 +3,14 @@
 
 #include <QMetaType>
 #include <QString>
+#include <gloox/presence.h>
+
+using namespace gloox;
 
 struct Contact {
     QString name;
     std::string jid;
-    bool online;
+    Presence::PresenceType presence;
 };
 
 Q_DECLARE_METATYPE(Contact)

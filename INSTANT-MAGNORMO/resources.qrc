@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/icons">
-        <file>icons/user-black.png</file>
+        <file alias="user-away">icons/user-black.png</file>
         <file alias="user-offline">icons/user-silhouette.png</file>
         <file alias="user-online">icons/user-thief-baldie.png</file>
     </qresource>

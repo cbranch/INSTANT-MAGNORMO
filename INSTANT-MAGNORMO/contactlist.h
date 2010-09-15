@@ -1,9 +1,15 @@
 #ifndef CONTACTLIST_H
 #define CONTACTLIST_H
 
+#include <QTreeWidget>
+#include <QVBoxLayout>
+#include <QIcon>
 #include <QWidget>
-#include "Contact.h"
 #include <QSharedPointer>
+#include <gloox/presence.h>
+#include "Contact.h"
+
+using namespace gloox;
 
 class QTreeWidget;
 class QTreeWidgetItem;

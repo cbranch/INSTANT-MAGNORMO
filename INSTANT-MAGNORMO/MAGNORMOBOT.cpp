@@ -198,8 +198,7 @@ void MAGNORMOBOT::handleRosterPresence (const RosterItem &item, const std::strin
         QSharedPointer<Contact> x(new Contact);
         x->jid = item.jid();
         x->name = QString::fromUtf8(item.name().c_str());
-        if(presence==Presence::Away) x->name+=QString(" (AWAY)");
-        x->online = true;
+        x->presence = presence;
         emit contactDiscovered(x);
     } else {
         printf( "presence received: %s : ", item.name().c_str() );
