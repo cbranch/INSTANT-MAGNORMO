@@ -54,26 +54,6 @@ class MessageTest : public MessageSessionHandler, ConnectionListener, LogHandler
 
       j->logInstance().registerLogHandler( LogLevelDebug, LogAreaAll, this );
 
-//
-// this code connects to a jabber server through a SOCKS5 proxy
-//
-//       ConnectionSOCKS5Proxy* conn = new ConnectionSOCKS5Proxy( j,
-//                                   new ConnectionTCP( j->logInstance(),
-//                                                      "sockshost", 1080 ),
-//                                   j->logInstance(), "example.net" );
-//       conn->setProxyAuth( "socksuser", "sockspwd" );
-//       j->setConnectionImpl( conn );
-
-//
-// this code connects to a jabber server through a HTTP proxy through a SOCKS5 proxy
-//
-//       ConnectionTCP* conn0 = new ConnectionTCP( j->logInstance(), "old", 1080 );
-//       ConnectionSOCKS5Proxy* conn1 = new ConnectionSOCKS5Proxy( conn0, j->logInstance(), "old", 8080 );
-//       conn1->setProxyAuth( "socksuser", "sockspwd" );
-//       ConnectionHTTPProxy* conn2 = new ConnectionHTTPProxy( j, conn1, j->logInstance(), "jabber.cc" );
-//       conn2->setProxyAuth( "httpuser", "httppwd" );
-//       j->setConnectionImpl( conn2 );
-
 
       if( j->connect( false ) )
       {
@@ -179,6 +159,10 @@ class MessageTest : public MessageSessionHandler, ConnectionListener, LogHandler
 
 int main( int argc, char** argv)
 {
+  if(argc!=3) {
+      printf("YOU SUCK AT USING THE COMMANDLINE YOU FUCKING NOOB\n");
+      return 666;
+  }
   MessageTest *r = new MessageTest();
   r->start(argv[1],argv[2]);
   delete( r );
