@@ -6,7 +6,7 @@
 class ContactList;
 class StatusWidget;
 class QDockWidget;
-class IMThread;
+class MAGNORMOBOT;
 
 class MainWindow : public QMainWindow
 {
@@ -23,8 +23,12 @@ protected:
     QDockWidget *statusWidgetDock;
 
 public:
-    IMThread *imThread;
-    void connectThread();
+    MAGNORMOBOT *bot;
+    void connectAccount(QString username, QString password, QString server, int port);
+
+public slots:
+    void connected();
+    void disconnected();
 };
 
 #endif // MAINWINDOW_H

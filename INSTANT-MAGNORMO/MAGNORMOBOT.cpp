@@ -1,15 +1,17 @@
 #include "MAGNORMOBOT.h"
-#include "imthread.h"
 #include <gloox/rostermanager.h>
 #include <gloox/rosteritem.h>
 #include "Contact.h"
 #include <QSharedPointer>
 
-MAGNORMOBOT::MAGNORMOBOT(IMThread *thread) :
-        m_session( 0 ),
-        m_messageEventFilter( 0 ),
-        m_chatStateFilter( 0 ),
-        thread(thread)
+MAGNORMOBOT::MAGNORMOBOT(QString username, QString password, QString server = QString(), int port = -1) :
+    m_session(0),
+    m_messageEventFilter(0),
+    m_chatStateFilter(0),
+    username(username.toStdString()),
+    password(password.toStdString()),
+    server(server.toStdString()),
+    port(port)
 {
 }
 
@@ -17,9 +19,8 @@ MAGNORMOBOT::~MAGNORMOBOT()
 {
 }
 
-void MAGNORMOBOT::start(std::string username, std::string password, std::string server, int port)
+void MAGNORMOBOT::run()
 {
-
   JID jid( username );
   j = new Client( jid, password, port );
   if (!server.empty())
@@ -51,6 +52,7 @@ void MAGNORMOBOT::start(std::string username, std::string password, std::string 
 
 void MAGNORMOBOT::onConnect()
 {
+    emit connected();
     Roster *roster = j->rosterManager()->roster();
     for (Roster::const_iterator i = roster->begin(); i != roster->end(); i++) {
         QSharedPointer<Contact> x(new Contact);
@@ -58,12 +60,13 @@ void MAGNORMOBOT::onConnect()
         RosterItem *item = i->second;
         x->name = QString::fromUtf8(item->name().c_str());
         x->online = item->online();
-        thread->discoverContact(x);
+        emit contactDiscovered(x);
     }
 }
 
 void MAGNORMOBOT::onDisconnect( ConnectionError e )
 {
+    emit disconnected();
   printf( "message_test: disconnected: %d\n", e );
   if( e == ConnAuthenticationFailed )
     printf( "auth failed. reason: %d\n", j->authError() );

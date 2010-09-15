@@ -33,40 +33,47 @@ using namespace gloox;
 # include <windows.h>
 #endif
 
-class IMThread;
+#include <QThread>
+#include <QString>
+#include <QSharedPointer>
+#include "Contact.h"
 
-class MAGNORMOBOT : public MessageSessionHandler, ConnectionListener, LogHandler,
-                    MessageEventHandler, MessageHandler, ChatStateHandler
+class MAGNORMOBOT : public QThread, MessageSessionHandler, ConnectionListener, LogHandler,
+                           MessageEventHandler, MessageHandler, ChatStateHandler
 {
-  public:
-    MAGNORMOBOT(IMThread *imThread);
+    Q_OBJECT
+ public:
+    explicit MAGNORMOBOT(QString username, QString password, QString server, int port);
 
     virtual ~MAGNORMOBOT();
 
-    void start(std::string username, std::string password, std::string server, int port);
+    void run();
 
     virtual void onConnect();
-
     virtual void onDisconnect( ConnectionError e );
-
     virtual bool onTLSConnect( const CertInfo& info );
-
     virtual void handleMessage( const Message& msg, MessageSession * /*session*/ );
-
     virtual void handleMessageEvent( const JID& from, MessageEventType event );
-
     virtual void handleChatState( const JID& from, ChatStateType state );
-
     virtual void handleMessageSession( MessageSession *session );
-
     virtual void handleLog( LogLevel level, LogArea area, const std::string& message );
 
-  private:
+private:
     Client *j;
     MessageSession *m_session;
     MessageEventFilter *m_messageEventFilter;
     ChatStateFilter *m_chatStateFilter;
-    IMThread *thread;
+
+
+    std::string username;
+    std::string password;
+    std::string server;
+    int port;
+
+signals:
+    void connected();
+    void disconnected();
+    void contactDiscovered(QSharedPointer<Contact> contact);
 };
 
 #endif // MAGNORMOBOT_H

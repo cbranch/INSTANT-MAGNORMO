@@ -3,7 +3,8 @@
 #include "mainwindow.h"
 #include "accountdialog.h"
 #include <stdio.h>
-#include "imthread.h"
+#include "Contact.h"
+#include "MAGNORMOBOT.h"
 
 int main(int argc, char *argv[])
 {
@@ -21,9 +22,8 @@ int main(int argc, char *argv[])
         }
     }
     MainWindow w;
-    w.imThread = new IMThread(account->username, account->password, account->server, account->port);
-    w.connectThread();
+    w.connectAccount(account->username, account->password, account->server, account->port);
     w.show();
-    w.imThread->start();
+    w.bot->start();
     return a.exec();
 }

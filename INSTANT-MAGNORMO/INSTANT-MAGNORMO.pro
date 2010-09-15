@@ -14,7 +14,6 @@ SOURCES += main.cpp \
     contactlist.cpp \
     conversationwidget.cpp \
     accountdialog.cpp \
-    imthread.cpp \
     MAGNORMOBOT.cpp \
     statuswidget.cpp
 HEADERS += mainwindow.h \
@@ -22,7 +21,6 @@ HEADERS += mainwindow.h \
     conversationwidget.h \
     accountdialog.h \
     MAGNORMOBOT.h \
-    imthread.h \
     Contact.h \
     statuswidget.h
 FORMS += accountdialog.ui

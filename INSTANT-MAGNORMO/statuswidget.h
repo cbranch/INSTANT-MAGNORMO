@@ -14,9 +14,7 @@ public:
 
 signals:
 
-public slots:
-
-protected:
+public:
     QLabel *label;
     QProgressBar *progress;
 
