@@ -179,18 +179,32 @@ void MAGNORMOBOT::handleItemUnsubscribed (const JID &jid)
 
 void MAGNORMOBOT::handleRoster (const Roster &roster)
 {
-    for (Roster::const_iterator i = roster.begin(); i != roster.end(); i++) {
-        QSharedPointer<Contact> x(new Contact);
-        x->jid = i->first;
-        RosterItem *item = i->second;
-        x->name = QString::fromUtf8(item->name().c_str());
-        x->online = item->online();
-        emit contactDiscovered(x);
-    }
+    //for (Roster::const_iterator i = roster.begin(); i != roster.end(); i++) {
+    //    QSharedPointer<Contact> x(new Contact);
+    //    x->jid = i->first;
+    //    RosterItem *item = i->second;
+    //    x->name = QString::fromUtf8(item->name().c_str());
+    //    x->online = item->online();
+    //    emit contactDiscovered(x);
+    //}
 }
 
 void MAGNORMOBOT::handleRosterPresence (const RosterItem &item, const std::string &resource, Presence::PresenceType presence, const std::string &msg)
 {
+    if(presence==0 || presence==2) {
+        printf( "presence received: %s : ", item.name().c_str() );
+        printf("ONLINE OR AWAY\n");
+        QSharedPointer<Contact> x(new Contact);
+        x->jid = item.jid();
+        x->name = QString::fromUtf8(item.name().c_str());
+        if(presence==2) x->name+=QString(" (AWAY)");
+        x->online = true;
+        emit contactDiscovered(x);
+    } else {
+        printf( "presence received: %s : ", item.name().c_str() );
+        printf("OFFLINE\n");
+    }
+    fflush(stdout);
 }
 
 void MAGNORMOBOT::handleSelfPresence (const RosterItem &item, const std::string &resource, Presence::PresenceType presence, const std::string &msg)
