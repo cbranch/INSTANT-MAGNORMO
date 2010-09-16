@@ -77,7 +77,6 @@ void ContactList::plantContact(QSharedPointer<Contact> contact)
         if(groupIt==groupMap.end()) {
             QTreeWidgetItem *gItem = new QTreeWidgetItem(contactTree);
             gItem->setExpanded(true);
-            gItem->sortChildren(0,Qt::AscendingOrder,true);
             gItem->setText(0,thisGroup);
             groupMap[thisGroup] = gItem;
         }
