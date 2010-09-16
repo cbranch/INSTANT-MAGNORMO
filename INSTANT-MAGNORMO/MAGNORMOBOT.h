@@ -1,19 +1,47 @@
 #ifndef MAGNORMOBOT_H
 #define MAGNORMOBOT_H
 
-#include <gloox/messagesessionhandler.h>
-#include <gloox/messageeventhandler.h>
-#include <gloox/chatstatehandler.h>
-#include <gloox/loghandler.h>
-#include <gloox/connectionlistener.h>
-#include <gloox/messagehandler.h>
-#include <gloox/rosterlistener.h>
-using namespace gloox;
-
 #include <QThread>
 #include <QString>
 #include <QSharedPointer>
 #include "Contact.h"
+
+#include <gloox/messagesessionhandler.h>
+#include <gloox/messageeventhandler.h>
+#include <gloox/message.h>
+#include <gloox/messagehandler.h>
+#include <gloox/messageeventfilter.h>
+#include <gloox/chatstatehandler.h>
+#include <gloox/loghandler.h>
+#include <gloox/client.h>
+#include <gloox/chatstatefilter.h>
+#include <gloox/disco.h>
+#include <gloox/gloox.h>
+#include <gloox/lastactivity.h>
+#include <gloox/logsink.h>
+#include <gloox/connectionlistener.h>
+#include <gloox/connectiontcpclient.h>
+#include <gloox/connectionsocks5proxy.h>
+#include <gloox/connectionhttpproxy.h>
+#include <gloox/rosteritem.h>
+#include <gloox/rostermanager.h>
+#include <gloox/rosterlistener.h>
+#include <gloox/presence.h>
+
+#ifndef _WIN32
+# include <unistd.h>
+#endif
+
+#include <stdio.h>
+#include <string>
+#include <cstdio> // [s]print[f]
+
+
+#if defined( WIN32 ) || defined( _WIN32 )
+# include <windows.h>
+#endif
+
+using namespace gloox;
 
 namespace gloox {
     class Client;

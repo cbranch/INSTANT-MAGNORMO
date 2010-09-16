@@ -9,6 +9,7 @@ using namespace gloox;
 
 struct Contact {
     QString name;
+    QString group;
     std::string jid;
     Presence::PresenceType presence;
 };

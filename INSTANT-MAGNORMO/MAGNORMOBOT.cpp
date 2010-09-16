@@ -1,33 +1,5 @@
 #include "MAGNORMOBOT.h"
 
-#include <gloox/client.h>
-#include <gloox/messageeventfilter.h>
-#include <gloox/chatstatefilter.h>
-#include <gloox/disco.h>
-#include <gloox/message.h>
-#include <gloox/gloox.h>
-#include <gloox/lastactivity.h>
-#include <gloox/logsink.h>
-#include <gloox/connectiontcpclient.h>
-#include <gloox/connectionsocks5proxy.h>
-#include <gloox/connectionhttpproxy.h>
-#include <gloox/rosteritem.h>
-#include <gloox/rostermanager.h>
-#include <gloox/presence.h>
-
-#ifndef _WIN32
-# include <unistd.h>
-#endif
-
-#include <stdio.h>
-#include <string>
-
-#include <cstdio> // [s]print[f]
-
-#if defined( WIN32 ) || defined( _WIN32 )
-# include <windows.h>
-#endif
-
 MAGNORMOBOT::MAGNORMOBOT(QString username, QString password, QString server = QString(), int port = -1) :
     m_session(0),
     m_messageEventFilter(0),
@@ -187,6 +159,11 @@ void MAGNORMOBOT::handleRosterPresence (const RosterItem &item, const std::strin
     QSharedPointer<Contact> x(new Contact);
     x->jid = item.jid();
     x->name = QString::fromUtf8(item.name().c_str());
+    if(item.groups().size()==0) {
+        x->group = QString("WORTHLESS MINIONS");
+    } else {
+        x->group = QString((*item.groups().begin()).c_str());
+    }
     x->presence = presence;
     emit contactPresenceUpdate(x);
 }

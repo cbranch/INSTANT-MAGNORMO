@@ -66,8 +66,24 @@ void ContactList::plantContact(QSharedPointer<Contact> contact)
 
     // Clear the whole tree and redraw it with updated icons and stuff
     contactTree->clear();
+
+    map<QString,QTreeWidgetItem*> groupMap;
+    map<QString,QTreeWidgetItem*>::iterator groupIt;
+
+    // Iterate through all of our active contacts
     for(it=contactMap.begin();it!=contactMap.end();it++) {
-        QTreeWidgetItem *item = new QTreeWidgetItem(contactTree);
+        QString thisGroup = it->second->group;
+        groupIt = groupMap.find(thisGroup);
+        if(groupIt==groupMap.end()) {
+            QTreeWidgetItem *gItem = new QTreeWidgetItem(contactTree);
+            gItem->setExpanded(true);
+            gItem->sortChildren(0,Qt::AscendingOrder,true);
+            gItem->setText(0,thisGroup);
+            groupMap[thisGroup] = gItem;
+        }
+
+        groupIt = groupMap.find(thisGroup);
+        QTreeWidgetItem *item = new QTreeWidgetItem((*groupIt).second);
         item->setText(0, it->second->name);
         item->setData(0, Qt::UserRole, QString::fromUtf8(it->second->jid.c_str()));
         if (it->second->presence==Presence::Available) {
