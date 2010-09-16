@@ -76,6 +76,7 @@ void ContactList::plantContact(QSharedPointer<Contact> contact)
             item->setIcon(0, QIcon(":/icons/user-away"));
         }
     }
+    contactTree->sortItems(0,Qt::AscendingOrder);
 }
 
 void ContactList::itemActivated(QTreeWidgetItem *item, int column)
