@@ -23,8 +23,39 @@ void ContactList::plantContact(QSharedPointer<Contact> contact)
         contactMap[contact->jid]=contact;
     } else {
         // Update the existing contacts presence value
+        switch(contact->presence) {
+        case Presence::Available:
+            printf("%s: Available\n",contact->name.toStdString().c_str());
+            break;
+        case Presence::Chat:
+            printf("%s: Chat\n",contact->name.toStdString().c_str());
+            break;
+        case Presence::Away:
+            printf("%s: Away\n",contact->name.toStdString().c_str());
+            break;
+        case Presence::DND:
+            printf("%s: DND\n",contact->name.toStdString().c_str());
+            break;
+        case Presence::XA:
+            printf("%s: XA\n",contact->name.toStdString().c_str());
+            break;
+        case Presence::Unavailable:
+            printf("%s: Unavailable\n",contact->name.toStdString().c_str());
+            break;
+        case Presence::Probe:
+            printf("%s: Probe\n",contact->name.toStdString().c_str());
+            break;
+        case Presence::Error:
+            printf("%s: Error\n",contact->name.toStdString().c_str());
+            break;
+        case Presence::Invalid:
+            printf("%s: Invalid\n",contact->name.toStdString().c_str());
+            break;
+        }
+        fflush(stdout);
+
         if(contact->presence==Presence::Unavailable) {
-            contactMap.erase(it);
+            contactMap.erase(contact->jid);
         } else {
             it->second->presence = contact->presence;
         }

@@ -9,6 +9,7 @@
 #include <gloox/presence.h>
 #include "Contact.h"
 #include <map>
+#include <stdio.h>
 
 using namespace std;
 using namespace gloox;

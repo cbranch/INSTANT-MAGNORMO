@@ -184,19 +184,11 @@ void MAGNORMOBOT::handleRoster (const Roster &roster)
 
 void MAGNORMOBOT::handleRosterPresence (const RosterItem &item, const std::string &resource, Presence::PresenceType presence, const std::string &msg)
 {
-    if(presence==Presence::Available || presence==Presence::Away) {
-        printf( "presence received: %s : ", item.name().c_str() );
-        printf("ONLINE OR AWAY\n");
-        QSharedPointer<Contact> x(new Contact);
-        x->jid = item.jid();
-        x->name = QString::fromUtf8(item.name().c_str());
-        x->presence = presence;
-        emit contactPresenceUpdate(x);
-    } else {
-        printf( "presence received: %s : ", item.name().c_str() );
-        printf("OFFLINE\n");
-    }
-    fflush(stdout);
+    QSharedPointer<Contact> x(new Contact);
+    x->jid = item.jid();
+    x->name = QString::fromUtf8(item.name().c_str());
+    x->presence = presence;
+    emit contactPresenceUpdate(x);
 }
 
 void MAGNORMOBOT::handleSelfPresence (const RosterItem &item, const std::string &resource, Presence::PresenceType presence, const std::string &msg)
