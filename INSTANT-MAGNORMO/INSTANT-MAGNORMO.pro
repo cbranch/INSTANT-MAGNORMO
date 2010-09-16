@@ -15,14 +15,16 @@ SOURCES += main.cpp \
     conversationwidget.cpp \
     accountdialog.cpp \
     MAGNORMOBOT.cpp \
-    statuswidget.cpp
+    statuswidget.cpp \
+    contactmodel.cpp
 HEADERS += mainwindow.h \
     contactlist.h \
     conversationwidget.h \
     accountdialog.h \
     MAGNORMOBOT.h \
     Contact.h \
-    statuswidget.h
+    statuswidget.h \
+    contactmodel.h
 FORMS += accountdialog.ui \
     conversationwidget.ui
 RESOURCES += resources.qrc
