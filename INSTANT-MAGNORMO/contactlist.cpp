@@ -79,6 +79,7 @@ void ContactList::plantContact(QSharedPointer<Contact> contact)
             gItem->setExpanded(true);
             gItem->setBackgroundColor(0,QColor(Qt::red));
             gItem->setText(0,thisGroup);
+            gItem->setData(0,Qt::UserRole, QString("GROUP"));
             groupMap[thisGroup] = gItem;
         }
 

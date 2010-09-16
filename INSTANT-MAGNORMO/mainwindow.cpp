@@ -55,25 +55,27 @@ void MainWindow::disconnected()
 
 void MainWindow::startConversation(QString jid)
 {
-    QString contactName("Conversation");
-    ConversationDict::const_iterator iter = conversationDict.find(jid);
-    if (iter != conversationDict.end()) {
-        // Select already existing conversation
-        iter.value()->setVisible(true);
-        statusWidgetDock->setFocus(Qt::OtherFocusReason);
-    } else {
-        // Open new conversation
-        ConversationWidget *convo = new ConversationWidget(jid);
-        QDockWidget *dock = new QDockWidget(contactName);
-        dock->setWidget(convo);
-        // Is there an existing conversation?
-        if (conversationDict.empty()) {
-            addDockWidget(Qt::LeftDockWidgetArea, dock);
+    if(jid!="GROUP") {
+        QString contactName("Conversation");
+        ConversationDict::const_iterator iter = conversationDict.find(jid);
+        if (iter != conversationDict.end()) {
+            // Select already existing conversation
+            iter.value()->setVisible(true);
+            statusWidgetDock->setFocus(Qt::OtherFocusReason);
         } else {
-            tabifyDockWidget(conversationDict.begin().value(), dock);
+            // Open new conversation
+            ConversationWidget *convo = new ConversationWidget(jid);
+            QDockWidget *dock = new QDockWidget(contactName);
+            dock->setWidget(convo);
+            // Is there an existing conversation?
+            if (conversationDict.empty()) {
+                addDockWidget(Qt::LeftDockWidgetArea, dock);
+            } else {
+                tabifyDockWidget(conversationDict.begin().value(), dock);
+            }
+            conversationDict.insert(jid, dock);
+            connect(convo, SIGNAL(destroyed(QObject*)), SLOT(handleConversationDestroyed(QObject*)));
         }
-        conversationDict.insert(jid, dock);
-        connect(convo, SIGNAL(destroyed(QObject*)), SLOT(handleConversationDestroyed(QObject*)));
     }
 }
 
