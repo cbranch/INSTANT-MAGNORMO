@@ -18,11 +18,15 @@ void ContactList::plantContact(QSharedPointer<Contact> contact)
 {
     map<string,QSharedPointer<Contact> >::iterator it;
     it = contactMap.find(contact->jid);
+    // If it is the end of the contactMap this means that this is a
+    // new contact which is not on our list yet so we need to add
+    // them
     if(it==contactMap.end()) {
         // Add a new contact to our current list
         contactMap[contact->jid]=contact;
+    // Else this is an existing contact so we need to update their
+    // presence to update their new status on the list
     } else {
-        // Update the existing contacts presence value
         switch(contact->presence) {
         case Presence::Available:
             printf("%s: Available\n",contact->name.toStdString().c_str());
@@ -41,7 +45,9 @@ void ContactList::plantContact(QSharedPointer<Contact> contact)
             break;
         case Presence::Unavailable:
             printf("%s: Unavailable\n",contact->name.toStdString().c_str());
-            break;
+            // Remove the contact from our list of online peoples
+            contactMap.erase(contact->jid);
+            return;
         case Presence::Probe:
             printf("%s: Probe\n",contact->name.toStdString().c_str());
             break;
@@ -54,16 +60,12 @@ void ContactList::plantContact(QSharedPointer<Contact> contact)
         }
         fflush(stdout);
 
-        if(contact->presence==Presence::Unavailable) {
-            contactMap.erase(contact->jid);
-        } else {
-            it->second->presence = contact->presence;
-        }
+        // Update the contacts presence status
+        it->second->presence = contact->presence;
     }
 
-    // Clear the whole tree and redraw it
+    // Clear the whole tree and redraw it with updated icons and stuff
     contactTree->clear();
-
     for(it=contactMap.begin();it!=contactMap.end();it++) {
         QTreeWidgetItem *item = new QTreeWidgetItem(contactTree);
         item->setText(0, it->second->name);
@@ -71,7 +73,7 @@ void ContactList::plantContact(QSharedPointer<Contact> contact)
         if (it->second->presence==Presence::Available) {
             item->setIcon(0, QIcon(":/icons/user-online"));
         } else if(it->second->presence==Presence::Away) {
-            //item->setIcon(0, QIcon(":/icons/user-away"));
+            item->setIcon(0, QIcon(":/icons/user-away"));
         }
     }
 }
