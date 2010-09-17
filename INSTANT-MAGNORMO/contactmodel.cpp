@@ -129,15 +129,21 @@ QVariant ContactModel::data(const QModelIndex &index, int role) const
         case Qt::DecorationRole:
             {
                 RosterItem *item = contactData->getRosterItemFromJid(jid);
-                //if (!item)
+                if (!item)
                     return QIcon(":/icons/user-online");
-                /*else
-                    switch (item->highestResource()->presence()) {
-                    case Presence::Available:
-                        return QIcon(":/icons/user-online");
-                    case Presence::Away:
-                        return QIcon(":/icons/user-away");
-                    }*/
+                if (!item->highestResource())
+                    return QIcon(":/icons/user-online");
+                switch (item->highestResource()->presence()) {
+                case Presence::Available:
+                case Presence::Chat:
+                    return QIcon(":/icons/user-online");
+                case Presence::Away:
+                case Presence::DND:
+                case Presence::XA:
+                    return QIcon(":/icons/user-away");
+                default:
+                    return QIcon(":/icons/user-offline");
+                }
                 break;
             }
 
@@ -197,24 +203,45 @@ QModelIndex ContactModel::parent(const QModelIndex &child) const
     return createIndex(groups.keys().indexOf(group->groupName), 0);
 }
 
+QList<QModelIndex> ContactModel::getIndexesOfJid(QString jid)
+{
+    QList<QModelIndex> indexes;
+    int i = 0;
+    for (auto iter = groups.begin(); iter != groups.end(); iter++, i++) {
+        ContactGroup *group = iter.value();
+        int pos = group->jids.indexOf(jid);
+        if (pos != -1) {
+            indexes.append(createIndex(pos, 0, group));
+        }
+    }
+    return indexes;
+}
+
 void ContactModel::updateContactPresence(QString jid)
 {
-
+    QList<QModelIndex> indexes = getIndexesOfJid(jid);
+    foreach (QModelIndex index, indexes) {
+        emit dataChanged(index, index);
+    }
 }
 
 void ContactModel::addContact(QString jid)
 {
-
+    qDebug("HURR A CONTACT WAS ADDED YOU SHOULD CODE THIS");
 }
 
 void ContactModel::updateContact(QString jid)
 {
-
+    qDebug("HURR A CONTACT WAS UPDATED YOU SHOULD CODE THIS A BIT BETTER");
+    QList<QModelIndex> indexes = getIndexesOfJid(jid);
+    foreach (QModelIndex index, indexes) {
+        emit dataChanged(index, index);
+    }
 }
 
 void ContactModel::removeContact(QString jid)
 {
-
+    qDebug("HURR A CONTACT WAS REMOVED YOU SHOULD CODE THIS");
 }
 
 void ContactModel::refreshContacts()

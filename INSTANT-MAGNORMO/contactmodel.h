@@ -30,6 +30,8 @@ public:
     QModelIndex index(int row, int column, const QModelIndex &parent) const;
     QModelIndex parent(const QModelIndex &child) const;
 
+    QList<QModelIndex> getIndexesOfJid(QString jid);
+
 public slots:
     void updateContactPresence(QString jid);
     void addContact(QString jid);
