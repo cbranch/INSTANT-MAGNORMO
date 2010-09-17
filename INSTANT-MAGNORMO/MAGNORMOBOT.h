@@ -87,6 +87,7 @@ signals:
     void disconnected();
     void contactPresenceUpdate(QSharedPointer<Contact> contact);
     void spewMessage(QString msg, QString jid);
+    void openConversationWindow(QString jid);
 };
 
 #endif // MAGNORMOBOT_H

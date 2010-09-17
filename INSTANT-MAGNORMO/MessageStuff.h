@@ -9,6 +9,7 @@ struct MessageStuff {
     MessageSession *session;
     MessageEventFilter *eventFilter;
     ChatStateFilter *stateFilter;
+    bool chatWindowOpen;
 };
 
 #endif // MESSAGESTUFF_H
