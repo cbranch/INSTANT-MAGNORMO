@@ -13,6 +13,8 @@ Q_OBJECT
 public:
     explicit ContactList(QWidget *parent = 0);
 
+    void setModel(QAbstractItemModel *model);
+
 signals:
     void conversationInitiated(QString jid);
 
