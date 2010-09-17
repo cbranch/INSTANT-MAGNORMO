@@ -156,16 +156,8 @@ void MAGNORMOBOT::handleRoster (const Roster &roster)
 
 void MAGNORMOBOT::handleRosterPresence (const RosterItem &item, const std::string &resource, Presence::PresenceType presence, const std::string &msg)
 {
-    QSharedPointer<Contact> x(new Contact);
-    x->jid = item.jid();
-    x->name = QString::fromUtf8(item.name().c_str());
-    if(item.groups().size()==0) {
-        x->group = QString("WORTHLESS MINIONS");
-    } else {
-        x->group = QString((*item.groups().begin()).c_str());
-    }
-    x->presence = presence;
-    emit contactPresenceUpdate(x);
+    std::string jid = item.jid() + resource;
+    emit contactPresenceUpdate(QString::fromUtf8(jid.c_str()));
 }
 
 void MAGNORMOBOT::handleSelfPresence (const RosterItem &item, const std::string &resource, Presence::PresenceType presence, const std::string &msg)
