@@ -32,6 +32,11 @@ public:
 
     QList<QModelIndex> getIndexesOfJid(QString jid);
 
+    enum UserRoles {
+        JIDRole = Qt::UserRole,
+        PresenceRole
+    };
+
 public slots:
     void updateContactPresence(QString jid);
     void addContact(QString jid);
