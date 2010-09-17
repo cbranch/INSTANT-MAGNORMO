@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include <QDockWidget>
 #include "contactlist.h"
+#include "contactmodel.h"
 #include "statuswidget.h"
 #include "conversationwidget.h"
 #include "MAGNORMOBOT.h"
@@ -10,7 +11,8 @@
 #include <QTreeWidget>
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent)
+    QMainWindow(parent),
+    bot(0)
 {
     setDockOptions(QMainWindow::AllowNestedDocks | QMainWindow::AllowTabbedDocks | QMainWindow::AnimatedDocks);
     contactListDock = new QDockWidget(tr("Contacts"), this);
@@ -31,15 +33,19 @@ MainWindow::~MainWindow()
 
 void MainWindow::connectAccount(QString username, QString password, QString server, int port)
 {
+    Q_ASSERT(!bot);
     bot = new MAGNORMOBOT(username, password, server, port);
+    ContactModel *contacts = new ContactModel(bot, contactList);
+    contactList->contactTree->setModel(contacts);
     connect(bot, SIGNAL(connected()), SLOT(connected()));
     connect(bot, SIGNAL(disconnected()), SLOT(disconnected()));
-    connect(bot, SIGNAL(contactPresenceUpdate(QSharedPointer<Contact>)), contactList, SLOT(plantContact(QSharedPointer<Contact>)));
     statusWidget->label->setText(tr("Connecting"));
     statusWidget->progress->setMinimum(0);
     statusWidget->progress->setMaximum(0);
     statusWidget->progress->setValue(0);
     statusWidgetDock->setVisible(true);
+
+    bot->start();
 }
 
 void MainWindow::connected()
@@ -75,6 +81,7 @@ void MainWindow::startConversation(QString jid)
             }
             conversationDict.insert(jid, dock);
             connect(convo, SIGNAL(destroyed(QObject*)), SLOT(handleConversationDestroyed(QObject*)));
+            connect(bot, SIGNAL(spewMessage(QString,QString)), convo, SLOT(messageRevieved(QString,QString)));
         }
     }
 }

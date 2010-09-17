@@ -25,3 +25,10 @@ void ConversationWidget::changeEvent(QEvent *e)
         break;
     }
 }
+
+void ConversationWidget::messageRevieved(QString msg, QString jid)
+{
+    if(jid==this->jid) {
+        ui->textEdit->append(msg);
+    }
+}

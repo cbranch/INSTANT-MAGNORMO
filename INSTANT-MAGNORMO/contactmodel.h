@@ -2,13 +2,25 @@
 #define CONTACTMODEL_H
 
 #include <QAbstractItemModel>
+#include <QMap>
+#include <QStringList>
 class MAGNORMOBOT;
+
+struct ContactGroup
+{
+    QString groupName;
+    QStringList jids;
+
+    ContactGroup() {}
+    ContactGroup(QString name) : groupName(name) {}
+};
 
 class ContactModel : public QAbstractItemModel
 {
 Q_OBJECT
 public:
     explicit ContactModel(MAGNORMOBOT *contactData, QObject *parent = 0);
+    virtual ~ContactModel();
 
     Qt::ItemFlags flags(const QModelIndex &index) const;
     QVariant data(const QModelIndex &index, int role) const;
@@ -18,8 +30,17 @@ public:
     QModelIndex index(int row, int column, const QModelIndex &parent) const;
     QModelIndex parent(const QModelIndex &child) const;
 
+public slots:
+    void updateContactPresence(QString jid);
+    void addContact(QString jid);
+    void updateContact(QString jid);
+    void removeContact(QString jid);
+    void refreshContacts();
+
 protected:
     MAGNORMOBOT *contactData;
+
+    QMap<QString, ContactGroup* > groups;
 };
 
 #endif // CONTACTMODEL_H

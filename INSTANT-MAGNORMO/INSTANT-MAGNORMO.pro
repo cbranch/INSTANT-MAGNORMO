@@ -3,6 +3,7 @@
 # -------------------------------------------------
 QT += network \
     multimedia
+QMAKE_CXXFLAGS += -std=c++0x
 LIBS = -lgloox \
     -lgnutls \
     -lresolv \

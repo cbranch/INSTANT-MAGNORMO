@@ -24,6 +24,5 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.connectAccount(account->username, account->password, account->server, account->port);
     w.show();
-    w.bot->start();
     return a.exec();
 }

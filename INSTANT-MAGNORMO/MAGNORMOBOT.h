@@ -53,6 +53,8 @@ class MAGNORMOBOT : public QThread, MessageSessionHandler, ConnectionListener, L
                            MessageEventHandler, MessageHandler, ChatStateHandler, RosterListener
 {
     Q_OBJECT
+
+    friend class ContactModel;
  public:
     explicit MAGNORMOBOT(QString username, QString password, QString server, int port);
 
@@ -83,10 +85,6 @@ class MAGNORMOBOT : public QThread, MessageSessionHandler, ConnectionListener, L
 
 private:
     Client *j;
-    MessageSession *m_session;
-    MessageEventFilter *m_messageEventFilter;
-    ChatStateFilter *m_chatStateFilter;
-
 
     std::string username;
     std::string password;
@@ -96,7 +94,12 @@ private:
 signals:
     void connected();
     void disconnected();
-    void contactPresenceUpdate(QString jid);
+    void contactListReceived();
+    void contactPresenceUpdated(QString jid);
+    void contactAdded(QString jid);
+    void contactUpdated(QString jid);
+    void contactRemoved(QString jid);
+    void spewMessage(QString msg, QString jid);
 };
 
 #endif // MAGNORMOBOT_H

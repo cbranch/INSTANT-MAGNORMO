@@ -19,8 +19,10 @@ protected:
     void changeEvent(QEvent *e);
 
 signals:
+    void sendMessage(QString msg);
 
 public slots:
+    void messageRevieved(QString msg, QString jid);
 
 private:
     Ui::ConversationWidget *ui;
