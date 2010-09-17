@@ -1,9 +1,6 @@
 #include "MAGNORMOBOT.h"
 
 MAGNORMOBOT::MAGNORMOBOT(QString username, QString password, QString server = QString(), int port = -1) :
-    m_session(0),
-    m_messageEventFilter(0),
-    m_chatStateFilter(0),
     username(username.toUtf8().data()),
     password(password.toUtf8().data()),
     server(server.toUtf8().data()),
@@ -73,38 +70,26 @@ bool MAGNORMOBOT::onTLSConnect( const CertInfo& info )
   return true;
 }
 
-void MAGNORMOBOT::handleMessage( const Message& msg, MessageSession * /*session*/ )
+void MAGNORMOBOT::handleMessage( const Message& msg, MessageSession *session )
 {
   printf( "type: %d, subject: %s, message: %s, thread id: %s\n", msg.subtype(),
           msg.subject().c_str(), msg.body().c_str(), msg.thread().c_str() );
+  printf("##############################################################\n");
+  fflush(stdout);
+  emit spewMessage(QString(msg.body().c_str()),QString(session->target().full().c_str()));
 
-  std::string re = "You said:\n" + msg.body() + "\nMAGNORMO DISAGREES.\n";
+  std::string re = "MAGNORMO IS INDIFFERENT TO YOUR OPINIONS.";
   std::string sub;
   if( !msg.subject().empty() )
     sub = "Re: " +  msg.subject();
-
-  m_messageEventFilter->raiseMessageEvent( MessageEventDisplayed );
-#if defined( WIN32 ) || defined( _WIN32 )
-  Sleep( 1000 );
-#else
-  sleep( 1 );
-#endif
-  m_messageEventFilter->raiseMessageEvent( MessageEventComposing );
-  m_chatStateFilter->setChatState( ChatStateComposing );
-#if defined( WIN32 ) || defined( _WIN32 )
-  Sleep( 2000 );
-#else
-  sleep( 2 );
-#endif
-  m_session->send( re, sub );
-
-  if( msg.body() == "quit" )
-    j->disconnect();
+  session->send( re, sub );
 }
 
 void MAGNORMOBOT::handleMessageEvent( const JID& from, MessageEventType event )
 {
   printf( "received event: %d from: %s\n", event, from.full().c_str() );
+  printf("++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+  fflush(stdout);
 }
 
 void MAGNORMOBOT::handleChatState( const JID& from, ChatStateType state )
@@ -115,14 +100,15 @@ void MAGNORMOBOT::handleChatState( const JID& from, ChatStateType state )
 void MAGNORMOBOT::handleMessageSession( MessageSession *session )
 {
   printf( "got new session\n");
+  session->registerMessageHandler(this);
   // this example can handle only one session. so we get rid of the old session
-  j->disposeMessageSession( m_session );
-  m_session = session;
-  m_session->registerMessageHandler( this );
-  m_messageEventFilter = new MessageEventFilter( m_session );
-  m_messageEventFilter->registerMessageEventHandler( this );
-  m_chatStateFilter = new ChatStateFilter( m_session );
-  m_chatStateFilter->registerChatStateHandler( this );
+  //j->disposeMessageSession( m_session );
+  //m_session = session;
+  //m_session->registerMessageHandler( this );
+  //m_messageEventFilter = new MessageEventFilter( m_session );
+  //m_messageEventFilter->registerMessageEventHandler( this );
+  //m_chatStateFilter = new ChatStateFilter( m_session );
+  //m_chatStateFilter->registerChatStateHandler( this );
 }
 
 void MAGNORMOBOT::handleLog( LogLevel level, LogArea area, const std::string& message )

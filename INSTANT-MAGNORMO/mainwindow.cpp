@@ -75,6 +75,7 @@ void MainWindow::startConversation(QString jid)
             }
             conversationDict.insert(jid, dock);
             connect(convo, SIGNAL(destroyed(QObject*)), SLOT(handleConversationDestroyed(QObject*)));
+            connect(bot, SIGNAL(spewMessage(QString,QString)), convo, SLOT(messageRevieved(QString,QString)));
         }
     }
 }
