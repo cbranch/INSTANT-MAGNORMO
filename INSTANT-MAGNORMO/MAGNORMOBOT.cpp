@@ -64,6 +64,14 @@ void MAGNORMOBOT::sendMessage(QString jid, QString msg)
     emit spewMessage(showMsg,jid);
 }
 
+void MAGNORMOBOT::dissapearedWindow(QString jid)
+{
+    messageStuffIterator = messageStuffMap.find(jid);
+    MessageStuff *ms;
+    ms = (*messageStuffIterator).second;
+    ms->chatWindowOpen = false;
+}
+
 QString MAGNORMOBOT::getNameFromJid(QString jid)
 {
     auto roster = j->rosterManager()->roster();

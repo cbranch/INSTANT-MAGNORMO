@@ -103,6 +103,7 @@ signals:
 
 public slots:
     void sendMessage(QString jid, QString msg);
+    void dissapearedWindow(QString jid);
 };
 
 #endif // MAGNORMOBOT_H

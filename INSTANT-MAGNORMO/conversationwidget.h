@@ -21,9 +21,11 @@ protected:
 
 signals:
     void sendMessage(QString jid, QString msg);
+    void dissapearWindow(QString jid);
 
 public slots:
     void messageRevieved(QString msg, QString jid);
+    void onVisibleChange(bool visible);
 
 private:
     Ui::ConversationWidget *ui;
