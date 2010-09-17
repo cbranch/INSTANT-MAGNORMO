@@ -18,8 +18,6 @@ ContactList::ContactList(QWidget *parent) :
 
 void ContactList::contactActivated(const QModelIndex &index)
 {
-    if (index.isValid())
-        return;
     QVariant data = index.data(Qt::UserRole);
     if (data.isValid())
         emit conversationInitiated(data.toString());

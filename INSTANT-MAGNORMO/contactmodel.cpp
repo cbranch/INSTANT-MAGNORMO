@@ -2,6 +2,7 @@
 #include "MAGNORMOBOT.h"
 #include <gloox/rostermanager.h>
 #include <gloox/rosteritem.h>
+#include <QIcon>
 
 /*
 
@@ -122,15 +123,26 @@ QVariant ContactModel::data(const QModelIndex &index, int role) const
         // Contacts
         ContactGroup *group = reinterpret_cast<ContactGroup *>(index.internalPointer());
         QString jid = group->jids.at(index.row());
-        auto roster = contactData->j->rosterManager()->roster();
-        std::string jidstring = jid.toUtf8().data();
         switch (role) {
         case Qt::DisplayRole:
-            auto itemIter = roster->find(jidstring);
-            if (itemIter != roster->end())
-                return QString::fromUtf8(itemIter->second->name().c_str());
-            else
-                return jid;
+            return contactData->getNameFromJid(jid);
+        case Qt::DecorationRole:
+            {
+                RosterItem *item = contactData->getRosterItemFromJid(jid);
+                //if (!item)
+                    return QIcon(":/icons/user-online");
+                /*else
+                    switch (item->highestResource()->presence()) {
+                    case Presence::Available:
+                        return QIcon(":/icons/user-online");
+                    case Presence::Away:
+                        return QIcon(":/icons/user-away");
+                    }*/
+                break;
+            }
+
+        case Qt::UserRole:
+            return jid;
         }
     }
     return QVariant();

@@ -39,6 +39,7 @@ void MainWindow::connectAccount(QString username, QString password, QString serv
     contactList->contactTree->setModel(contacts);
     connect(bot, SIGNAL(connected()), SLOT(connected()));
     connect(bot, SIGNAL(disconnected()), SLOT(disconnected()));
+    connect(bot, SIGNAL(openConversationWindow(QString)), SLOT(startConversation(QString)), Qt::BlockingQueuedConnection);
     statusWidget->label->setText(tr("Connecting"));
     statusWidget->progress->setMinimum(0);
     statusWidget->progress->setMaximum(0);
@@ -62,7 +63,8 @@ void MainWindow::disconnected()
 void MainWindow::startConversation(QString jid)
 {
     if(jid!="GROUP") {
-        QString contactName("Conversation");
+        //QString contactName("Conversation");
+        QString contactName = bot->getNameFromJid(jid);
         ConversationDict::const_iterator iter = conversationDict.find(jid);
         if (iter != conversationDict.end()) {
             // Select already existing conversation
