@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QString>
+#include <cstdio>
 
 namespace Ui {
     class ConversationWidget;
@@ -19,7 +20,7 @@ protected:
     void changeEvent(QEvent *e);
 
 signals:
-    void sendMessage(QString msg);
+    void sendMessage(QString jid, QString msg);
 
 public slots:
     void messageRevieved(QString msg, QString jid);
@@ -30,6 +31,9 @@ private:
 public:
     QString jid;
 
+
+private slots:
+    void on_lineEdit_returnPressed();
 };
 
 #endif // CONVERSATIONWIDGET_H

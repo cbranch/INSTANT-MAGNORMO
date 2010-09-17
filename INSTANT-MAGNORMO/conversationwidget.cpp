@@ -32,3 +32,10 @@ void ConversationWidget::messageRevieved(QString msg, QString jid)
         ui->textEdit->append(msg);
     }
 }
+
+void ConversationWidget::on_lineEdit_returnPressed()
+{
+    QString message = ui->lineEdit->text();
+    ui->lineEdit->setText(QString(""));
+    emit sendMessage(jid,message);
+}

@@ -53,7 +53,6 @@ class MAGNORMOBOT : public QThread, MessageSessionHandler, ConnectionListener, L
 
     void run();
 
-    void sendMessage(QString jid, QString msg);
 
     QString getNameFromJid(QString jid);
     RosterItem* getRosterItemFromJid(QString jid);
@@ -84,6 +83,8 @@ private:
     map<QString,MessageStuff*> messageStuffMap;
     map<QString,MessageStuff*>::iterator messageStuffIterator;
 
+    MessageStuff* createMessageStuff(MessageSession *session);
+
     std::string username;
     std::string password;
     std::string server;
@@ -99,6 +100,9 @@ signals:
     void contactRemoved(QString jid);
     void spewMessage(QString msg, QString jid);
     void openConversationWindow(QString jid);
+
+public slots:
+    void sendMessage(QString jid, QString msg);
 };
 
 #endif // MAGNORMOBOT_H

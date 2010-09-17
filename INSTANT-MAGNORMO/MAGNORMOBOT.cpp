@@ -47,9 +47,20 @@ void MAGNORMOBOT::run()
 
 void MAGNORMOBOT::sendMessage(QString jid, QString msg)
 {
+    MessageStuff *ms;
     messageStuffIterator = messageStuffMap.find(jid);
-    MessageStuff *ms = (*messageStuffIterator).second;
+    if(messageStuffIterator==messageStuffMap.end()) {
+        // We need to create a new message stuff because we havent spoken to this
+        // person yet
+        MessageSession *session = new MessageSession(j,JID(jid.toStdString()));
+        ms = createMessageStuff(session);
+    } else {
+        ms = (*messageStuffIterator).second;
+    }
+    printf("SENDING A FUCKING MESSAGE: %s\n",msg.toStdString().c_str());
+    fflush(stdout);
     ms->session->send(msg.toStdString());
+    emit spewMessage(msg,jid);
 }
 
 QString MAGNORMOBOT::getNameFromJid(QString jid)
@@ -114,10 +125,7 @@ void MAGNORMOBOT::handleMessage( const Message& msg, MessageSession *session )
     }
 
     // Puts the incoming message on the relevant conversation window
-    emit spewMessage(QString(msg.body().c_str()),QString(thisJID));
-
-    // Sends a message back to the person who was talking to you
-    sendMessage(thisJID,QString("Yep."));
+    emit spewMessage(QString(msg.body().c_str()),thisJID);
 }
 
 void MAGNORMOBOT::handleMessageEvent( const JID& from, MessageEventType event )
@@ -135,6 +143,11 @@ void MAGNORMOBOT::handleChatState( const JID& from, ChatStateType state )
 void MAGNORMOBOT::handleMessageSession( MessageSession *session )
 {
     //Make a new message stuff
+    createMessageStuff(session);
+}
+
+MessageStuff* MAGNORMOBOT::createMessageStuff(MessageSession *session)
+{
     MessageStuff *ms = new MessageStuff();
     ms->session = session;
     ms->session->registerMessageHandler(this);
@@ -145,6 +158,8 @@ void MAGNORMOBOT::handleMessageSession( MessageSession *session )
     ms->chatWindowOpen = false;
 
     messageStuffMap[QString(session->target().full().c_str())] = ms;
+
+    return ms;
 }
 
 void MAGNORMOBOT::handleLog( LogLevel level, LogArea area, const std::string& message )
