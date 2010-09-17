@@ -57,7 +57,8 @@ void MainWindow::disconnected()
 void MainWindow::startConversation(QString jid)
 {
     if(jid!="GROUP") {
-        QString contactName("Conversation");
+        //QString contactName("Conversation");
+        QString contactName = contactList->getContactName(jid.toStdString());
         ConversationDict::const_iterator iter = conversationDict.find(jid);
         if (iter != conversationDict.end()) {
             // Select already existing conversation

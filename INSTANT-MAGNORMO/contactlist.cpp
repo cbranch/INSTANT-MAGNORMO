@@ -96,6 +96,14 @@ void ContactList::plantContact(QSharedPointer<Contact> contact)
     contactTree->sortItems(0,Qt::AscendingOrder);
 }
 
+QString ContactList::getContactName(string JID)
+{
+    map<string,QSharedPointer<Contact> >::iterator it;
+    it = contactMap.find(JID);
+    QSharedPointer<Contact> c = (*it).second;
+    return c->name;
+}
+
 void ContactList::itemActivated(QTreeWidgetItem *item, int column)
 {
     if (!item)

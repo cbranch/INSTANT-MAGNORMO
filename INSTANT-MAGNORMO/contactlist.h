@@ -23,6 +23,7 @@ class ContactList : public QWidget
 Q_OBJECT
 public:
     explicit ContactList(QWidget *parent = 0);
+    QString getContactName(string JID);
 
 signals:
     void conversationInitiated(QString jid);
