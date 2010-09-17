@@ -1,11 +1,6 @@
 #ifndef MAGNORMOBOT_H
 #define MAGNORMOBOT_H
 
-#include <QThread>
-#include <QString>
-#include <QSharedPointer>
-#include "Contact.h"
-
 #include <gloox/messagesessionhandler.h>
 #include <gloox/messageeventhandler.h>
 #include <gloox/message.h>
@@ -28,20 +23,17 @@
 #include <gloox/rosterlistener.h>
 #include <gloox/presence.h>
 
-#ifndef _WIN32
-# include <unistd.h>
-#endif
-
-#include <stdio.h>
+#include <QThread>
+#include <QString>
+#include <QSharedPointer>
+#include "Contact.h"
+#include "MessageStuff.h"
 #include <string>
-#include <cstdio> // [s]print[f]
-
-
-#if defined( WIN32 ) || defined( _WIN32 )
-# include <windows.h>
-#endif
+#include <map>
+#include <cstdio>
 
 using namespace gloox;
+using namespace std;
 
 namespace gloox {
     class Client;
@@ -83,6 +75,7 @@ class MAGNORMOBOT : public QThread, MessageSessionHandler, ConnectionListener, L
 
 private:
     Client *j;
+    map<QString,MessageStuff*> messageStuffMap;
 
     std::string username;
     std::string password;

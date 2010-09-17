@@ -99,16 +99,17 @@ void MAGNORMOBOT::handleChatState( const JID& from, ChatStateType state )
 
 void MAGNORMOBOT::handleMessageSession( MessageSession *session )
 {
-  printf( "got new session\n");
-  session->registerMessageHandler(this);
-  // this example can handle only one session. so we get rid of the old session
-  //j->disposeMessageSession( m_session );
-  //m_session = session;
-  //m_session->registerMessageHandler( this );
-  //m_messageEventFilter = new MessageEventFilter( m_session );
-  //m_messageEventFilter->registerMessageEventHandler( this );
-  //m_chatStateFilter = new ChatStateFilter( m_session );
-  //m_chatStateFilter->registerChatStateHandler( this );
+    printf( "Got new session\n\n");
+    //Make a new message stuff
+    MessageStuff *ms = new MessageStuff();
+    ms->session = session;
+    ms->session->registerMessageHandler(this);
+    ms->eventFilter = new MessageEventFilter(session);
+    ms->eventFilter->registerMessageEventHandler(this);
+    ms->stateFilter = new ChatStateFilter(session);
+    ms->stateFilter->registerChatStateHandler(this);
+
+    messageStuffMap[session->target().full().c_str()] = ms;
 }
 
 void MAGNORMOBOT::handleLog( LogLevel level, LogArea area, const std::string& message )
