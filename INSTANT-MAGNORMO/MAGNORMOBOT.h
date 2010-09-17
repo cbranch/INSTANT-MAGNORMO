@@ -47,10 +47,11 @@ class MAGNORMOBOT : public QThread, MessageSessionHandler, ConnectionListener, L
     Q_OBJECT
  public:
     explicit MAGNORMOBOT(QString username, QString password, QString server, int port);
-
     virtual ~MAGNORMOBOT();
 
     void run();
+
+    void sendMessage(QString jid, QString msg);
 
     virtual void onConnect();
     virtual void onDisconnect( ConnectionError e );
@@ -76,6 +77,7 @@ class MAGNORMOBOT : public QThread, MessageSessionHandler, ConnectionListener, L
 private:
     Client *j;
     map<QString,MessageStuff*> messageStuffMap;
+    map<QString,MessageStuff*>::iterator messageStuffIterator;
 
     std::string username;
     std::string password;

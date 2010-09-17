@@ -44,6 +44,13 @@ void MAGNORMOBOT::run()
     delete( j );
 }
 
+void MAGNORMOBOT::sendMessage(QString jid, QString msg)
+{
+    messageStuffIterator = messageStuffMap.find(jid);
+    MessageStuff *ms = (*messageStuffIterator).second;
+    ms->session->send(msg.toStdString());
+}
+
 void MAGNORMOBOT::onConnect()
 {
     emit connected();
@@ -85,13 +92,11 @@ void MAGNORMOBOT::handleMessage( const Message& msg, MessageSession *session )
         ms->chatWindowOpen=true;
     }
 
+    // Puts the incoming message on the relevant conversation window
     emit spewMessage(QString(msg.body().c_str()),QString(thisJID));
 
-    std::string re = "MAGNORMO IS INDIFFERENT TO YOUR OPINIONS.";
-    std::string sub;
-    if( !msg.subject().empty() )
-        sub = "Re: " +  msg.subject();
-    session->send( re, sub );
+    // Sends a message back to the person who was talking to you
+    sendMessage(thisJID,QString("Yep."));
 }
 
 void MAGNORMOBOT::handleMessageEvent( const JID& from, MessageEventType event )
