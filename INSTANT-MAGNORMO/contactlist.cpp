@@ -25,6 +25,7 @@ void ContactList::setModel(QAbstractItemModel *model)
     contactTree->setModel(proxyModel);
     contactTree->setSortingEnabled(true);
     contactTree->sortByColumn(0, Qt::AscendingOrder);
+    connect(model, SIGNAL(modelReset()), contactTree, SLOT(expandAll()));
 }
 
 void ContactList::contactActivated(const QModelIndex &index)
