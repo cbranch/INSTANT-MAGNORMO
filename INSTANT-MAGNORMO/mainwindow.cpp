@@ -85,6 +85,8 @@ void MainWindow::startConversation(QString jid)
             connect(convo, SIGNAL(destroyed(QObject*)), SLOT(handleConversationDestroyed(QObject*)));
             connect(convo, SIGNAL(sendMessage(QString,QString)), bot, SLOT(sendMessage(QString,QString)));
             connect(bot, SIGNAL(spewMessage(QString,QString)), convo, SLOT(messageRevieved(QString,QString)));
+            connect(dock, SIGNAL(visibilityChanged(bool)),convo,SLOT(onVisibleChange(bool)));
+            connect(convo, SIGNAL(dissapearWindow(QString)),bot,SLOT(dissapearedWindow(QString)));
         }
     }
 }

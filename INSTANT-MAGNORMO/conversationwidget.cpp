@@ -33,6 +33,12 @@ void ConversationWidget::messageRevieved(QString msg, QString jid)
     }
 }
 
+void ConversationWidget::onVisibleChange(bool visible)
+{
+    if(!visible)
+        emit dissapearWindow(jid);
+}
+
 void ConversationWidget::on_lineEdit_returnPressed()
 {
     QString message = ui->lineEdit->text();
