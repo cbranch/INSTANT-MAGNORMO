@@ -18,7 +18,8 @@ SOURCES += main.cpp \
     MAGNORMOBOT.cpp \
     statuswidget.cpp \
     contactmodel.cpp \
-    contactsortfilterproxymodel.cpp
+    contactsortfilterproxymodel.cpp \
+    accountmanager.cpp
 HEADERS += mainwindow.h \
     contactlist.h \
     conversationwidget.h \
@@ -28,7 +29,9 @@ HEADERS += mainwindow.h \
     statuswidget.h \
     contactmodel.h \
     MessageStuff.h \
-    contactsortfilterproxymodel.h
+    contactsortfilterproxymodel.h \
+    accountmanager.h \
+    account.h
 FORMS += accountdialog.ui \
     conversationwidget.ui
 RESOURCES += resources.qrc
