@@ -60,7 +60,7 @@ void MAGNORMOBOT::sendMessage(QString jid, QString msg)
     printf("SENDING A FUCKING MESSAGE: %s\n",msg.toStdString().c_str());
     fflush(stdout);
     ms->session->send(msg.toStdString());
-    QString showMsg = "<b>I DECLARED</b>: <font color=\"red\">" + msg + "</font>";
+    QString showMsg = "<b><font color=\"blue\">I DECLARED:</font></b> " + msg;
     emit spewMessage(showMsg,jid);
 }
 
@@ -134,7 +134,7 @@ void MAGNORMOBOT::handleMessage( const Message& msg, MessageSession *session )
     }
 
     // Puts the incoming message on the relevant conversation window
-    QString showMsg = "<b>MINION SAYS: </b><font color=\"blue\">" + QString(msg.body().c_str()) + "</font>";
+    QString showMsg = "<b><font color=\"red\">MINION SAYS:</font></b> " + QString(msg.body().c_str());
     emit spewMessage(showMsg,thisJID);
 }
 
