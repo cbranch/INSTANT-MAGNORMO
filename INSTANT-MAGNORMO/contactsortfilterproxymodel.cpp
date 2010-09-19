@@ -11,9 +11,12 @@ bool ContactSortFilterProxyModel::filterAcceptsRow(int sourceRow,
         const QModelIndex &sourceParent) const
 {
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
-    if (index.data(ContactModel::JIDRole).isValid() &&
-        index.data(ContactModel::PresenceRole) == gloox::Presence::Unavailable)
-        return false;
+    if (index.data(ContactModel::JIDRole).isValid()) {
+        if (index.data(ContactModel::PresenceRole) == gloox::Presence::Unavailable)
+            return false;
+        else
+            return true;
+    }
     return true;
 }
 
