@@ -2,8 +2,7 @@
 
 AccountManager::AccountManager()
 {
-    allAccounts = QList<Account>();
-    activeAccounts = QList<Account>();
+    accounts = QList<Account>();
     gatherAccounts();
 }
 
