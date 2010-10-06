@@ -6,6 +6,7 @@
 #include <QSettings>
 #include "account.h"
 #include "accountdialog.h"
+#include "accountmanagerdialog.h"
 
 
 class AccountManager
@@ -25,7 +26,7 @@ private:
     void gatherAccounts();
     void writeAccounts();
 
-    QList<Account> accounts;
+    QList<Account*> accounts;
 };
 
 #endif // AccountManager_H

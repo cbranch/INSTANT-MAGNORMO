@@ -2,6 +2,7 @@
 #define ACCOUNTDIALOG_H
 
 #include <QDialog>
+#include "account.h"
 
 namespace Ui {
     class AccountDialog;
@@ -13,11 +14,7 @@ public:
     AccountDialog(QWidget *parent = 0);
     ~AccountDialog();
 
-    QString username;
-    QString password;
-    QString server;
-    int port;
-
+    Account *account;
 protected:
     void changeEvent(QEvent *e);
 

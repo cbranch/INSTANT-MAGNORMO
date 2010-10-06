@@ -12,6 +12,8 @@ enum AccountType {
 struct Account {
     QString user;
     QString password;
+    QString server;
+    int port;
     AccountType type;
     bool active;
 };
