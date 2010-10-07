@@ -5,8 +5,10 @@
 #include <QList>
 #include <QListWidgetItem>
 #include <QStringList>
+#include <QSettings>
 #include "account.h"
 #include "accountdialog.h"
+#include <stdio.h>
 
 namespace Ui {
     class accountmanagerdialog;
@@ -20,16 +22,16 @@ public:
     explicit accountmanagerdialog(QWidget *parent = 0);
     ~accountmanagerdialog();
 
-    void setAccountList(QList<Account*> accounts);
-    QString username;
-    QString password;
-    QString server;
-    int port;
+    QList<Account*> getActiveAccounts();
 
 private:
     Ui::accountmanagerdialog *ui;
+    QList<Account*> accounts;
 
     QListWidgetItem* makeListItem(Account *acc);
+    Account* getAccount(QListWidgetItem *item);
+    void writeAccounts();
+    void gatherAccounts();
 
 private slots:
     void on_addButton_clicked();

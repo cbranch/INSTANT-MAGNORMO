@@ -54,5 +54,6 @@ void AccountDialog::on_buttonBox_accepted()
     }
 
     account->password = ui->passwordEdit->text();
+    account->active = true;
     this->accept();
 }
