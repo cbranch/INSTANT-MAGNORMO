@@ -135,6 +135,8 @@ void accountmanagerdialog::on_buttonBox_accepted()
 void accountmanagerdialog::on_editButton_clicked()
 {
     QList<QListWidgetItem*> selected = ui->listWidget->selectedItems();
+    if(selected.isEmpty())
+        return;
     QListWidgetItem *thisOne = selected.first();
     Account *acc = getAccount(thisOne);
 
@@ -148,5 +150,22 @@ void accountmanagerdialog::on_editButton_clicked()
         }
         case QDialog::Rejected:
             return;
+    }
+}
+
+void accountmanagerdialog::on_toggleButton_clicked()
+{
+    QList<QListWidgetItem*> selected = ui->listWidget->selectedItems();
+    if(selected.isEmpty())
+        return;
+    QListWidgetItem *thisOne = selected.first();
+    Account *acc = getAccount(thisOne);
+
+    if(acc->active) {
+        acc->active = false;
+        thisOne->setIcon(QIcon(":/icons/inactive"));
+    } else {
+        acc->active = true;
+        thisOne->setIcon(QIcon(":/icons/active"));
     }
 }
