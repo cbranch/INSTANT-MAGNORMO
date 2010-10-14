@@ -11,7 +11,8 @@ namespace Ui {
 class AccountDialog : public QDialog {
     Q_OBJECT
 public:
-    AccountDialog(QWidget *parent = 0);
+    AccountDialog(QWidget *parent);
+    AccountDialog(QWidget *parent, Account *acc);
     ~AccountDialog();
 
     Account *account;

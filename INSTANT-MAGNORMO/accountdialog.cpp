@@ -9,6 +9,33 @@ AccountDialog::AccountDialog(QWidget *parent) :
     account = new Account();
 }
 
+AccountDialog::AccountDialog(QWidget *parent, Account *acc) :
+    QDialog(parent),
+    ui(new Ui::AccountDialog)
+{
+    ui->setupUi(this);
+    account = acc;
+    int snip = acc->user.indexOf("@");
+    if(snip!=-1)
+        acc->user = acc->user.left(snip);
+
+    int index = 0;
+    switch(acc->type) {
+    case GTALK:
+        index = 0;
+        break;
+    case GAPP:
+        index = 1;
+        break;
+    case FACEBOOK:
+        index = 2;
+        break;
+    }
+    ui->serverList->setCurrentIndex(index);
+    ui->usernameEdit->setText(acc->user);
+    ui->passwordEdit->setText(acc->password);
+}
+
 AccountDialog::~AccountDialog()
 {
     delete ui;

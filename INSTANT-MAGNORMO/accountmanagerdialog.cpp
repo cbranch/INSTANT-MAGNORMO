@@ -28,7 +28,7 @@ accountmanagerdialog::~accountmanagerdialog()
 
 void accountmanagerdialog::on_addButton_clicked()
 {
-    AccountDialog *accDiag = new AccountDialog();
+    AccountDialog *accDiag = new AccountDialog(0);
     switch(accDiag->exec()) {
         case QDialog::Accepted:
         {
@@ -46,7 +46,7 @@ QListWidgetItem* accountmanagerdialog::makeListItem(Account *acc)
     QString service = "FUCKING SOMETHING WRONG";
     switch(acc->type) {
         case FACEBOOK:
-            service = "BOOK OF FACES";
+            service = "FACEBOOK";
             break;
         case GAPP:
             service = "GAPP";
@@ -55,7 +55,11 @@ QListWidgetItem* accountmanagerdialog::makeListItem(Account *acc)
             service = "GTALK";
             break;
     }
-    QString itemName = service + " " + acc->user;
+    int snip = acc->user.indexOf("@");
+    QString username = "";
+    if(snip!=-1)
+        username = acc->user.left(snip);
+    QString itemName = service + " " + username;
     QListWidgetItem *accItem = new QListWidgetItem();
     accItem->setText(itemName);
     accItem->setData(Qt::UserRole,qVariantFromValue((void*)acc));
@@ -132,5 +136,17 @@ void accountmanagerdialog::on_editButton_clicked()
 {
     QList<QListWidgetItem*> selected = ui->listWidget->selectedItems();
     QListWidgetItem *thisOne = selected.first();
+    Account *acc = getAccount(thisOne);
 
+    AccountDialog *accDiag = new AccountDialog(0,acc);
+    switch(accDiag->exec()) {
+        case QDialog::Accepted:
+        {
+            //accounts.append(accDiag->account);
+            //ui->listWidget->addItem(makeListItem(accDiag->account));
+            break;
+        }
+        case QDialog::Rejected:
+            return;
+    }
 }
