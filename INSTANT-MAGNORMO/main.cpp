@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 
     QCoreApplication::setOrganizationName("MAGNORMO");
     QCoreApplication::setOrganizationDomain("joshfyne.com");
-    QCoreApplication::setApplicationName("INSTANT MAGNORMO");
+    QCoreApplication::setApplicationName("INSTANT_MAGNORMO");
 
     accountmanagerdialog *managerDialog = new accountmanagerdialog();
     switch(managerDialog->exec()) {

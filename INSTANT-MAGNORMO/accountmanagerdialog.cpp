@@ -109,6 +109,7 @@ void accountmanagerdialog::gatherAccounts()
     QSettings settings;
     int size = settings.beginReadArray("accounts");
     for(int i=0;i<size;++i) {
+        settings.setArrayIndex(i);
         Account *acc = new Account();
         acc->user = settings.value("user").toString();
         acc->password = settings.value("password").toString();
