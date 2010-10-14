@@ -59,6 +59,11 @@ QListWidgetItem* accountmanagerdialog::makeListItem(Account *acc)
     QListWidgetItem *accItem = new QListWidgetItem();
     accItem->setText(itemName);
     accItem->setData(Qt::UserRole,qVariantFromValue((void*)acc));
+    if(acc->active) {
+        accItem->setIcon(QIcon(":/icons/active"));
+    } else {
+        accItem->setIcon(QIcon(":/icons/inactive"));
+    }
 
     return accItem;
 }
@@ -83,8 +88,6 @@ QList<Account*> accountmanagerdialog::getActiveAccounts()
 
 void accountmanagerdialog::writeAccounts()
 {
-    printf("WRITING ACCOUNTS\n");
-    fflush(stdout);
     QSettings settings;
     settings.beginWriteArray("accounts");
     QList<Account*>::iterator itr;
@@ -104,8 +107,6 @@ void accountmanagerdialog::writeAccounts()
 
 void accountmanagerdialog::gatherAccounts()
 {
-    printf("READING ACCOUNTS\n");
-    fflush(stdout);
     QSettings settings;
     int size = settings.beginReadArray("accounts");
     for(int i=0;i<size;++i) {
@@ -125,4 +126,11 @@ void accountmanagerdialog::gatherAccounts()
 void accountmanagerdialog::on_buttonBox_accepted()
 {
     writeAccounts();
+}
+
+void accountmanagerdialog::on_editButton_clicked()
+{
+    QList<QListWidgetItem*> selected = ui->listWidget->selectedItems();
+    QListWidgetItem *thisOne = selected.first();
+
 }

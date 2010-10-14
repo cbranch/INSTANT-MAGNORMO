@@ -34,6 +34,7 @@ private:
     void gatherAccounts();
 
 private slots:
+    void on_editButton_clicked();
     void on_addButton_clicked();
     void on_buttonBox_accepted();
 };
