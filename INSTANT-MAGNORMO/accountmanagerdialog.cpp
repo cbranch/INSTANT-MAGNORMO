@@ -5,20 +5,11 @@ accountmanagerdialog::accountmanagerdialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::accountmanagerdialog)
 {
-    accounts = QList<Account *>();
-
     // Setup gui shit
     ui->setupUi(this);
 
     // Get account info
-    gatherAccounts();
-
-    // Build the List box stuff
-    QList<Account*>::iterator itr;
-    for(itr = accounts.begin();itr < accounts.end(); ++itr) {
-        Account *acc = *itr;
-        ui->listWidget->addItem(makeListItem(acc));
-    }
+    readAccounts();
 }
 
 accountmanagerdialog::~accountmanagerdialog()
@@ -32,7 +23,6 @@ void accountmanagerdialog::on_addButton_clicked()
     switch(accDiag->exec()) {
         case QDialog::Accepted:
         {
-            accounts.append(accDiag->account);
             ui->listWidget->addItem(makeListItem(accDiag->account));
             break;
         }
@@ -80,9 +70,9 @@ Account* accountmanagerdialog::getAccount(QListWidgetItem *item)
 QList<Account*> accountmanagerdialog::getActiveAccounts()
 {
     QList<Account*> activeAccounts = QList<Account*>();
-    QList<Account*>::iterator itr;
-    for(itr = accounts.begin(); itr<accounts.end(); ++itr) {
-        Account *acc = *itr;
+    int numItems = ui->listWidget->count();
+    for(int i=0;i<numItems;i++) {
+        Account *acc = getAccount(ui->listWidget->item(i));
         if(acc->active)
             activeAccounts.append(acc);
     }
@@ -94,22 +84,22 @@ void accountmanagerdialog::writeAccounts()
 {
     QSettings settings;
     settings.beginWriteArray("accounts");
-    QList<Account*>::iterator itr;
-    int i=0;
-    for(itr=accounts.begin();itr<accounts.end();++itr) {
+    settings.remove("");
+    int numItems = ui->listWidget->count();
+    for(int i=0;i<numItems;i++) {
         settings.setArrayIndex(i);
-        settings.setValue("user",accounts.at(i)->user);
-        settings.setValue("password",accounts.at(i)->password);
-        settings.setValue("server",accounts.at(i)->server);
-        settings.setValue("port",accounts.at(i)->port);
-        settings.setValue("type",accounts.at(i)->type);
-        settings.setValue("active",accounts.at(i)->active);
-        i++;
+        Account *acc = getAccount(ui->listWidget->item(i));
+        settings.setValue("user",acc->user);
+        settings.setValue("password",acc->password);
+        settings.setValue("server",acc->server);
+        settings.setValue("port",acc->port);
+        settings.setValue("type",acc->type);
+        settings.setValue("active",acc->active);
     }
     settings.endArray();
 }
 
-void accountmanagerdialog::gatherAccounts()
+void accountmanagerdialog::readAccounts()
 {
     QSettings settings;
     int size = settings.beginReadArray("accounts");
@@ -122,7 +112,9 @@ void accountmanagerdialog::gatherAccounts()
         acc->port = settings.value("port").toInt();
         acc->type = (AccountType)settings.value("type").toInt();
         acc->active = settings.value("active").toBool();
-        accounts.append(acc);
+
+        // Here we make the list widget item containing each account
+        ui->listWidget->addItem(makeListItem(acc));
     }
     settings.endArray();
 }
@@ -141,16 +133,7 @@ void accountmanagerdialog::on_editButton_clicked()
     Account *acc = getAccount(thisOne);
 
     AccountDialog *accDiag = new AccountDialog(0,acc);
-    switch(accDiag->exec()) {
-        case QDialog::Accepted:
-        {
-            //accounts.append(accDiag->account);
-            //ui->listWidget->addItem(makeListItem(accDiag->account));
-            break;
-        }
-        case QDialog::Rejected:
-            return;
-    }
+    accDiag->exec();
 }
 
 void accountmanagerdialog::on_toggleButton_clicked()
@@ -168,4 +151,11 @@ void accountmanagerdialog::on_toggleButton_clicked()
         acc->active = true;
         thisOne->setIcon(QIcon(":/icons/active"));
     }
+}
+
+void accountmanagerdialog::on_removeButton_clicked()
+{
+    QListWidgetItem *thisItem = ui->listWidget->currentItem();
+    ui->listWidget->takeItem(ui->listWidget->currentRow());
+    delete thisItem;
 }

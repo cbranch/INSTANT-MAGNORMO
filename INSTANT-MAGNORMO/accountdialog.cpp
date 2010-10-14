@@ -63,6 +63,7 @@ void AccountDialog::on_buttonBox_accepted()
         else
             account->user = ui->usernameEdit->text() + QString("@gmail.com/");
 
+        account->port = 5222;
         account->type = GTALK;
         break;
 

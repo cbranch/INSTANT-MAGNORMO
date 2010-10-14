@@ -26,14 +26,14 @@ public:
 
 private:
     Ui::accountmanagerdialog *ui;
-    QList<Account*> accounts;
 
     QListWidgetItem* makeListItem(Account *acc);
     Account* getAccount(QListWidgetItem *item);
     void writeAccounts();
-    void gatherAccounts();
+    void readAccounts();
 
 private slots:
+    void on_removeButton_clicked();
     void on_toggleButton_clicked();
     void on_editButton_clicked();
     void on_addButton_clicked();
