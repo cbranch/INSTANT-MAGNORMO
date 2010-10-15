@@ -1,8 +1,9 @@
 #include "MAGNORMOBOT.h"
+#include <QtGlobal>
 
 MAGNORMOBOT::MAGNORMOBOT(QString username, QString password, QString server = QString(), int port = -1) :
     j(0),
-    username(username.toUtf8().data()),
+	username(username.toUtf8().data()),
     password(password.toUtf8().data()),
     server(server.toUtf8().data()),
     port(port)
@@ -39,7 +40,7 @@ void MAGNORMOBOT::run()
         {
             ce = j->recv();
         }
-        printf( "ce: %d\n", ce );
+        qDebug( "ce: %d\n", ce );
     }
 
     delete( j );
@@ -52,12 +53,13 @@ void MAGNORMOBOT::sendMessage(QString jid, QString msg)
     if(messageStuffIterator==messageStuffMap.end()) {
         // We need to create a new message stuff because we havent spoken to this
         // person yet
-        MessageSession *session = new MessageSession(j,JID(jid.toStdString()));
+		JID jid2(jid.toStdString());
+        MessageSession *session = new MessageSession(j,jid2);
         ms = createMessageStuff(session);
     } else {
         ms = (*messageStuffIterator).second;
     }
-    printf("SENDING A FUCKING MESSAGE: %s\n",msg.toStdString().c_str());
+    qDebug("SENDING A FUCKING MESSAGE: %s\n",msg.toStdString().c_str());
     fflush(stdout);
     ms->session->send(msg.toStdString());
     QString showMsg = "<b><font color=\"blue\">I DECLARED:</font></b> " + msg;
@@ -74,8 +76,8 @@ void MAGNORMOBOT::dissapearedWindow(QString jid)
 
 QString MAGNORMOBOT::getNameFromJid(QString jid)
 {
-    auto roster = j->rosterManager()->roster();
-    auto iter = roster->find(jid.toUtf8().data());
+	gloox::Roster* roster = j->rosterManager()->roster();
+	gloox::Roster::iterator iter = roster->find(jid.toUtf8().data());
     if (iter != roster->end())
         return QString::fromUtf8(iter->second->name().c_str());
     else
@@ -84,8 +86,8 @@ QString MAGNORMOBOT::getNameFromJid(QString jid)
 
 RosterItem* MAGNORMOBOT::getRosterItemFromJid(QString jid)
 {
-    auto roster = j->rosterManager()->roster();
-    auto iter = roster->find(jid.toUtf8().data());
+    gloox::Roster* roster = j->rosterManager()->roster();
+    gloox::Roster::iterator iter = roster->find(jid.toUtf8().data());
     if (iter != roster->end())
         return iter->second;
     else
@@ -100,9 +102,9 @@ void MAGNORMOBOT::onConnect()
 void MAGNORMOBOT::onDisconnect( ConnectionError e )
 {
     emit disconnected();
-    printf( "message_test: disconnected: %d\n", e );
+    qDebug( "message_test: disconnected: %d\n", e );
     if( e == ConnAuthenticationFailed )
-        printf( "auth failed. reason: %d\n", j->authError() );
+        qDebug( "auth failed. reason: %d\n", j->authError() );
 }
 
 bool MAGNORMOBOT::onTLSConnect( const CertInfo& info )
@@ -110,7 +112,7 @@ bool MAGNORMOBOT::onTLSConnect( const CertInfo& info )
     time_t from( info.date_from );
     time_t to( info.date_to );
 
-    printf( "status: %d\nissuer: %s\npeer: %s\nprotocol: %s\nmac: %s\ncipher: %s\ncompression: %s\n"
+    qDebug( "status: %d\nissuer: %s\npeer: %s\nprotocol: %s\nmac: %s\ncipher: %s\ncompression: %s\n"
             "from: %s\nto: %s\n",
             info.status, info.issuer.c_str(), info.server.c_str(),
             info.protocol.c_str(), info.mac.c_str(), info.cipher.c_str(),
@@ -140,14 +142,14 @@ void MAGNORMOBOT::handleMessage( const Message& msg, MessageSession *session )
 
 void MAGNORMOBOT::handleMessageEvent( const JID& from, MessageEventType event )
 {
-    printf( "received event: %d from: %s\n", event, from.full().c_str() );
-    printf("++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+    qDebug( "received event: %d from: %s\n", event, from.full().c_str() );
+    qDebug("++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
     fflush(stdout);
 }
 
 void MAGNORMOBOT::handleChatState( const JID& from, ChatStateType state )
 {
-    printf( "received state: %d from: %s\n", state, from.full().c_str() );
+    qDebug( "received state: %d from: %s\n", state, from.full().c_str() );
 }
 
 void MAGNORMOBOT::handleMessageSession( MessageSession *session )
@@ -174,7 +176,7 @@ MessageStuff* MAGNORMOBOT::createMessageStuff(MessageSession *session)
 
 void MAGNORMOBOT::handleLog( LogLevel level, LogArea area, const std::string& message )
 {
-    printf("log: level: %d, area: %d, %s\n", level, area, message.c_str() );
+    qDebug("log: level: %d, area: %d, %s\n", level, area, message.c_str() );
 }
 
 void MAGNORMOBOT::handleItemAdded (const JID &jid)

@@ -132,7 +132,7 @@ QList<QModelIndex> ContactModel::getIndexesOfJid(QString jid)
 {
     QList<QModelIndex> indexes;
     int i = 0;
-    for (auto iter = groups.begin(); iter != groups.end(); iter++, i++) {
+	for (GroupIterator iter = groups.begin(); iter != groups.end(); iter++, i++) {
         ContactGroup *group = iter.value();
         int pos = group->jids.indexOf(jid);
         if (pos != -1) {
@@ -179,18 +179,18 @@ void ContactModel::refreshContacts()
     groups.clear();
     ContactGroup *noGroup = new ContactGroup("WORTHLESS MINIONS");
     groups.insert(noGroup->groupName, noGroup);
-    auto roster = contactData->j->rosterManager()->roster();
-    for (auto iter = roster->begin(); iter != roster->end(); iter++) {
+	gloox::Roster* roster = contactData->j->rosterManager()->roster();
+	for (gloox::Roster::iterator iter = roster->begin(); iter != roster->end(); iter++) {
         QString jid = QString::fromUtf8(iter->first.c_str());
         RosterItem *item = iter->second;
         if (item->groups().empty()) {
             // Add to no-group
             noGroup->jids.append(jid);
         } else {
-            auto itemgroups = item->groups();
-            for (auto groupIter = itemgroups.begin(); groupIter != itemgroups.end(); groupIter++) {
+			gloox::StringList itemgroups = item->groups();
+			for (gloox::StringList::iterator groupIter = itemgroups.begin(); groupIter != itemgroups.end(); groupIter++) {
                 QString groupName = QString::fromUtf8(groupIter->c_str());
-                auto group = groups.find(groupName);
+				GroupIterator group = groups.find(groupName);
                 if (group == groups.end())
                     group = groups.insert(groupName, new ContactGroup(groupName));
                 group.value()->jids.append(jid);

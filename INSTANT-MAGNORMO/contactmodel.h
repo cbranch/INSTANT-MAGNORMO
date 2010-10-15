@@ -48,6 +48,7 @@ protected:
     MAGNORMOBOT *contactData;
 
     QMap<QString, ContactGroup* > groups;
+	typedef QMap<QString, ContactGroup* >::iterator GroupIterator;
 };
 
 #endif // CONTACTMODEL_H
