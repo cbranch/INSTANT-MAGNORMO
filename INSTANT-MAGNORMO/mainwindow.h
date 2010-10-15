@@ -3,6 +3,7 @@
 
 #include <QtGui/QMainWindow>
 #include <QHash>
+#include "accountmanagerdialog.h"
 
 class ContactList;
 class StatusWidget;
@@ -27,9 +28,12 @@ protected:
     QDockWidget *statusWidgetDock;
     ConversationDict conversationDict;
 
+    accountmanagerdialog *accMgrDiag;
+
 public:
     MAGNORMOBOT *bot;
     void connectAccount(QString username, QString password, QString server, int port);
+    void startAccountManager(bool specificRequest);
 
 public slots:
     void connected();

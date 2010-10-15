@@ -21,8 +21,9 @@ class accountmanagerdialog : public QDialog
 public:
     explicit accountmanagerdialog(QWidget *parent = 0);
     ~accountmanagerdialog();
-
     QList<Account*> getActiveAccounts();
+
+    bool needed;
 
 private:
     Ui::accountmanagerdialog *ui;

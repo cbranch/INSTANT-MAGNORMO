@@ -3,13 +3,20 @@
 
 accountmanagerdialog::accountmanagerdialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::accountmanagerdialog)
+    ui(new Ui::accountmanagerdialog),
+    needed(true)
 {
     // Setup gui shit
     ui->setupUi(this);
 
     // Get account info
     readAccounts();
+
+    // Test to see if we already have active accounts and just
+    QList<Account *> accounts = getActiveAccounts();
+    if(accounts.size()!=0) {
+        this->needed = false;
+    }
 }
 
 accountmanagerdialog::~accountmanagerdialog()
@@ -122,6 +129,7 @@ void accountmanagerdialog::readAccounts()
 void accountmanagerdialog::on_buttonBox_accepted()
 {
     writeAccounts();
+    this->accept();
 }
 
 void accountmanagerdialog::on_editButton_clicked()

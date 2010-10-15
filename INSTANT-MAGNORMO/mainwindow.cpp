@@ -25,6 +25,8 @@ MainWindow::MainWindow(QWidget *parent) :
     statusWidget = new StatusWidget();
     statusWidgetDock->setWidget(statusWidget);
     addDockWidget(Qt::LeftDockWidgetArea, statusWidgetDock);
+
+    accMgrDiag = new accountmanagerdialog();
 }
 
 MainWindow::~MainWindow()
@@ -94,4 +96,37 @@ void MainWindow::startConversation(QString jid)
 void MainWindow::handleConversationDestroyed(QObject *list)
 {
     conversationDict.remove(qobject_cast<ConversationWidget*>(list)->jid);
+}
+
+void MainWindow::startAccountManager(bool specificRequest)
+{
+    if(accMgrDiag->needed||specificRequest) {
+        switch(accMgrDiag->exec()) {
+            case QDialog::Accepted:
+            {
+                QList<Account*> activeAccounts = accMgrDiag->getActiveAccounts();
+                // For now we will select the first active one as we dont have multiple account support yet
+                if(activeAccounts.size()==0) {
+                    printf("You suck balls\n");
+                    return;
+                }
+                // Add active accounts loop here
+                Account* acc = activeAccounts.first();
+
+                connectAccount(acc->user,acc->password,acc->server,acc->port);
+                return;
+            }
+            case QDialog::Rejected:
+            {
+                return;
+            }
+        }
+    } else {
+        QList<Account*> activeAccounts = accMgrDiag->getActiveAccounts();
+        // For now we will select the first active one as we dont have multiple account support yet
+        Account* acc = activeAccounts.first();
+
+        connectAccount(acc->user,acc->password,acc->server,acc->port);
+        return;
+    }
 }
