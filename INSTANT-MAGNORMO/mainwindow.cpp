@@ -23,6 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
     addDockWidget(Qt::LeftDockWidgetArea, contactListDock);
     connect(contactList, SIGNAL(conversationInitiated(QString)), SLOT(startConversation(QString)));
 
+    // Status widget thinggggyyiiieiiiidiiweieiii
     statusWidgetDock = new QDockWidget(tr("Status"), this);
     statusWidget = new StatusWidget();
     statusWidgetDock->setWidget(statusWidget);
