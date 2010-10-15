@@ -15,6 +15,8 @@ MainWindow::MainWindow(QWidget *parent) :
     bot(0)
 {
     setDockOptions(QMainWindow::AllowNestedDocks | QMainWindow::AllowTabbedDocks | QMainWindow::AnimatedDocks);
+
+    // Contact List
     contactListDock = new QDockWidget(tr("Contacts"), this);
     contactList = new ContactList();
     contactListDock->setWidget(contactList);
@@ -26,7 +28,13 @@ MainWindow::MainWindow(QWidget *parent) :
     statusWidgetDock->setWidget(statusWidget);
     addDockWidget(Qt::LeftDockWidgetArea, statusWidgetDock);
 
+    // Account Manager Dialog
     accMgrDiag = new accountmanagerdialog();
+
+    // Menu Bar
+    toolBar = new QToolBar(this);
+    createToolBar();
+    this->addToolBar(toolBar);
 }
 
 MainWindow::~MainWindow()
@@ -129,4 +137,25 @@ void MainWindow::startAccountManager(bool specificRequest)
         connectAccount(acc->user,acc->password,acc->server,acc->port);
         return;
     }
+}
+
+void MainWindow::createToolBar()
+{
+    // Accounts menu
+    QAction *accountManagerAction = toolBar->addAction(QIcon(":/icons/accounts"),"THE ACCOUNT MANGER");
+    connect(accountManagerAction,SIGNAL(triggered()),this,SLOT(getAccountManager()));
+
+    // Window menu
+    QAction *contactWindowAction = toolBar->addAction(QIcon(":/icons/contacts"),"YOUR SUPPOSED \"MATES\"");
+    connect(contactWindowAction,SIGNAL(triggered()),this,SLOT(getContactWindow()));
+}
+
+void MainWindow::getAccountManager()
+{
+    startAccountManager(true);
+}
+
+void MainWindow::getContactWindow()
+{
+    contactListDock->setVisible(true);
 }

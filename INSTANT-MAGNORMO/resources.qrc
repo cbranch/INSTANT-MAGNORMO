@@ -5,5 +5,8 @@
         <file alias="user-online">icons/user-thief-baldie.png</file>
         <file alias="inactive">icons/cross.png</file>
         <file alias="active">icons/tick.png</file>
+        <file alias="accounts">icons/key.png</file>
+        <file alias="windows">icons/monitor-window-3d.png</file>
+        <file alias="contacts">icons/users.png</file>
     </qresource>
 </RCC>
