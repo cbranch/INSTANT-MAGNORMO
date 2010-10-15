@@ -3,11 +3,16 @@
 # -------------------------------------------------
 QT += network \
     multimedia
-QMAKE_CXXFLAGS += -std=c++0x
-LIBS = -lgloox \
-    -lgnutls \
-    -lresolv \
-    -pthread
+LIBS = -lgloox
+!win32:LIBS += -lgnutls -lresolv -pthread
+win32 {
+  LIBS += -lzlibwapi
+  debug:LIBS += -L../Debug
+  release:LIBS += -L../Release
+  DEFINES += ZLIB_WINAPI GLOOX_IMPORTS
+  INCLUDEPATH += ../Include
+}
+
 TARGET = INSTANT-MAGNORMO
 TEMPLATE = app
 SOURCES += main.cpp \
