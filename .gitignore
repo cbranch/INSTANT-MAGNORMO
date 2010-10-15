@@ -8,3 +8,14 @@ ui_*
 *.o
 # Built binaries
 INSTANT-MAGNORMO/INSTANT-MAGNORMO
+# Windows support files
+Include/
+Release/
+Debug/
+*.ncb
+*.sdf
+*.sln
+*.suo
+*.vcproj*
+*.vcxproj*
+*.pdb
