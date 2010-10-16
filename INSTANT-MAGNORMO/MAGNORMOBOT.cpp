@@ -82,10 +82,14 @@ QString MAGNORMOBOT::getNameFromJid(QString jid)
 {
 	gloox::Roster* roster = j->rosterManager()->roster();
 	gloox::Roster::iterator iter = roster->find(jid.toUtf8().data());
-    if (iter != roster->end())
-        return QString::fromUtf8(iter->second->name().c_str());
-    else
-        return QString();
+    if (iter != roster->end()) {
+        QString name = QString::fromUtf8(iter->second->name().c_str());
+        if(name.length()==0)
+            return jid;
+        else
+            return name;
+    } else
+        return jid;
 }
 
 RosterItem* MAGNORMOBOT::getRosterItemFromJid(QString jid)
@@ -128,6 +132,12 @@ void MAGNORMOBOT::handleMessage( const Message& msg, MessageSession *session )
 {
     // JID of who this message was from
     QString thisJID = QString(session->target().full().c_str());
+
+    // Trim the resource jazz
+    int resourceIndex = thisJID.indexOf("/");
+    if(resourceIndex!=-1) {
+        thisJID = thisJID.left(resourceIndex);
+    }
 
     // Test to see if the chat window needed is open or not
     map<QString,MessageStuff*>::iterator msIt;
@@ -174,6 +184,7 @@ MessageStuff* MAGNORMOBOT::createMessageStuff(MessageSession *session)
     ms->stateFilter->registerChatStateHandler(this);
     ms->chatWindowOpen = false;
 
+    printf("JID:  %s\n",session->target().full().c_str());
     messageStuffMap[QString(session->target().full().c_str())] = ms;
 
     return ms;
