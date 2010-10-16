@@ -9,4 +9,7 @@
         <file alias="windows">icons/monitor-window-3d.png</file>
         <file alias="contacts">icons/users.png</file>
     </qresource>
+    <qresource prefix="/">
+        <file>styles.css</file>
+    </qresource>
 </RCC>

@@ -1,5 +1,6 @@
 #include <QtGui/QApplication>
-#include <QMessageBox>
+#include <QFile>
+#include <QTextStream>
 #include "mainwindow.h"
 #include <stdio.h>
 #include "Contact.h"
@@ -14,9 +15,13 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationDomain("joshfyne.com");
     QCoreApplication::setApplicationName("INSTANT_MAGNORMO");
 
-    qApp->setStyleSheet("QWidget     { background: QLinearGradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #fff, stop: 1 #ccc); border-style: none; }"
-                        "QLineEdit   { border-style: solid; border-color:black; border-width:1px; }"
-                        "QPushButton { border-style: solid; border-color:black; border-width:1px; }");
+	{
+		QFile styleSheet(":/styles.css");
+		if (styleSheet.open(QFile::ReadOnly)) {
+			QTextStream out(&styleSheet);
+			qApp->setStyleSheet(out.readAll());
+		}
+	}
 
     MainWindow w;
     w.startAccountManager(false);
