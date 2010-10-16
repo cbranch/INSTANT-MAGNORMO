@@ -4,16 +4,9 @@
 #include <gloox/rosteritem.h>
 #include <QIcon>
 
-ContactModel::ContactModel(MAGNORMOBOT *contactData, QObject *parent) :
-    QAbstractItemModel(parent),
-    contactData(contactData)
+ContactModel::ContactModel(QObject *parent) :
+    QAbstractItemModel(parent)
 {
-    connect(contactData, SIGNAL(contactPresenceUpdated(QString)), SLOT(updateContactPresence(QString)));
-    connect(contactData, SIGNAL(contactAdded(QString)), SLOT(addContact(QString)));
-    connect(contactData, SIGNAL(contactUpdated(QString)), SLOT(updateContact(QString)));
-    connect(contactData, SIGNAL(contactRemoved(QString)), SLOT(removeContact(QString)));
-    connect(contactData, SIGNAL(contactListReceived()), SLOT(refreshContacts()));
-    refreshContacts();
 }
 
 ContactModel::~ContactModel()
@@ -126,6 +119,17 @@ QModelIndex ContactModel::parent(const QModelIndex &child) const
         return QModelIndex();
     ContactGroup *group = reinterpret_cast<ContactGroup *>(child.internalPointer());
     return createIndex(groups.keys().indexOf(group->groupName), 0);
+}
+
+void ContactModel::addBot(MAGNORMOBOT *bot)
+{
+	contactData = bot;
+	connect(contactData, SIGNAL(contactPresenceUpdated(QString)), SLOT(updateContactPresence(QString)));
+    connect(contactData, SIGNAL(contactAdded(QString)), SLOT(addContact(QString)));
+    connect(contactData, SIGNAL(contactUpdated(QString)), SLOT(updateContact(QString)));
+    connect(contactData, SIGNAL(contactRemoved(QString)), SLOT(removeContact(QString)));
+    connect(contactData, SIGNAL(contactListReceived()), SLOT(refreshContacts()));
+    refreshContacts();
 }
 
 QList<QModelIndex> ContactModel::getIndexesOfJid(QString jid)
