@@ -3,10 +3,9 @@
 
 #include <QObject>
 #include <QList>
-#include "MAGNORMOBOT.h"
-#include "account.h"
-#include "contactmodel.h"
-#include "mainwindow.h"
+class MAGNORMOBOT;
+class Account;
+class ContactModel;
 
 class ConnectionManger : public QObject
 {

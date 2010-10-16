@@ -1,4 +1,8 @@
 #include "connectionmanger.h"
+#include "mainwindow.h"
+#include "MAGNORMOBOT.h"
+#include "account.h"
+#include "contactmodel.h"
 
 ConnectionManger::ConnectionManger(QObject *parent, ContactModel *cM) :
     QObject(parent),
@@ -22,7 +26,7 @@ void ConnectionManger::connectAccount(Account *acc)
     MAGNORMOBOT *bot = new MAGNORMOBOT(acc);
     contacts->addBot(bot);
 
-    MainWindow *mainWin = (MainWindow*)QObject::parent();
+    MainWindow *mainWin = qobject_cast<MainWindow*>(parent());
 
     connect(bot, SIGNAL(connected()),mainWin, SLOT(connected()));
     connect(bot, SIGNAL(disconnected()),mainWin, SLOT(disconnected()));

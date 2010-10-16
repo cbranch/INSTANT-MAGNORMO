@@ -9,6 +9,7 @@
 #include <QProgressBar>
 #include <QLabel>
 #include <QTreeWidget>
+#include "connectionmanger.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),

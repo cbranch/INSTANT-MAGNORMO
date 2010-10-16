@@ -60,7 +60,7 @@ QVariant ContactModel::data(const QModelIndex &index, int role) const
             return contact.jid;
 
 		case ContactModel::BotRole:
-			return QVariant::fromValue(bot);
+			return QVariant::fromValue((void*)bot);
 
         case ContactModel::PresenceRole:
             {
@@ -226,12 +226,13 @@ void ContactModel::removeContacts(MAGNORMOBOT *bot)
 {
 	// Filter out contacts and groups belonging to the magnormobot
 	for (GroupIterator group = groups.begin(); group != groups.end(); group++) {
-		for (QList<ContactItem>::iterator contact = group->contacts.begin();
-				contact != group->contacts.end(); contact++) {
+		ContactGroup *cg = group.value();
+		for (QList<ContactItem>::iterator contact = cg->contacts.begin();
+				contact != cg->contacts.end(); contact++) {
 			if (contact->conduit.data() == bot)
-				group->contacts.erase(contact);
+				cg->contacts.erase(contact);
 		}
-		if (group->contacts.empty()) {
+		if (cg->contacts.empty()) {
 			delete *group;
 			groups.erase(group);
 		}
