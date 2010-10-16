@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <QModelIndex>
-#include "contact.h"
+#include "Contact.h"
 class QTreeView;
 
 class ContactList : public QWidget
