@@ -51,18 +51,11 @@ MainWindow::~MainWindow()
 
 void MainWindow::connectAccount(QString username, QString password, QString server, int port)
 {
-	/*
-    contactList->setModel(contacts);
-    connect(bot, SIGNAL(connected()), SLOT(connected()));
-    connect(bot, SIGNAL(disconnected()), SLOT(disconnected()));
-    connect(bot, SIGNAL(openConversationWindow(QString)), SLOT(startConversation(QString)), Qt::BlockingQueuedConnection);
     statusWidget->label->setText(tr("Connecting"));
     statusWidget->progress->setMinimum(0);
     statusWidget->progress->setMaximum(0);
     statusWidget->progress->setValue(0);
     statusWidgetDock->setVisible(true);
-
-    bot->start();*/
 }
 
 void MainWindow::connected()
@@ -78,7 +71,7 @@ void MainWindow::disconnected()
 
 void MainWindow::startConversation(QString jid)
 {
-    MAGNORMOBOT *bot = sender();
+    MAGNORMOBOT *bot = (MAGNORMOBOT*)sender();
     if(jid!="GROUP") {
         //QString contactName("Conversation");
         QString contactName = bot->getNameFromJid(jid);
