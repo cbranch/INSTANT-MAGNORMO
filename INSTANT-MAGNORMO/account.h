@@ -16,7 +16,11 @@ struct Account {
     int port;
     AccountType type;
     bool active;
+
+	bool operator ==(const Account &other);
 };
+
+uint qHash(const Account &key);
 
 #endif // ACCOUNT_H
 
