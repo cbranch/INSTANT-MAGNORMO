@@ -11,6 +11,14 @@ win32 {
   release:LIBS += -L../Release
   DEFINES += ZLIB_WINAPI GLOOX_IMPORTS
   INCLUDEPATH += ../Include
+
+  release:DESTDIR = ../Release
+  debug:DESTDIR = ../Debug
+  debug:QMAKE_CXXFLAGS = /Fd"..\\Debug\\"
+  OBJECTS_DIR = $$DESTDIR/.obj
+  MOC_DIR = $$DESTDIR/.moc
+  RCC_DIR = $$DESTDIR/.rcc
+  UI_DIR = $$DESTDIR/.ui
 }
 
 TARGET = INSTANT-MAGNORMO
