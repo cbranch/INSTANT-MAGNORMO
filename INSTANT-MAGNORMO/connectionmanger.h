@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QList>
 class MAGNORMOBOT;
-class Account;
+struct Account;
 class ContactModel;
 
 class ConnectionManger : public QObject
