@@ -23,6 +23,13 @@ MainWindow::MainWindow(QWidget *parent) :
     addDockWidget(Qt::LeftDockWidgetArea, contactListDock);
     connect(contactList, SIGNAL(conversationInitiated(QString)), SLOT(startConversation(QString)));
 
+    // Contact Model
+    contactModel = new ContactModel(contactList);
+    contactList->setModel(contactModel);
+
+    // Connection Manager
+    connectionManager = new ConnectionManger(0,contactModel);
+
     // Status widget thinggggyyiiieiiiidiiweieiii
     statusWidgetDock = new QDockWidget(tr("Status"), this);
     statusWidget = new StatusWidget();
@@ -44,10 +51,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::connectAccount(QString username, QString password, QString server, int port)
 {
-    Q_ASSERT(!bot);
-    bot = new MAGNORMOBOT(username, password, server, port);
-    ContactModel *contacts = new ContactModel(contactList);
-	contacts->addBot(bot);
     contactList->setModel(contacts);
     connect(bot, SIGNAL(connected()), SLOT(connected()));
     connect(bot, SIGNAL(disconnected()), SLOT(disconnected()));
