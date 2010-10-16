@@ -69,9 +69,12 @@ void MAGNORMOBOT::sendMessage(QString jid, QString msg)
 void MAGNORMOBOT::dissapearedWindow(QString jid)
 {
     messageStuffIterator = messageStuffMap.find(jid);
-    MessageStuff *ms;
-    ms = (*messageStuffIterator).second;
-    ms->chatWindowOpen = false;
+	if (messageStuffIterator != messageStuffMap.end()) {
+		MessageStuff *ms;
+		ms = (*messageStuffIterator).second;
+		ms->chatWindowOpen = false;
+	} else
+		qWarning("MAGNORMOBOT::dissapearedWindow could not find jid");
 }
 
 QString MAGNORMOBOT::getNameFromJid(QString jid)
