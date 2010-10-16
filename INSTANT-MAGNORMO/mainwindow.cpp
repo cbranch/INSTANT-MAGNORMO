@@ -23,6 +23,13 @@ MainWindow::MainWindow(QWidget *parent) :
     addDockWidget(Qt::LeftDockWidgetArea, contactListDock);
     connect(contactList, SIGNAL(conversationInitiated(QString)), SLOT(startConversation(QString)));
 
+    // Contact Model
+    contactModel = new ContactModel(contactList);
+    contactList->setModel(contactModel);
+
+    // Connection Manager
+    connectionManager = new ConnectionManger(this,contactModel);
+
     // Status widget thinggggyyiiieiiiidiiweieiii
     statusWidgetDock = new QDockWidget(tr("Status"), this);
     statusWidget = new StatusWidget();
@@ -44,10 +51,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::connectAccount(QString username, QString password, QString server, int port)
 {
-    Q_ASSERT(!bot);
-    //bot = new MAGNORMOBOT(username, password, server, port);
-    ContactModel *contacts = new ContactModel(contactList);
-	contacts->addBot(bot);
+	/*
     contactList->setModel(contacts);
     connect(bot, SIGNAL(connected()), SLOT(connected()));
     connect(bot, SIGNAL(disconnected()), SLOT(disconnected()));
@@ -58,7 +62,7 @@ void MainWindow::connectAccount(QString username, QString password, QString serv
     statusWidget->progress->setValue(0);
     statusWidgetDock->setVisible(true);
 
-    bot->start();
+    bot->start();*/
 }
 
 void MainWindow::connected()
@@ -74,6 +78,7 @@ void MainWindow::disconnected()
 
 void MainWindow::startConversation(QString jid)
 {
+    MAGNORMOBOT *bot = sender();
     if(jid!="GROUP") {
         //QString contactName("Conversation");
         QString contactName = bot->getNameFromJid(jid);

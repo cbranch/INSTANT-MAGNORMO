@@ -6,6 +6,8 @@
 #include <QToolBar>
 #include <QAction>
 #include "accountmanagerdialog.h"
+#include "contactmodel.h"
+#include "connectionmanger.h"
 
 class ContactList;
 class StatusWidget;
@@ -31,6 +33,8 @@ protected:
     ConversationDict conversationDict;
     accountmanagerdialog *accMgrDiag;
     QToolBar *toolBar;
+    ContactModel *contactModel;
+    ConnectionManger *connectionManager;
 
     void createToolBar();
     void connectAccount(QString username, QString password, QString server, int port);
