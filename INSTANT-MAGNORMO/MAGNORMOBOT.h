@@ -26,12 +26,12 @@
 #include <QThread>
 #include <QString>
 #include <QSharedPointer>
-#include "Contact.h"
 #include "MessageStuff.h"
 #include "account.h"
 #include <string>
 #include <map>
 #include <cstdio>
+class Contact;
 
 using namespace gloox;
 using namespace std;
@@ -102,11 +102,12 @@ signals:
     void contactUpdated(QString jid);
     void contactRemoved(QString jid);
     void spewMessage(QString msg, QString jid);
-    void openConversationWindow(QString jid);
+    void openConversationWindow(Contact);
 
 public slots:
     void sendMessage(QString jid, QString msg);
     void dissapearedWindow(QString jid);
 };
+#include "Contact.h"
 
 #endif // MAGNORMOBOT_H

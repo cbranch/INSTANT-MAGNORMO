@@ -3,8 +3,8 @@
 #include <QTextStream>
 #include "mainwindow.h"
 #include <stdio.h>
-#include "Contact.h"
 #include "MAGNORMOBOT.h"
+#include "Contact.h"
 
 int main(int argc, char *argv[])
 {

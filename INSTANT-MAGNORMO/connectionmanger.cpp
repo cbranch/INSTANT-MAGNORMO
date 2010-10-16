@@ -30,7 +30,7 @@ void ConnectionManger::connectAccount(Account *acc)
 
     connect(bot, SIGNAL(connected()),mainWin, SLOT(connected()));
     connect(bot, SIGNAL(disconnected()),mainWin, SLOT(disconnected()));
-    connect(bot, SIGNAL(openConversationWindow(QString)), mainWin, SLOT(startConversation(QString)), Qt::BlockingQueuedConnection);
+    connect(bot, SIGNAL(openConversationWindow(Contact)), mainWin, SLOT(startConversation(Contact)), Qt::BlockingQueuedConnection);
 
     bot->start();
 

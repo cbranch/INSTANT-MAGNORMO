@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
     contactList = new ContactList();
     contactListDock->setWidget(contactList);
     addDockWidget(Qt::LeftDockWidgetArea, contactListDock);
-    connect(contactList, SIGNAL(conversationInitiated(QString)), SLOT(startConversation(QString)));
+    connect(contactList, SIGNAL(conversationInitiated(Contact)), SLOT(startConversation(Contact)));
 
     // Contact Model
     contactModel = new ContactModel(contactList);
@@ -70,9 +70,10 @@ void MainWindow::disconnected()
     statusWidgetDock->setVisible(true);
 }
 
-void MainWindow::startConversation(QString jid)
+void MainWindow::startConversation(Contact contact)
 {
-    MAGNORMOBOT *bot = (MAGNORMOBOT*)sender();
+	MAGNORMOBOT *bot = contact.conduit.data();
+	QString jid = contact.jid;
     if(jid!="GROUP") {
         //QString contactName("Conversation");
         QString contactName = bot->getNameFromJid(jid);

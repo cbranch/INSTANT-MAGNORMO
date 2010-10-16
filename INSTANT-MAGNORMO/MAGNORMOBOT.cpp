@@ -135,7 +135,8 @@ void MAGNORMOBOT::handleMessage( const Message& msg, MessageSession *session )
     MessageStuff *ms = (*msIt).second;
     if(!ms->chatWindowOpen) {
         // If its not open it
-        emit openConversationWindow(QString(thisJID));
+		Contact contact(this, thisJID);
+        emit openConversationWindow(contact);
         ms->chatWindowOpen=true;
     }
 

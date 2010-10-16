@@ -3,16 +3,18 @@
 
 #include <QMetaType>
 #include <QString>
-#include <gloox/presence.h>
+#include <QWeakPointer>
+#include "MAGNORMOBOT.h"
 
-using namespace gloox;
-class MAGNORMOBOT;
-
-struct Contact {
-    QString name;
+class Contact
+{
+public:
 	QWeakPointer<MAGNORMOBOT> conduit;
-    std::string jid;
-    Presence::PresenceType presence;
+	QString jid;
+
+	Contact() { }
+	Contact(MAGNORMOBOT *conduit, QString jid) : conduit(conduit), jid(jid) { }
+	bool operator ==(const Contact &other) { return conduit == other.conduit && jid == other.jid; }
 };
 
 Q_DECLARE_METATYPE(Contact)

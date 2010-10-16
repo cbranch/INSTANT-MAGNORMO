@@ -6,9 +6,9 @@
 #include <gloox/chatstatefilter.h>
 
 struct MessageStuff {
-    MessageSession *session;
-    MessageEventFilter *eventFilter;
-    ChatStateFilter *stateFilter;
+	gloox::MessageSession *session;
+	gloox::MessageEventFilter *eventFilter;
+	gloox::ChatStateFilter *stateFilter;
     bool chatWindowOpen;
 };
 

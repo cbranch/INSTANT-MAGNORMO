@@ -14,6 +14,7 @@ class MAGNORMOBOT;
 class ConversationWidget;
 class ConnectionManger;
 class ContactModel;
+#include "Contact.h"
 
 typedef QHash<QString, QDockWidget*> ConversationDict;
 
@@ -47,7 +48,7 @@ public slots:
     void connected();
     void disconnected();
 
-    void startConversation(QString jid);
+    void startConversation(Contact);
     void handleConversationDestroyed(QObject* list);
 
 private slots:

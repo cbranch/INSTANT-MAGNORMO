@@ -7,20 +7,12 @@
 #include <QList>
 #include <QWeakPointer>
 #include "MAGNORMOBOT.h"
-
-struct ContactItem
-{
-	QWeakPointer<MAGNORMOBOT> conduit;
-	QString jid;
-
-	ContactItem(MAGNORMOBOT *conduit, QString jid) : conduit(conduit), jid(jid) { }
-	bool operator ==(const ContactItem &other) { return conduit == other.conduit && jid == other.jid; }
-};
+#include "Contact.h"
 
 struct ContactGroup
 {
     QString groupName;
-    QList<ContactItem> contacts;
+    QList<Contact> contacts;
 
     ContactGroup() {}
     ContactGroup(QString name) : groupName(name) {}
@@ -41,11 +33,11 @@ public:
     QModelIndex index(int row, int column, const QModelIndex &parent) const;
     QModelIndex parent(const QModelIndex &child) const;
 
-    QList<QModelIndex> getIndexesOfContact(ContactItem contact);
+    QList<QModelIndex> getIndexesOfContact(Contact contact);
 
     enum UserRoles {
         JIDRole = Qt::UserRole,
-		BotRole,
+		ContactRole,
         PresenceRole
     };
 
@@ -56,6 +48,7 @@ public slots:
     void addContact(QString jid);
     void updateContact(QString jid);
     void removeContact(QString jid);
+	void receiveContactList();
     void refreshContacts(MAGNORMOBOT *bot);
 	void removeContacts(MAGNORMOBOT *bot);
 

@@ -30,7 +30,7 @@ QVariant ContactModel::data(const QModelIndex &index, int role) const
     } else {
         // Contacts
         ContactGroup *group = reinterpret_cast<ContactGroup *>(index.internalPointer());
-        ContactItem contact = group->contacts.at(index.row());
+        Contact contact = group->contacts.at(index.row());
 		MAGNORMOBOT *bot = contact.conduit.data();
         switch (role) {
         case Qt::DisplayRole:
@@ -59,8 +59,8 @@ QVariant ContactModel::data(const QModelIndex &index, int role) const
         case ContactModel::JIDRole:
             return contact.jid;
 
-		case ContactModel::BotRole:
-			return QVariant::fromValue((void*)bot);
+		case ContactModel::ContactRole:
+			return QVariant::fromValue(contact);
 
         case ContactModel::PresenceRole:
             {
@@ -135,11 +135,11 @@ void ContactModel::addBot(MAGNORMOBOT *bot)
     connect(bot, SIGNAL(contactAdded(QString)), SLOT(addContact(QString)));
     connect(bot, SIGNAL(contactUpdated(QString)), SLOT(updateContact(QString)));
     connect(bot, SIGNAL(contactRemoved(QString)), SLOT(removeContact(QString)));
-    connect(bot, SIGNAL(contactListReceived()), SLOT(refreshContacts()));
+	connect(bot, SIGNAL(contactListReceived()), SLOT(receiveContactList()));
     refreshContacts(bot);
 }
 
-QList<QModelIndex> ContactModel::getIndexesOfContact(ContactItem contact)
+QList<QModelIndex> ContactModel::getIndexesOfContact(Contact contact)
 {
     QList<QModelIndex> indexes;
     int i = 0;
@@ -156,7 +156,7 @@ QList<QModelIndex> ContactModel::getIndexesOfContact(ContactItem contact)
 
 void ContactModel::updateContactPresence(QString jid)
 {
-	ContactItem contact(qobject_cast<MAGNORMOBOT*>(sender()), jid);
+	Contact contact(qobject_cast<MAGNORMOBOT*>(sender()), jid);
     QList<QModelIndex> indexes = getIndexesOfContact(contact);
     foreach (QModelIndex index, indexes) {
         emit dataChanged(index, index);
@@ -171,7 +171,7 @@ void ContactModel::addContact(QString jid)
 void ContactModel::updateContact(QString jid)
 {
     qDebug("HURR A CONTACT WAS UPDATED YOU SHOULD CODE THIS A BIT BETTER");
-	ContactItem contact(qobject_cast<MAGNORMOBOT*>(sender()), jid);
+	Contact contact(qobject_cast<MAGNORMOBOT*>(sender()), jid);
     QList<QModelIndex> indexes = getIndexesOfContact(contact);
     foreach (QModelIndex index, indexes) {
         emit dataChanged(index, index);
@@ -181,6 +181,11 @@ void ContactModel::updateContact(QString jid)
 void ContactModel::removeContact(QString jid)
 {
     qDebug("HURR A CONTACT WAS REMOVED YOU SHOULD CODE THIS");
+}
+
+void ContactModel::receiveContactList()
+{
+    refreshContacts(qobject_cast<MAGNORMOBOT*>(sender()));
 }
 
 void ContactModel::refreshContacts(MAGNORMOBOT *bot)
@@ -203,7 +208,7 @@ void ContactModel::refreshContacts(MAGNORMOBOT *bot)
 
 	gloox::Roster* roster = bot->j->rosterManager()->roster();
 	for (gloox::Roster::iterator iter = roster->begin(); iter != roster->end(); iter++) {
-        ContactItem contact(bot, QString::fromUtf8(iter->first.c_str()));
+        Contact contact(bot, QString::fromUtf8(iter->first.c_str()));
         RosterItem *item = iter->second;
         if (item->groups().empty()) {
             // Add to no-group
@@ -227,7 +232,7 @@ void ContactModel::removeContacts(MAGNORMOBOT *bot)
 	// Filter out contacts and groups belonging to the magnormobot
 	for (GroupIterator group = groups.begin(); group != groups.end(); group++) {
 		ContactGroup *cg = group.value();
-		for (QList<ContactItem>::iterator contact = cg->contacts.begin();
+		for (QList<Contact>::iterator contact = cg->contacts.begin();
 				contact != cg->contacts.end(); contact++) {
 			if (contact->conduit.data() == bot)
 				cg->contacts.erase(contact);

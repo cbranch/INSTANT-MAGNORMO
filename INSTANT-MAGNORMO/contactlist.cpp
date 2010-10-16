@@ -2,6 +2,7 @@
 #include <QTreeView>
 #include <QVBoxLayout>
 #include <QIcon>
+#include "contactmodel.h"
 #include "contactsortfilterproxymodel.h"
 
 ContactList::ContactList(QWidget *parent) :
@@ -32,7 +33,7 @@ void ContactList::setModel(QAbstractItemModel *model)
 
 void ContactList::contactActivated(const QModelIndex &index)
 {
-    QVariant data = index.data(Qt::UserRole);
+	QVariant data = index.data(ContactModel::ContactRole);
     if (data.isValid())
-        emit conversationInitiated(data.toString());
+		emit conversationInitiated(data.value<Contact>());
 }

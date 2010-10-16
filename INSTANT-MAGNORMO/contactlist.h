@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <QModelIndex>
-
+#include "contact.h"
 class QTreeView;
 
 class ContactList : public QWidget
@@ -16,7 +16,7 @@ public:
     void setModel(QAbstractItemModel *model);
 
 signals:
-    void conversationInitiated(QString jid);
+    void conversationInitiated(Contact);
 
 private slots:
     void contactActivated(const QModelIndex &index);
