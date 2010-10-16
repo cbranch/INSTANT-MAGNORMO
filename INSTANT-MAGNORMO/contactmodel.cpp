@@ -56,6 +56,7 @@ QVariant ContactModel::data(const QModelIndex &index, int role) const
                 break;
             }
 
+		case Qt::ToolTipRole:
         case ContactModel::JIDRole:
             return contact.jid;
 
