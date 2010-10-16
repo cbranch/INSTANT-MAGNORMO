@@ -33,6 +33,7 @@ SOURCES += main.cpp \
     contactmodel.cpp \
     contactsortfilterproxymodel.cpp \
     accountmanagerdialog.cpp \
+    account.cpp \
     connectionmanger.cpp
 HEADERS += mainwindow.h \
     contactlist.h \

@@ -8,6 +8,7 @@ ContactList::ContactList(QWidget *parent) :
     QWidget(parent)
 {
     QVBoxLayout *layout = new QVBoxLayout();
+	layout->setMargin(0);
     this->setLayout(layout);
     contactTree = new QTreeView();
     contactTree->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);

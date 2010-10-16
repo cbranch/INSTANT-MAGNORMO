@@ -10,6 +10,7 @@ using namespace gloox;
 struct Contact {
     QString name;
     QString group;
+	QWeakPointer<MAGNORMOBOT> conduit;
     std::string jid;
     Presence::PresenceType presence;
 };

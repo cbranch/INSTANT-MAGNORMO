@@ -19,7 +19,7 @@ class ContactModel : public QAbstractItemModel
 {
 Q_OBJECT
 public:
-    explicit ContactModel(MAGNORMOBOT *contactData, QObject *parent = 0);
+    explicit ContactModel(QObject *parent = 0);
     virtual ~ContactModel();
 
     Qt::ItemFlags flags(const QModelIndex &index) const;
@@ -36,6 +36,8 @@ public:
         JIDRole = Qt::UserRole,
         PresenceRole
     };
+
+	void addBot(MAGNORMOBOT *bot);
 
 public slots:
     void updateContactPresence(QString jid);

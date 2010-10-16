@@ -46,7 +46,8 @@ void MainWindow::connectAccount(QString username, QString password, QString serv
 {
     Q_ASSERT(!bot);
     bot = new MAGNORMOBOT(username, password, server, port);
-    ContactModel *contacts = new ContactModel(bot, contactList);
+    ContactModel *contacts = new ContactModel(contactList);
+	contacts->addBot(bot);
     contactList->setModel(contacts);
     connect(bot, SIGNAL(connected()), SLOT(connected()));
     connect(bot, SIGNAL(disconnected()), SLOT(disconnected()));
