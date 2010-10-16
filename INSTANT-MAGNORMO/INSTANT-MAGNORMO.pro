@@ -32,7 +32,8 @@ SOURCES += main.cpp \
     statuswidget.cpp \
     contactmodel.cpp \
     contactsortfilterproxymodel.cpp \
-    accountmanagerdialog.cpp
+    accountmanagerdialog.cpp \
+    connectionmanger.cpp
 HEADERS += mainwindow.h \
     contactlist.h \
     conversationwidget.h \
@@ -44,7 +45,8 @@ HEADERS += mainwindow.h \
     MessageStuff.h \
     contactsortfilterproxymodel.h \
     account.h \
-    accountmanagerdialog.h
+    accountmanagerdialog.h \
+    connectionmanger.h
 FORMS += accountdialog.ui \
     conversationwidget.ui \
     accountmanagerdialog.ui
