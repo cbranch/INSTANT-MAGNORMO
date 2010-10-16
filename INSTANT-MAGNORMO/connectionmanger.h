@@ -20,7 +20,6 @@ public:
 private:
     QList<MAGNORMOBOT *> connectionList;
     ContactModel *contacts;
-    MainWindow *mainWin;
 
 signals:
 

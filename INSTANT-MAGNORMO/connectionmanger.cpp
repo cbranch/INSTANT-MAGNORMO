@@ -4,7 +4,6 @@ ConnectionManger::ConnectionManger(QObject *parent, ContactModel *cM) :
     QObject(parent),
     contacts(cM)
 {
-    mainWin = (MainWindow*)QObject::parent();
 }
 
 void ConnectionManger::connectAccount(Account *acc)
@@ -23,6 +22,8 @@ void ConnectionManger::connectAccount(Account *acc)
     MAGNORMOBOT *bot = new MAGNORMOBOT(acc);
 
     contacts->addBot(bot);
+
+    MainWindow *mainWin = (MainWindow*)QObject::parent();
 
     connect(bot, SIGNAL(connected()),mainWin, SLOT(connected()));
     connect(bot, SIGNAL(disconnected()),mainWin, SLOT(disconnected()));
