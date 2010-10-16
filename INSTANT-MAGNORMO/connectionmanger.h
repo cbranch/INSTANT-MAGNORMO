@@ -16,9 +16,18 @@ public:
     void connectAccount(Account *acc);
     void disconnectAccount(Account *acc);
 
+    QSignalMapper *connectedMapper;
+    QSignalMapper *disconnectedMapper;
+    QSignalMapper *contactListReceivedMapper;
+    QSignalMapper *contactPresenceUpdatedMapper;
+    QSignalMapper *contactAddedMapper;
+    QSignalMapper *contactUpdatedMapper;
+    QSignalMapper *contactRemovedMapper;
+    QSignalMapper *spewMessageMapper;
+    QSignalMapper *openConverstionWindowMapper;
+
 private:
     QList<MAGNORMOBOT *> connectionList;
-    QSignalMapper *signalMapper;
 
 signals:
 
