@@ -114,15 +114,15 @@ void MainWindow::startAccountManager(bool specificRequest)
             case QDialog::Accepted:
             {
                 QList<Account*> activeAccounts = accMgrDiag->getActiveAccounts();
-                // For now we will select the first active one as we dont have multiple account support yet
                 if(activeAccounts.size()==0) {
                     printf("You suck balls\n");
                     return;
                 }
-                // Add active accounts loop here
-                Account* acc = activeAccounts.first();
-
-                connectAccount(acc->user,acc->password,acc->server,acc->port);
+                QList<Account*>::iterator itr;
+                for(itr=activeAccounts.begin();itr<activeAccounts.end();++itr) {
+                    Account* acc = *itr;
+                    connectionManager->connectAccount(acc);
+                }
                 return;
             }
             case QDialog::Rejected:
@@ -132,10 +132,11 @@ void MainWindow::startAccountManager(bool specificRequest)
         }
     } else {
         QList<Account*> activeAccounts = accMgrDiag->getActiveAccounts();
-        // For now we will select the first active one as we dont have multiple account support yet
-        Account* acc = activeAccounts.first();
-
-        connectAccount(acc->user,acc->password,acc->server,acc->port);
+        QList<Account*>::iterator itr;
+        for(itr=activeAccounts.begin();itr<activeAccounts.end();++itr) {
+            Account* acc = *itr;
+            connectionManager->connectAccount(acc);
+        }
         return;
     }
 }
