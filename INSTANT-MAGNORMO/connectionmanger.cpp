@@ -20,7 +20,6 @@ void ConnectionManger::connectAccount(Account *acc)
     }
 
     MAGNORMOBOT *bot = new MAGNORMOBOT(acc);
-
     contacts->addBot(bot);
 
     MainWindow *mainWin = (MainWindow*)QObject::parent();

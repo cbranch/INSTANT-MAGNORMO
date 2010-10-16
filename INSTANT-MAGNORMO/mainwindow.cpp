@@ -56,7 +56,6 @@ void MainWindow::connectAccount(QString username, QString password, QString serv
     statusWidget->progress->setMaximum(0);
     statusWidget->progress->setValue(0);
     statusWidgetDock->setVisible(true);
-
 }
 
 void MainWindow::connected()
