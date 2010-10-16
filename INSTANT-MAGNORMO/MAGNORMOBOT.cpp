@@ -6,7 +6,7 @@ MAGNORMOBOT::MAGNORMOBOT(Account *acc) :
         username(acc->user.toUtf8().data()),
     password(acc->password.toUtf8().data()),
     server(acc->server.toUtf8().data()),
-    port(port)
+    port(acc->port)
 {
     this->acc = acc;
 }
