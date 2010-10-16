@@ -3,10 +3,10 @@
 
 #include <QObject>
 #include <QList>
-#include <QSignalMapper>
 #include "MAGNORMOBOT.h"
 #include "account.h"
 #include "contactmodel.h"
+#include "mainwindow.h"
 
 class ConnectionManger : public QObject
 {
@@ -17,14 +17,10 @@ public:
     void connectAccount(Account *acc);
     void disconnectAccount(Account *acc);
 
-    QSignalMapper *connectedMapper;
-    QSignalMapper *disconnectedMapper;
-    QSignalMapper *spewMessageMapper;
-    QSignalMapper *openConverstionWindowMapper;
-
 private:
     QList<MAGNORMOBOT *> connectionList;
     ContactModel *contacts;
+    MainWindow *mainWin;
 
 signals:
 

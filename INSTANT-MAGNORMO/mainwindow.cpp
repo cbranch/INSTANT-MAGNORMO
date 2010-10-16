@@ -28,7 +28,7 @@ MainWindow::MainWindow(QWidget *parent) :
     contactList->setModel(contactModel);
 
     // Connection Manager
-    connectionManager = new ConnectionManger(0,contactModel);
+    connectionManager = new ConnectionManger(this,contactModel);
 
     // Status widget thinggggyyiiieiiiidiiweieiii
     statusWidgetDock = new QDockWidget(tr("Status"), this);
@@ -77,6 +77,7 @@ void MainWindow::disconnected()
 
 void MainWindow::startConversation(QString jid)
 {
+    MAGNORMOBOT *bot = sender();
     if(jid!="GROUP") {
         //QString contactName("Conversation");
         QString contactName = bot->getNameFromJid(jid);

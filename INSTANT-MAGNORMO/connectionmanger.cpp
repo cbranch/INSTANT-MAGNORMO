@@ -4,10 +4,7 @@ ConnectionManger::ConnectionManger(QObject *parent, ContactModel *cM) :
     QObject(parent),
     contacts(cM)
 {
-    connectedMapper = new QSignalMapper(this);
-    disconnectedMapper = new QSignalMapper(this);
-    spewMessageMapper = new QSignalMapper(this);
-    openConverstionWindowMapper = new QSignalMapper(this);
+    mainWin = (MainWindow*)QObject::parent();
 }
 
 void ConnectionManger::connectAccount(Account *acc)
@@ -27,13 +24,11 @@ void ConnectionManger::connectAccount(Account *acc)
 
     contacts->addBot(bot);
 
-    connect(bot, SIGNAL(connected()), connectedMapper, SLOT(map()));
-    connect(bot, SIGNAL(disconnected()), disconnectedMapper, SLOT(map()));
-    connect(bot, SIGNAL(spewMessage(QString,QString)), spewMessageMapper, SLOT(map()));
-    connect(bot, SIGNAL(openConversationWindow(QString)), openConverstionWindowMapper, SLOT(map()));
+    connect(bot, SIGNAL(connected()),mainWin, SLOT(connected()));
+    connect(bot, SIGNAL(disconnected()),mainWin, SLOT(disconnected()));
+    connect(bot, SIGNAL(openConversationWindow(QString)), mainWin, SLOT(startConversation(QString)), Qt::BlockingQueuedConnection);
 
     bot->start();
-
 
     connectionList.append(bot);
 }
