@@ -9,6 +9,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+	qRegisterMetaType<Contact>("Contact");
     qRegisterMetaType<QSharedPointer<Contact> >("QSharedPointer<Contact>");
 
     QCoreApplication::setOrganizationName("MAGNORMO");
