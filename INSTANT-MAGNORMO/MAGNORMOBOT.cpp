@@ -184,7 +184,6 @@ MessageStuff* MAGNORMOBOT::createMessageStuff(MessageSession *session)
     ms->stateFilter->registerChatStateHandler(this);
     ms->chatWindowOpen = false;
 
-    printf("JID:  %s\n",session->target().full().c_str());
     messageStuffMap[QString(session->target().full().c_str())] = ms;
 
     return ms;
