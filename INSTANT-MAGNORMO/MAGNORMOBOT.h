@@ -28,6 +28,7 @@
 #include <QSharedPointer>
 #include "Contact.h"
 #include "MessageStuff.h"
+#include "account.h"
 #include <string>
 #include <map>
 #include <cstdio>
@@ -48,7 +49,7 @@ class MAGNORMOBOT : public QThread, MessageSessionHandler, ConnectionListener, L
 
     friend class ContactModel;
  public:
-    explicit MAGNORMOBOT(QString username, QString password, QString server, int port);
+    explicit MAGNORMOBOT(Account *acc);
     virtual ~MAGNORMOBOT();
 
     void run();
@@ -78,6 +79,7 @@ class MAGNORMOBOT : public QThread, MessageSessionHandler, ConnectionListener, L
     virtual void handleNonrosterPresence (const Presence &presence);
     virtual void handleRosterError (const IQ &iq);
 
+    Account* getAccount();
 private:
     Client *j;
     map<QString,MessageStuff*> messageStuffMap;
@@ -89,6 +91,7 @@ private:
     std::string password;
     std::string server;
     int port;
+    Account *acc;
 
 signals:
     void connected();

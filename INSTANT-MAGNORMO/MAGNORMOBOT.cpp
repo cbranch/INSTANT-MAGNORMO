@@ -1,13 +1,14 @@
 #include "MAGNORMOBOT.h"
 #include <QtGlobal>
 
-MAGNORMOBOT::MAGNORMOBOT(QString username, QString password, QString server = QString(), int port = -1) :
+MAGNORMOBOT::MAGNORMOBOT(Account *acc) :
     j(0),
-	username(username.toUtf8().data()),
-    password(password.toUtf8().data()),
-    server(server.toUtf8().data()),
+        username(acc->user.toUtf8().data()),
+    password(acc->password.toUtf8().data()),
+    server(acc->server.toUtf8().data()),
     port(port)
 {
+    this->acc = acc;
 }
 
 MAGNORMOBOT::~MAGNORMOBOT()
@@ -237,3 +238,5 @@ void MAGNORMOBOT::handleNonrosterPresence (const Presence &presence)
 void MAGNORMOBOT::handleRosterError (const IQ &iq)
 {
 }
+
+Account* MAGNORMOBOT::getAccount() { return acc; }
