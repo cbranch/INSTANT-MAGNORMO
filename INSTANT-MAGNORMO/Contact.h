@@ -6,10 +6,10 @@
 #include <gloox/presence.h>
 
 using namespace gloox;
+class MAGNORMOBOT;
 
 struct Contact {
     QString name;
-    QString group;
 	QWeakPointer<MAGNORMOBOT> conduit;
     std::string jid;
     Presence::PresenceType presence;

@@ -4,12 +4,23 @@
 #include <QAbstractItemModel>
 #include <QMap>
 #include <QStringList>
-class MAGNORMOBOT;
+#include <QList>
+#include <QWeakPointer>
+#include "MAGNORMOBOT.h"
+
+struct ContactItem
+{
+	QWeakPointer<MAGNORMOBOT> conduit;
+	QString jid;
+
+	ContactItem(MAGNORMOBOT *conduit, QString jid) : conduit(conduit), jid(jid) { }
+	bool operator ==(const ContactItem &other) { return conduit == other.conduit && jid == other.jid; }
+};
 
 struct ContactGroup
 {
     QString groupName;
-    QStringList jids;
+    QList<ContactItem> contacts;
 
     ContactGroup() {}
     ContactGroup(QString name) : groupName(name) {}
@@ -30,10 +41,11 @@ public:
     QModelIndex index(int row, int column, const QModelIndex &parent) const;
     QModelIndex parent(const QModelIndex &child) const;
 
-    QList<QModelIndex> getIndexesOfJid(QString jid);
+    QList<QModelIndex> getIndexesOfContact(ContactItem contact);
 
     enum UserRoles {
         JIDRole = Qt::UserRole,
+		BotRole,
         PresenceRole
     };
 
@@ -44,10 +56,11 @@ public slots:
     void addContact(QString jid);
     void updateContact(QString jid);
     void removeContact(QString jid);
-    void refreshContacts();
+    void refreshContacts(MAGNORMOBOT *bot);
+	void removeContacts(MAGNORMOBOT *bot);
 
 protected:
-    MAGNORMOBOT *contactData;
+    QList<MAGNORMOBOT*> conduits;
 
     QMap<QString, ContactGroup* > groups;
 	typedef QMap<QString, ContactGroup* >::iterator GroupIterator;

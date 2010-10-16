@@ -27,7 +27,7 @@ void ConnectionManger::connectAccount(Account *acc)
         }
     }
 
-    MAGNORMOBOT *bot = new MAGNORMOBOT(acc->user, acc->password, acc->server, acc->port);
+    MAGNORMOBOT *bot = new MAGNORMOBOT(acc);
     connect(bot, SIGNAL(connected()), connectedMapper, SLOT(map()));
     connect(bot, SIGNAL(disconnected()), disconnectedMapper, SLOT(map()));
     connect(bot, SIGNAL(contactListReceived()), contactListReceivedMapper, SLOT(map()));
