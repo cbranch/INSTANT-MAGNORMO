@@ -18,7 +18,7 @@ void ConnectionManger::connectAccount(Account *acc)
         MAGNORMOBOT *b = *itr;
         Account *thisAccount = b->getAccount();
         if(*thisAccount==*acc) {
-            qDebug("Already connected to the requested account");
+            qDebug() << "Already connected to " << acc->user << " " << acc->server;
             return;
         }
     }
@@ -40,12 +40,17 @@ void ConnectionManger::connectAccount(Account *acc)
 void ConnectionManger::disconnectAccount(Account *acc)
 {
     // Find the account we want to disconnect from in the list
-    QList<MAGNORMOBOT*>::iterator itr;
-    for(itr=connectionList.begin();itr<connectionList.end();++itr) {
-        MAGNORMOBOT *b = *itr;
+    for(int i=0;i<connectionList.length();i++) {
+        MAGNORMOBOT *b = connectionList.at(i);
         Account *thisAccount = b->getAccount();
         if(*thisAccount==*acc) {
-            // Do the disconnection stuff here
+            qDebug() << "Disconnecting account " << acc->user << " " << acc->server;
+            connectionList.removeAt(i);
+            qDebug() << "Removed from list";
+            b->disconnect();
+            qDebug() << "Disconnected MAGNORMOBOT";
+            delete(b);
+            qDebug() << "Deleted MAGNORMOBOT";
         }
     }
 }

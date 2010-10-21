@@ -87,6 +87,18 @@ QList<Account*> accountmanagerdialog::getActiveAccounts()
     return activeAccounts;
 }
 
+QList<Account*> accountmanagerdialog::getAccounts()
+{
+    QList<Account*> accounts = QList<Account*>();
+    int numItems = ui->listWidget->count();
+    for(int i=0;i<numItems;i++) {
+        Account *acc = getAccount(ui->listWidget->item(i));
+        accounts.append(acc);
+    }
+
+    return accounts;
+}
+
 void accountmanagerdialog::writeAccounts()
 {
     QSettings settings;

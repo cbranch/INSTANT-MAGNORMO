@@ -114,7 +114,7 @@ void MainWindow::startAccountManager(bool specificRequest)
         switch(accMgrDiag->exec()) {
             case QDialog::Accepted:
             {
-                QList<Account*> activeAccounts = accMgrDiag->getActiveAccounts();
+                QList<Account*> activeAccounts = accMgrDiag->getAccounts();
                 if(activeAccounts.size()==0) {
                     printf("You suck balls\n");
                     return;
@@ -122,7 +122,10 @@ void MainWindow::startAccountManager(bool specificRequest)
                 QList<Account*>::iterator itr;
                 for(itr=activeAccounts.begin();itr<activeAccounts.end();++itr) {
                     Account* acc = *itr;
-                    connectionManager->connectAccount(acc);
+                    if(acc->active)
+                        connectionManager->connectAccount(acc);
+                    else
+                        connectionManager->disconnectAccount(acc);
                 }
                 return;
             }

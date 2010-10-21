@@ -22,6 +22,7 @@ public:
     explicit accountmanagerdialog(QWidget *parent = 0);
     ~accountmanagerdialog();
     QList<Account*> getActiveAccounts();
+    QList<Account*> getAccounts();
 
     bool needed;
 

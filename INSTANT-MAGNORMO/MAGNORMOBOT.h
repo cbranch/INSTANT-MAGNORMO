@@ -55,6 +55,7 @@ class MAGNORMOBOT : public QThread, MessageSessionHandler, ConnectionListener, L
 
     void run();
 
+    void disconnect();
 
     QString getNameFromJid(QString jid);
     RosterItem* getRosterItemFromJid(QString jid);

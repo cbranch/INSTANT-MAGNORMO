@@ -252,7 +252,8 @@ void MAGNORMOBOT::handleRosterError (const IQ &iq)
 
 Account* MAGNORMOBOT::getAccount() { return acc; }
 
-QIcon MAGNORMOBOT::getAccountIcon() {
+QIcon MAGNORMOBOT::getAccountIcon()
+{
     switch(acc->type) {
     case FACEBOOK:
         return QIcon(":/icons/facebook");
@@ -262,4 +263,10 @@ QIcon MAGNORMOBOT::getAccountIcon() {
         return QIcon(":/icons/gtalk");
     }
     return QIcon();
+}
+
+void MAGNORMOBOT::disconnect()
+{
+    emit disconnected();
+    j->disconnect();
 }
