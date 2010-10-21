@@ -58,6 +58,8 @@ protected slots:
 	void botDestroyed();
 
 protected:
+	bool hasContacts(MAGNORMOBOT *bot);
+
     QList<MAGNORMOBOT*> conduits;
 
     QMap<QString, ContactGroup* > groups;
