@@ -1,5 +1,6 @@
 #include "conversationwidget.h"
 #include "ui_conversationwidget.h"
+#include <QtGui/QApplication>
 
 ConversationWidget::ConversationWidget(QString jid, QWidget *parent) :
     QWidget(parent),
@@ -29,6 +30,7 @@ void ConversationWidget::changeEvent(QEvent *e)
 void ConversationWidget::messageRevieved(QString msg, QString jid)
 {
     if(jid==this->jid) {
+        qApp->alert(this,3000);
         ui->textEdit->append(msg);
     }
 }
