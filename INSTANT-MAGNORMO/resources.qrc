@@ -8,6 +8,8 @@
         <file alias="accounts">icons/key.png</file>
         <file alias="windows">icons/monitor-window-3d.png</file>
         <file alias="contacts">icons/users.png</file>
+        <file alias="facebook">icons/facebook.png</file>
+        <file alias="gtalk">icons/gtalk.png</file>
     </qresource>
     <qresource prefix="/">
         <file>styles.css</file>

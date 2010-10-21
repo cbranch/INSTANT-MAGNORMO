@@ -25,16 +25,18 @@ QVariant ContactModel::data(const QModelIndex &index, int role) const
         // Groups
         switch (role) {
         case Qt::DisplayRole:
-            return groups.keys().at(index.row());
+            if(index.column()==1)
+                return groups.keys().at(index.row());
         }
     } else {
         // Contacts
         ContactGroup *group = reinterpret_cast<ContactGroup *>(index.internalPointer());
         Contact contact = group->contacts.at(index.row());
-		MAGNORMOBOT *bot = contact.conduit.data();
+        MAGNORMOBOT *bot = contact.conduit.data();
         switch (role) {
         case Qt::DisplayRole:
-            return bot->getNameFromJid(contact.jid);
+            if(index.column()==1)
+                return bot->getNameFromJid(contact.jid);
         case Qt::DecorationRole:
             {
                 RosterItem *item = bot->getRosterItemFromJid(contact.jid);
@@ -45,23 +47,31 @@ QVariant ContactModel::data(const QModelIndex &index, int role) const
                 switch (item->highestResource()->presence()) {
                 case Presence::Available:
                 case Presence::Chat:
-                    return QIcon(":/icons/user-online");
+                    if(index.column()==1)
+                        return QIcon(":/icons/user-online");
+                    else {
+                        return bot->getAccountIcon();
+                    }
                 case Presence::Away:
                 case Presence::DND:
                 case Presence::XA:
-                    return QIcon(":/icons/user-away");
+                    if(index.column()==1)
+                        return QIcon(":/icons/user-away");
+                    else {
+                        return bot->getAccountIcon();
+                    }
                 default:
                     return QIcon(":/icons/user-offline");
                 }
                 break;
             }
 
-		case Qt::ToolTipRole:
+        case Qt::ToolTipRole:
         case ContactModel::JIDRole:
             return contact.jid;
 
-		case ContactModel::ContactRole:
-			return QVariant::fromValue(contact);
+        case ContactModel::ContactRole:
+            return QVariant::fromValue(contact);
 
         case ContactModel::PresenceRole:
             {
@@ -104,7 +114,7 @@ int ContactModel::rowCount(const QModelIndex &parent) const
 
 int ContactModel::columnCount(const QModelIndex &parent) const
 {
-    return 1;
+    return 2;
 }
 
 QModelIndex ContactModel::index(int row, int column, const QModelIndex &parent) const

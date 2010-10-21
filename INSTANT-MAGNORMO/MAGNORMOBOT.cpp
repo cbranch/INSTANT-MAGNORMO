@@ -251,3 +251,15 @@ void MAGNORMOBOT::handleRosterError (const IQ &iq)
 }
 
 Account* MAGNORMOBOT::getAccount() { return acc; }
+
+QIcon MAGNORMOBOT::getAccountIcon() {
+    switch(acc->type) {
+    case FACEBOOK:
+        return QIcon(":/icons/facebook");
+    case GTALK:
+        return QIcon(":/icons/gtalk");
+    case GAPP:
+        return QIcon(":/icons/gtalk");
+    }
+    return QIcon();
+}

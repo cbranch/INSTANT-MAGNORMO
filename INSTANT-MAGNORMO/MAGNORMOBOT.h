@@ -26,6 +26,7 @@
 #include <QThread>
 #include <QString>
 #include <QSharedPointer>
+#include <QIcon>
 #include "MessageStuff.h"
 #include "account.h"
 #include <string>
@@ -80,6 +81,7 @@ class MAGNORMOBOT : public QThread, MessageSessionHandler, ConnectionListener, L
     virtual void handleRosterError (const IQ &iq);
 
     Account* getAccount();
+    QIcon getAccountIcon();
 private:
     Client *j;
     map<QString,MessageStuff*> messageStuffMap;

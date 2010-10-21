@@ -8,6 +8,7 @@
 #include <QWeakPointer>
 #include "MAGNORMOBOT.h"
 #include "Contact.h"
+#include "account.h"
 
 struct ContactGroup
 {
