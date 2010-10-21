@@ -149,7 +149,7 @@ void ContactModel::addBot(MAGNORMOBOT *bot)
     connect(bot, SIGNAL(contactUpdated(QString)), SLOT(updateContact(QString)));
     connect(bot, SIGNAL(contactRemoved(QString)), SLOT(removeContact(QString)));
 	connect(bot, SIGNAL(contactListReceived()), SLOT(receiveContactList()));
-	connect(bot, SIGNAL(disconnected()), SLOT(botDisconnected()));
+	connect(bot, SIGNAL(disconnected()), SLOT(botDisconnected()), Qt::QueuedConnection);
 	connect(bot, SIGNAL(destroyed()), SLOT(botDestroyed()));
     refreshContacts(bot);
 }
@@ -157,14 +157,20 @@ void ContactModel::addBot(MAGNORMOBOT *bot)
 void ContactModel::botDisconnected()
 {
 	MAGNORMOBOT *bot = qobject_cast<MAGNORMOBOT*>(sender());
+	beginResetModel();
 	removeContacts(bot);
+	endResetModel();
 }
 
 void ContactModel::botDestroyed()
 {
 	MAGNORMOBOT *bot = qobject_cast<MAGNORMOBOT*>(sender());
 	conduits.removeOne(bot);
-	removeContacts(bot);
+	if (hasContacts(bot)) {
+		beginResetModel();
+		removeContacts(bot);
+		endResetModel();
+	}
 }
 
 QList<QModelIndex> ContactModel::getIndexesOfContact(Contact contact)
@@ -258,16 +264,34 @@ void ContactModel::refreshContacts(MAGNORMOBOT *bot)
 void ContactModel::removeContacts(MAGNORMOBOT *bot)
 {
 	// Filter out contacts and groups belonging to the magnormobot
+	GroupIterator group = groups.begin();
+	while (group != groups.end()) {
+		ContactGroup *cg = group.value();
+		QList<Contact>::iterator contact = cg->contacts.begin();
+		while (contact != cg->contacts.end()) {
+			if (contact->conduit.data() == bot)
+				contact = cg->contacts.erase(contact);
+			else
+				contact++;
+		}
+		if (cg->contacts.empty()) {
+			delete *group;
+			group = groups.erase(group);
+		} else {
+			group++;
+		}
+	}
+}
+
+bool ContactModel::hasContacts(MAGNORMOBOT *bot)
+{
 	for (GroupIterator group = groups.begin(); group != groups.end(); group++) {
 		ContactGroup *cg = group.value();
 		for (QList<Contact>::iterator contact = cg->contacts.begin();
 				contact != cg->contacts.end(); contact++) {
 			if (contact->conduit.data() == bot)
-				cg->contacts.erase(contact);
-		}
-		if (cg->contacts.empty()) {
-			delete *group;
-			groups.erase(group);
+				return true;
 		}
 	}
+	return false;
 }
