@@ -1,19 +1,7 @@
 #include "mainwindow.h"
-#include <QDockWidget>
-#include "contactlist.h"
-#include "contactmodel.h"
-#include "statuswidget.h"
-#include "conversationwidget.h"
-#include "MAGNORMOBOT.h"
-#include "Contact.h"
-#include <QProgressBar>
-#include <QLabel>
-#include <QTreeWidget>
-#include "connectionmanger.h"
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    bot(0)
+    QMainWindow(parent)
 {
     // Set style sheet here
     setTheme(":/styles/default.magstyle");
@@ -177,4 +165,12 @@ void MainWindow::setTheme(QString themeLocation)
         QTextStream out(&theme);
         qApp->setStyleSheet(out.readAll());
     }
+}
+
+void MainWindow::readSettings()
+{
+}
+
+void MainWindow::writeSettings()
+{
 }

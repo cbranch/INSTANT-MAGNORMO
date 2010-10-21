@@ -7,7 +7,19 @@
 #include <QToolBar>
 #include <QFile>
 #include <QAction>
+#include <QDockWidget>
+#include <QProgressBar>
+#include <QLabel>
+#include <QTreeWidget>
+
 #include "accountmanagerdialog.h"
+#include "contactlist.h"
+#include "contactmodel.h"
+#include "statuswidget.h"
+#include "conversationwidget.h"
+#include "MAGNORMOBOT.h"
+#include "Contact.h"
+#include "connectionmanger.h"
 
 class ContactList;
 class StatusWidget;
@@ -43,8 +55,10 @@ protected:
     void connectAccount(QString username, QString password, QString server, int port);
     void setTheme(QString themeLocation);
 
+    void readSettings();
+    void writeSettings();
+
 public:
-    MAGNORMOBOT *bot;
     void startAccountManager(bool specificRequest);
 
 public slots:
