@@ -53,6 +53,10 @@ public slots:
     void refreshContacts(MAGNORMOBOT *bot);
 	void removeContacts(MAGNORMOBOT *bot);
 
+protected slots:
+	void botDisconnected();
+	void botDestroyed();
+
 protected:
     QList<MAGNORMOBOT*> conduits;
 
