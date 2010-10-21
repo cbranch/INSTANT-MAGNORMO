@@ -49,8 +49,6 @@ void ConnectionManger::disconnectAccount(Account *acc)
             qDebug() << "Removed from list";
             b->disconnect();
             qDebug() << "Disconnected MAGNORMOBOT";
-            //delete(b);
-            //qDebug() << "Deleted MAGNORMOBOT";
         }
     }
 }
