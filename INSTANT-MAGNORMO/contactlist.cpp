@@ -29,6 +29,8 @@ void ContactList::setModel(QAbstractItemModel *model)
     contactTree->setSortingEnabled(true);
     contactTree->sortByColumn(0, Qt::AscendingOrder);
     connect(model, SIGNAL(modelReset()), contactTree, SLOT(expandAll()));
+	connect(model, SIGNAL(modelReset()), SLOT(setGroupProperties()));
+	connect(model, SIGNAL(rowsInserted(QModelIndex,int,int)), SLOT(setGroupProperties(QModelIndex,int,int)));
 }
 
 void ContactList::contactActivated(const QModelIndex &index)
@@ -36,4 +38,20 @@ void ContactList::contactActivated(const QModelIndex &index)
 	QVariant data = index.data(ContactModel::ContactRole);
     if (data.isValid())
 		emit conversationInitiated(data.value<Contact>());
+}
+
+void ContactList::setGroupProperties()
+{
+	QAbstractItemModel *model = contactTree->model();
+	QModelIndex root = contactTree->rootIndex();
+	int count = model->rowCount(root);
+	for (int i = 0; i <= count; i++)
+		contactTree->setFirstColumnSpanned(i, root, true);
+}
+
+void ContactList::setGroupProperties(const QModelIndex &parent, int start, int end)
+{
+	if (!parent.isValid())
+		for (int i = start; i <= end; i++)
+			contactTree->setFirstColumnSpanned(i, parent, true);
 }

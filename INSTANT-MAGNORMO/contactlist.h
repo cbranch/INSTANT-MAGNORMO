@@ -20,6 +20,8 @@ signals:
 
 private slots:
     void contactActivated(const QModelIndex &index);
+	void setGroupProperties();
+	void setGroupProperties(const QModelIndex &parent, int start, int end);
 
 protected:
     QTreeView *contactTree;

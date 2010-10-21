@@ -25,7 +25,7 @@ QVariant ContactModel::data(const QModelIndex &index, int role) const
         // Groups
         switch (role) {
         case Qt::DisplayRole:
-            if(index.column()==1)
+            if(index.column()==0)
                 return groups.keys().at(index.row());
         }
     } else {
@@ -90,7 +90,9 @@ QVariant ContactModel::data(const QModelIndex &index, int role) const
 QVariant ContactModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     switch (section) {
-    case 0:
+	case 0:
+		return tr("Account");
+    case 1:
         return tr("Contact");
     }
     return QVariant();
@@ -114,7 +116,7 @@ int ContactModel::rowCount(const QModelIndex &parent) const
 
 int ContactModel::columnCount(const QModelIndex &parent) const
 {
-    return 2;
+	return 2;
 }
 
 QModelIndex ContactModel::index(int row, int column, const QModelIndex &parent) const
