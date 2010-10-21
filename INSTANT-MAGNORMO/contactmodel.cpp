@@ -149,7 +149,22 @@ void ContactModel::addBot(MAGNORMOBOT *bot)
     connect(bot, SIGNAL(contactUpdated(QString)), SLOT(updateContact(QString)));
     connect(bot, SIGNAL(contactRemoved(QString)), SLOT(removeContact(QString)));
 	connect(bot, SIGNAL(contactListReceived()), SLOT(receiveContactList()));
+	connect(bot, SIGNAL(disconnected()), SLOT(botDisconnected()));
+	connect(bot, SIGNAL(destroyed()), SLOT(botDestroyed()));
     refreshContacts(bot);
+}
+
+void ContactModel::botDisconnected()
+{
+	MAGNORMOBOT *bot = qobject_cast<MAGNORMOBOT*>(sender());
+	removeContacts(bot);
+}
+
+void ContactModel::botDestroyed()
+{
+	MAGNORMOBOT *bot = qobject_cast<MAGNORMOBOT*>(sender());
+	conduits.removeOne(bot);
+	removeContacts(bot);
 }
 
 QList<QModelIndex> ContactModel::getIndexesOfContact(Contact contact)
