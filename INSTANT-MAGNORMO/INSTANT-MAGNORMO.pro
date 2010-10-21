@@ -6,7 +6,7 @@ QT += network \
 LIBS = -lgloox
 !win32:LIBS += -lgnutls -lresolv -pthread
 win32 {
-  LIBS += -lzlibwapi
+  #LIBS += -lzlibwapi
   debug:LIBS += -L../Debug
   release:LIBS += -L../Release
   DEFINES += ZLIB_WINAPI GLOOX_IMPORTS
