@@ -3,7 +3,7 @@
 
 MAGNORMOBOT::MAGNORMOBOT(Account *acc) :
     j(0),
-        username(acc->user.toUtf8().data()),
+    username(acc->user.toUtf8().data()),
     password(acc->password.toUtf8().data()),
     server(acc->server.toUtf8().data()),
     port(acc->port)
@@ -13,6 +13,7 @@ MAGNORMOBOT::MAGNORMOBOT(Account *acc) :
 
 MAGNORMOBOT::~MAGNORMOBOT()
 {
+	delete j;
 }
 
 void MAGNORMOBOT::run()
@@ -33,18 +34,7 @@ void MAGNORMOBOT::run()
 
     j->logInstance().registerLogHandler( LogLevelDebug, LogAreaAll, this );
 
-
-    if( j->connect( false ) )
-    {
-        ConnectionError ce = ConnNoError;
-        while( ce == ConnNoError )
-        {
-            ce = j->recv();
-        }
-        qDebug( "ce: %d\n", ce );
-    }
-
-    delete( j );
+    j->connect(true);
 }
 
 void MAGNORMOBOT::sendMessage(QString jid, QString msg)
@@ -267,6 +257,5 @@ QIcon MAGNORMOBOT::getAccountIcon()
 
 void MAGNORMOBOT::disconnect()
 {
-    emit disconnected();
     j->disconnect();
 }
