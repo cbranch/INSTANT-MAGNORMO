@@ -50,6 +50,7 @@ void ConnectionManger::disconnectAccount(Account *acc)
             qDebug() << "Removed from list";
             b->disconnect();
             qDebug() << "Disconnected MAGNORMOBOT";
+            return;
         }
     }
 }

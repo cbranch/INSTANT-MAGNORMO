@@ -263,7 +263,7 @@ void ContactModel::removeContacts(MAGNORMOBOT *bot)
 		for (QList<Contact>::iterator contact = cg->contacts.begin();
 				contact != cg->contacts.end(); contact++) {
 			if (contact->conduit.data() == bot)
-				cg->contacts.erase(contact);
+                cg->contacts.erase(contact);
 		}
 		if (cg->contacts.empty()) {
 			delete *group;
