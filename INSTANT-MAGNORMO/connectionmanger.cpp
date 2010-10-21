@@ -18,7 +18,6 @@ void ConnectionManger::connectAccount(Account *acc)
         MAGNORMOBOT *b = *itr;
         Account *thisAccount = b->getAccount();
         if(*thisAccount==*acc) {
-            qDebug() << "Already connected to " << acc->user << " " << acc->server;
             return;
         }
     }
@@ -35,6 +34,8 @@ void ConnectionManger::connectAccount(Account *acc)
     bot->start();
 
     connectionList.append(bot);
+
+    qDebug() << "Connected to account" << acc->user << " " << acc->server;
 }
 
 void ConnectionManger::disconnectAccount(Account *acc)
