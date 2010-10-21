@@ -14,12 +14,13 @@ win32 {
 
   release:DESTDIR = ../Release
   debug:DESTDIR = ../Debug
-  debug:QMAKE_CXXFLAGS = /Fd"..\\Debug\\"
   OBJECTS_DIR = $$DESTDIR/.obj
   MOC_DIR = $$DESTDIR/.moc
   RCC_DIR = $$DESTDIR/.rcc
   UI_DIR = $$DESTDIR/.ui
 }
+# move project dependency info
+win32-msvc2008:debug:QMAKE_CXXFLAGS = /Fd"..\\Debug\\"
 
 TARGET = INSTANT-MAGNORMO
 TEMPLATE = app
