@@ -2,8 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QtGui/QMainWindow>
+#include <QtGui/QApplication>
 #include <QHash>
 #include <QToolBar>
+#include <QFile>
 #include <QAction>
 #include "accountmanagerdialog.h"
 
@@ -39,6 +41,7 @@ protected:
 
     void createToolBar();
     void connectAccount(QString username, QString password, QString server, int port);
+    void setTheme(QString themeLocation);
 
 public:
     MAGNORMOBOT *bot;

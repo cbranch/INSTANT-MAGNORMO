@@ -15,6 +15,10 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     bot(0)
 {
+    // Set style sheet here
+    setTheme(":/styles/default.magstyle");
+
+    // Docking shit
     setDockOptions(QMainWindow::AllowNestedDocks | QMainWindow::AllowTabbedDocks | QMainWindow::AnimatedDocks);
 
     // Contact List
@@ -164,4 +168,13 @@ void MainWindow::getAccountManager()
 void MainWindow::getContactWindow()
 {
     contactListDock->setVisible(true);
+}
+
+void MainWindow::setTheme(QString themeLocation)
+{
+    QFile theme(themeLocation);
+    if (theme.open(QFile::ReadOnly)) {
+        QTextStream out(&theme);
+        qApp->setStyleSheet(out.readAll());
+    }
 }

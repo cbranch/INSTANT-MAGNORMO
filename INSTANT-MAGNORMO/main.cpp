@@ -16,13 +16,6 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationDomain("joshfyne.com");
     QCoreApplication::setApplicationName("INSTANT_MAGNORMO");
 
-	{
-		QFile styleSheet(":/styles.css");
-		if (styleSheet.open(QFile::ReadOnly)) {
-			QTextStream out(&styleSheet);
-			qApp->setStyleSheet(out.readAll());
-		}
-	}
 
     MainWindow w;
     w.startAccountManager(false);

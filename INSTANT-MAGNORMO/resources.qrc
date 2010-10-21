@@ -12,6 +12,6 @@
         <file alias="gtalk">icons/gtalk.png</file>
     </qresource>
     <qresource prefix="/">
-        <file>styles.css</file>
+        <file>styles/default.magstyle</file>
     </qresource>
 </RCC>
