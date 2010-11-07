@@ -47,3 +47,19 @@ void ConversationWidget::on_lineEdit_returnPressed()
     ui->lineEdit->setText(QString(""));
     emit sendMessage(jid,message);
 }
+
+void ConversationWidget::on_pushButton_clicked()
+{
+    QPixmap screenShot = QPixmap::grabWindow(QApplication::desktop()->winId());
+
+    QString format = "png";
+    QString initialPath = QDir::currentPath() + tr("/untitled.") + format;
+
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save As"),
+                                                    initialPath,
+                                                    tr("%1 Files (*.%2);;All Files (*)")
+                                                    .arg(format.toUpper())
+                                                    .arg(format));
+    if (!fileName.isEmpty())
+        screenShot.save(fileName, format.toAscii());
+}

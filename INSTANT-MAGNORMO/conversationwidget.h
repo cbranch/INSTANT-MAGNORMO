@@ -2,7 +2,12 @@
 #define CONVERSATIONWIDGET_H
 
 #include <QWidget>
+#include <QApplication>
+#include <QDesktopWidget>
 #include <QString>
+#include <QPixmap>
+#include <QFileDialog>
+#include <QDir>
 #include <cstdio>
 
 namespace Ui {
@@ -35,6 +40,7 @@ public:
 
 
 private slots:
+    void on_pushButton_clicked();
     void on_lineEdit_returnPressed();
 };
 
