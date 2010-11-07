@@ -151,7 +151,8 @@ void MainWindow::createToolBar()
 
 	// Window menu
     QAction *closeAction = toolBar->addAction(QIcon(":/icons/close"),"BE A QUITTER");
-    connect(closeAction,SIGNAL(triggered()),this,SLOT(close()));
+	QApplication *app = static_cast<QApplication *>(QCoreApplication::instance());
+    connect(closeAction, SIGNAL(triggered()), app, SLOT(quit()));
 }
 
 void MainWindow::getAccountManager()
