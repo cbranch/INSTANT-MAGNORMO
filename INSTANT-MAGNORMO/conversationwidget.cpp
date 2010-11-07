@@ -75,9 +75,6 @@ void ConversationWidget::finishedImageUpload(QNetworkReply *reply)
 
     while(!xml.atEnd()) {
         QXmlStreamReader::TokenType token = xml.readNext();
-        if(token==QXmlStreamReader::StartDocument) {
-            continue;
-        }
         if(token==QXmlStreamReader::StartElement) {
             if(xml.name()=="original") {
                 xml.readNext();
