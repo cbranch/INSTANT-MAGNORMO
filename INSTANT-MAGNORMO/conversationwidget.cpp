@@ -74,15 +74,16 @@ void ConversationWidget::finishedImageUpload(QNetworkReply *reply)
     QXmlStreamReader xml(reply->readAll());
 
     while(!xml.atEnd()) {
-        xml.readNext();
-        // Find the image link here
-    }
-
-    QList<QByteArray> headerList = reply->rawHeaderList();
-    QList<QByteArray>::iterator itr;
-    for(itr=headerList.begin();itr<headerList.end();++itr) {
-        QByteArray bytes = *itr;
-        QString stuff(bytes);
-        qDebug(stuff.toStdString().c_str());
+        QXmlStreamReader::TokenType token = xml.readNext();
+        if(token==QXmlStreamReader::StartDocument) {
+            continue;
+        }
+        if(token==QXmlStreamReader::StartElement) {
+            if(xml.name()=="original") {
+                xml.readNext();
+                emit sendMessage(jid,QString("Sceenshot: ")+xml.text().toString());
+                return;
+            }
+        }
     }
 }
