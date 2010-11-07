@@ -121,17 +121,15 @@ bool MAGNORMOBOT::onTLSConnect( const CertInfo& info )
 void MAGNORMOBOT::handleMessage( const Message& msg, MessageSession *session )
 {
     // JID of who this message was from
-    QString thisJID = QString(session->target().full().c_str());
-
-    // Trim the resource jazz
-    int resourceIndex = thisJID.indexOf("/");
-    if(resourceIndex!=-1) {
-        thisJID = thisJID.left(resourceIndex);
-    }
+    QString thisJID = QString(session->target().bare().c_str());
 
     // Test to see if the chat window needed is open or not
     map<QString,MessageStuff*>::iterator msIt;
     msIt = messageStuffMap.find(thisJID);
+	if (msIt == messageStuffMap.end()) {
+		// Not in there yet
+		qFatal("urrr how did we get here");
+	}
     MessageStuff *ms = (*msIt).second;
     if(!ms->chatWindowOpen) {
         // If its not open it
@@ -174,7 +172,7 @@ MessageStuff* MAGNORMOBOT::createMessageStuff(MessageSession *session)
     ms->stateFilter->registerChatStateHandler(this);
     ms->chatWindowOpen = false;
 
-    messageStuffMap[QString(session->target().full().c_str())] = ms;
+    messageStuffMap[QString(session->target().bare().c_str())] = ms;
 
     return ms;
 }
@@ -186,7 +184,7 @@ void MAGNORMOBOT::handleLog( LogLevel level, LogArea area, const std::string& me
 
 void MAGNORMOBOT::handleItemAdded (const JID &jid)
 {
-    emit contactAdded(QString::fromUtf8(jid.full().c_str()));
+    emit contactAdded(QString::fromUtf8(jid.bare().c_str()));
 }
 
 void MAGNORMOBOT::handleItemSubscribed (const JID &jid)
@@ -195,12 +193,12 @@ void MAGNORMOBOT::handleItemSubscribed (const JID &jid)
 
 void MAGNORMOBOT::handleItemRemoved (const JID &jid)
 {
-    emit contactRemoved(QString::fromUtf8(jid.full().c_str()));
+    emit contactRemoved(QString::fromUtf8(jid.bare().c_str()));
 }
 
 void MAGNORMOBOT::handleItemUpdated (const JID &jid)
 {
-    emit contactUpdated(QString::fromUtf8(jid.full().c_str()));
+    emit contactUpdated(QString::fromUtf8(jid.bare().c_str()));
 }
 
 void MAGNORMOBOT::handleItemUnsubscribed (const JID &jid)
