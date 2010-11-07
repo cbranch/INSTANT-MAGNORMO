@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QApplication>
 #include <QDesktopWidget>
+#include <QDesktopServices>
 #include <QString>
 #include <QPixmap>
 #include <QFileDialog>
@@ -52,6 +53,7 @@ private slots:
     void on_pushButton_clicked();
     void on_lineEdit_returnPressed();
     void finishedImageUpload(QNetworkReply *reply);
+    void handleClickedLink(QUrl link);
 };
 
 #endif // CONVERSATIONWIDGET_H

@@ -8,6 +8,7 @@ ConversationWidget::ConversationWidget(QString jid, QWidget *parent) :
     jid(jid)
 {
     ui->setupUi(this);
+    connect(ui->textEdit,SIGNAL(anchorClicked(QUrl)),this,SLOT(handleClickedLink(QUrl)));
 }
 
 ConversationWidget::~ConversationWidget()
@@ -44,6 +45,7 @@ void ConversationWidget::onVisibleChange(bool visible)
 void ConversationWidget::on_lineEdit_returnPressed()
 {
     QString message = ui->lineEdit->text();
+    if(message=="") return;
     ui->lineEdit->setText(QString(""));
     emit sendMessage(jid,message);
 }
@@ -94,7 +96,7 @@ void ConversationWidget::finishedImageUpload(QNetworkReply *reply)
         if(token==QXmlStreamReader::StartElement) {
             if(xml.name()=="original") {
                 xml.readNext();
-                emit sendMessage(jid,xml.text().toString());
+                emit sendMessage(jid,QString("<a href=\"")+xml.text().toString()+QString("\">CHECK IT OUT</a>"));
                 return;
             }
         }
@@ -103,3 +105,9 @@ void ConversationWidget::finishedImageUpload(QNetworkReply *reply)
     // If we make it this far it didnt work
     ui->textEdit->append("...that totally didnt work...");
 }
+
+void ConversationWidget::handleClickedLink(QUrl link)
+{
+    QDesktopServices::openUrl(link);
+}
+
