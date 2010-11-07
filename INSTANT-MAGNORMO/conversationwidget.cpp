@@ -61,7 +61,7 @@ void ConversationWidget::on_pushButton_clicked()
     buffer.open(QIODevice::WriteOnly);
     screenShot.save(&buffer,"PNG");
 
-    QUrl url("http://api.imgur.com/2/upload");
+    QUrl url("http://api.imgur.com/2/upload.xml");
     QByteArray data;
     data.append(QString("image=").toUtf8());
     data.append(imageBytes);
@@ -71,6 +71,10 @@ void ConversationWidget::on_pushButton_clicked()
 
 void ConversationWidget::finishedImageUpload(QNetworkReply *reply)
 {
+    QByteArray theResponse = reply->readAll();
+    QString stuff(theResponse);
+    qDebug(stuff.toStdString().c_str());
+
     QList<QByteArray> headerList = reply->rawHeaderList();
     QList<QByteArray>::iterator itr;
     for(itr=headerList.begin();itr<headerList.end();++itr) {
