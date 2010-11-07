@@ -52,14 +52,30 @@ void ConversationWidget::on_pushButton_clicked()
 {
     QPixmap screenShot = QPixmap::grabWindow(QApplication::desktop()->winId());
 
-    QString format = "png";
-    QString initialPath = QDir::currentPath() + tr("/untitled.") + format;
+    QNetworkAccessManager *nam = new QNetworkAccessManager(this);
+    connect(nam,SIGNAL(finished(QNetworkReply*)),this,SLOT(finishedImageUpload(QNetworkReply*)));
 
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save As"),
-                                                    initialPath,
-                                                    tr("%1 Files (*.%2);;All Files (*)")
-                                                    .arg(format.toUpper())
-                                                    .arg(format));
-    if (!fileName.isEmpty())
-        screenShot.save(fileName, format.toAscii());
+    // Convert screenshot to bytearray
+    QByteArray imageBytes;
+    QBuffer buffer(&imageBytes);
+    buffer.open(QIODevice::WriteOnly);
+    screenShot.save(&buffer,"PNG");
+
+    QUrl url("http://api.imgur.com/2/upload");
+    QByteArray data;
+    data.append(QString("image=").toUtf8());
+    data.append(imageBytes);
+    data.append(QString("&key=6ac90b313a7090ef63a05de4acef2418").toUtf8());
+    nam->post(QNetworkRequest(url),data);
+}
+
+void ConversationWidget::finishedImageUpload(QNetworkReply *reply)
+{
+    QList<QByteArray> headerList = reply->rawHeaderList();
+    QList<QByteArray>::iterator itr;
+    for(itr=headerList.begin();itr<headerList.end();++itr) {
+        QByteArray bytes = *itr;
+        QString stuff(bytes);
+        qDebug(stuff.toStdString().c_str());
+    }
 }

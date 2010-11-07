@@ -8,6 +8,14 @@
 #include <QPixmap>
 #include <QFileDialog>
 #include <QDir>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QNetworkRequest>
+#include <QUrl>
+#include <QByteArray>
+#include <QBuffer>
+#include <QIODevice>
+#include <QList>
 #include <cstdio>
 
 namespace Ui {
@@ -42,6 +50,7 @@ public:
 private slots:
     void on_pushButton_clicked();
     void on_lineEdit_returnPressed();
+    void finishedImageUpload(QNetworkReply *reply);
 };
 
 #endif // CONVERSATIONWIDGET_H
