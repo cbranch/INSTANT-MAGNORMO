@@ -16,6 +16,16 @@ ConversationWidget::~ConversationWidget()
     delete ui;
 }
 
+QString ConversationWidget::getRichMessage(QString original)
+{
+	QRegExp linkify("((?:http|https|ftp)://\\S*)");
+	original.replace(linkify, tr("<a href=\"\\1\">\\1</a>"));
+	QRegExp linkifyFuzzy("\b(www\.\\S*)");
+	original.replace(linkifyFuzzy, tr("<a href=\"\\1\">\\1</a>"));
+
+	return original;
+}
+
 void ConversationWidget::changeEvent(QEvent *e)
 {
     QWidget::changeEvent(e);
@@ -32,7 +42,7 @@ void ConversationWidget::messageRevieved(QString msg, QString jid)
 {
     if(jid==this->jid) {
         qApp->alert(this,3000);
-        ui->textEdit->append(msg);
+        ui->textEdit->append(getRichMessage(msg));
     }
 }
 

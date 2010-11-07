@@ -31,6 +31,8 @@ public:
     explicit ConversationWidget(QString jid, QWidget *parent = 0);
     ~ConversationWidget();
 
+	QString getRichMessage(QString original);
+
 protected:
     void changeEvent(QEvent *e);
 
