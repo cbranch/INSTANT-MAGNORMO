@@ -71,8 +71,8 @@ void ConversationWidget::on_pushButton_clicked()
 	QString boundary = "--" + boundaryString + crlf;
 	QByteArray multipart;
 	multipart.append(boundary);
-	multipart.append(QString("Content-Disposition: form-data; name=\"image\"; filename=\"screenshot.png\"" + crlf).toAscii());
-	multipart.append(QString("Content-Type: image/png" + crlf + crlf).toAscii());
+	multipart.append(QString("Content-Disposition: form-data; name=\"image\"; filename=\"screenshot.png\"" + crlf));
+	multipart.append(QString("Content-Type: image/png" + crlf + crlf));
 	multipart.append(imageBytes);
 	multipart.append(QString(crlf + "--" + boundaryString + "--" + crlf));
 
