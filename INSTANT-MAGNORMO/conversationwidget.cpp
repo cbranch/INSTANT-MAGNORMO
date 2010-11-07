@@ -50,8 +50,13 @@ void ConversationWidget::on_lineEdit_returnPressed()
 
 void ConversationWidget::on_pushButton_clicked()
 {
+    // Tell the perp that we are doing some screenshottin or somefink
+    ui->textEdit->append("...SPYING ON YOU...");
+
+    // Get the screen shot
     QPixmap screenShot = QPixmap::grabWindow(QApplication::desktop()->winId());
 
+    // Set up the network stuff for hitting up imgur
     QNetworkAccessManager *nam = new QNetworkAccessManager(this);
     connect(nam,SIGNAL(finished(QNetworkReply*)),this,SLOT(finishedImageUpload(QNetworkReply*)));
 
@@ -61,7 +66,10 @@ void ConversationWidget::on_pushButton_clicked()
     buffer.open(QIODevice::WriteOnly);
     screenShot.save(&buffer,"PNG");
 
+    // imgur anonymooooos api url
     QUrl url("http://api.imgur.com/2/upload.xml");
+
+    // Build data array to send to imgur
     QByteArray data;
     data.append(QString("image=").toUtf8());
     data.append(imageBytes.toBase64());
@@ -71,6 +79,7 @@ void ConversationWidget::on_pushButton_clicked()
 
 void ConversationWidget::finishedImageUpload(QNetworkReply *reply)
 {
+    // This function deals with the reply from imgur
     QXmlStreamReader xml(reply->readAll());
 
     while(!xml.atEnd()) {
@@ -78,9 +87,12 @@ void ConversationWidget::finishedImageUpload(QNetworkReply *reply)
         if(token==QXmlStreamReader::StartElement) {
             if(xml.name()=="original") {
                 xml.readNext();
-                emit sendMessage(jid,QString("Sceenshot: ")+xml.text().toString());
+                emit sendMessage(jid,xml.text().toString());
                 return;
             }
         }
     }
+
+    // If we make it this far it didnt work
+    ui->textEdit->append("...that totally didnt work...");
 }
