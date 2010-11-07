@@ -66,21 +66,28 @@ void ConversationWidget::on_pushButton_clicked()
     buffer.open(QIODevice::WriteOnly);
     screenShot.save(&buffer,"PNG");
 
-    // imgur anonymooooos api url
-    QUrl url("http://api.imgur.com/2/upload.xml");
+	QString crlf("\r\n");
+	QString boundaryString("----------------991719012056841984089743414380");
+	QString boundary = "--" + boundaryString + crlf;
+	QByteArray multipart;
+	multipart.append(boundary);
+	multipart.append(QString("Content-Disposition: form-data; name=\"image\"; filename=\"screenshot.png\"" + crlf).toAscii());
+	multipart.append(QString("Content-Type: image/png" + crlf + crlf).toAscii());
+	multipart.append(imageBytes);
+	multipart.append(QString(crlf + "--" + boundaryString + "--" + crlf));
 
-    // Build data array to send to imgur
-    QByteArray data;
-    data.append(QString("image=").toUtf8());
-    data.append(imageBytes.toBase64());
-    data.append(QString("&key=6ac90b313a7090ef63a05de4acef2418").toUtf8());
-    nam->post(QNetworkRequest(url),data);
+	// imgur anonymooooos api url
+    QString url("http://api.imgur.com/2/upload.xml");
+	QString query("?key=6ac90b313a7090ef63a05de4acef2418");
+	QNetworkRequest request(QUrl(url + query));
+	request.setHeader(QNetworkRequest::ContentTypeHeader, "multipart/form-data; boundary=" + boundaryString);
+    nam->post(request, multipart);
 }
 
 void ConversationWidget::finishedImageUpload(QNetworkReply *reply)
 {
     // This function deals with the reply from imgur
-    QXmlStreamReader xml(reply->readAll());
+    QXmlStreamReader xml(reply);
 
     while(!xml.atEnd()) {
         QXmlStreamReader::TokenType token = xml.readNext();
