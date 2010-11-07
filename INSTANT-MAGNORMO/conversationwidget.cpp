@@ -71,9 +71,12 @@ void ConversationWidget::on_pushButton_clicked()
 
 void ConversationWidget::finishedImageUpload(QNetworkReply *reply)
 {
-    QByteArray theResponse = reply->readAll();
-    QString stuff(theResponse);
-    qDebug(stuff.toStdString().c_str());
+    QXmlStreamReader xml(reply->readAll());
+
+    while(!xml.atEnd()) {
+        xml.readNext();
+        // Find the image link here
+    }
 
     QList<QByteArray> headerList = reply->rawHeaderList();
     QList<QByteArray>::iterator itr;

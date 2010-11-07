@@ -16,6 +16,7 @@
 #include <QBuffer>
 #include <QIODevice>
 #include <QList>
+#include <QXmlStreamReader>
 #include <cstdio>
 
 namespace Ui {
