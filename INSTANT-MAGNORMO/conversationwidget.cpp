@@ -64,7 +64,7 @@ void ConversationWidget::on_pushButton_clicked()
     QUrl url("http://api.imgur.com/2/upload.xml");
     QByteArray data;
     data.append(QString("image=").toUtf8());
-    data.append(imageBytes);
+    data.append(imageBytes.toBase64());
     data.append(QString("&key=6ac90b313a7090ef63a05de4acef2418").toUtf8());
     nam->post(QNetworkRequest(url),data);
 }
