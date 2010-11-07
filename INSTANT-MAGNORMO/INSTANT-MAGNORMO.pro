@@ -35,7 +35,8 @@ SOURCES += main.cpp \
     contactsortfilterproxymodel.cpp \
     accountmanagerdialog.cpp \
     account.cpp \
-    connectionmanger.cpp
+    connectionmanger.cpp \
+    QAppBar.cpp
 HEADERS += mainwindow.h \
     contactlist.h \
     conversationwidget.h \
@@ -48,7 +49,8 @@ HEADERS += mainwindow.h \
     contactsortfilterproxymodel.h \
     account.h \
     accountmanagerdialog.h \
-    connectionmanger.h
+    connectionmanger.h \
+    QAppBar.h
 FORMS += accountdialog.ui \
     conversationwidget.ui \
     accountmanagerdialog.ui
