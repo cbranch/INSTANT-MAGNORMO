@@ -96,7 +96,7 @@ void ConversationWidget::finishedImageUpload(QNetworkReply *reply)
         if(token==QXmlStreamReader::StartElement) {
             if(xml.name()=="original") {
                 xml.readNext();
-                emit sendMessage(jid,QString("<a href=\"")+xml.text().toString()+QString("\">CHECK IT OUT</a>"));
+                emit sendMessage(jid, tr("CHECK IT OUT: ") + xml.text().toString());
                 return;
             }
         }
