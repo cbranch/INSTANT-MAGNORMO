@@ -58,6 +58,8 @@ protected:
     void readSettings();
     void writeSettings();
 
+	void closeEvent(QCloseEvent *event);
+
 public:
     void startAccountManager(bool specificRequest);
 

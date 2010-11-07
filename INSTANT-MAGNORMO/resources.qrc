@@ -10,6 +10,7 @@
         <file alias="contacts">icons/users.png</file>
         <file alias="facebook">icons/facebook.png</file>
         <file alias="gtalk">icons/gtalk.png</file>
+        <file alias="close">icons/cross-circle.png</file>
     </qresource>
     <qresource prefix="/">
         <file>styles/default.magstyle</file>

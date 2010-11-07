@@ -36,6 +36,8 @@ MainWindow::MainWindow(QWidget *parent) :
     toolBar = new QToolBar(this);
     createToolBar();
     this->addToolBar(toolBar);
+
+	readSettings();
 }
 
 MainWindow::~MainWindow()
@@ -146,6 +148,10 @@ void MainWindow::createToolBar()
     // Window menu
     QAction *contactWindowAction = toolBar->addAction(QIcon(":/icons/contacts"),"YOUR SUPPOSED \"MATES\"");
     connect(contactWindowAction,SIGNAL(triggered()),this,SLOT(getContactWindow()));
+
+	// Window menu
+    QAction *closeAction = toolBar->addAction(QIcon(":/icons/close"),"BE A QUITTER");
+    connect(closeAction,SIGNAL(triggered()),this,SLOT(close()));
 }
 
 void MainWindow::getAccountManager()
@@ -169,8 +175,20 @@ void MainWindow::setTheme(QString themeLocation)
 
 void MainWindow::readSettings()
 {
+	QSettings settings;
+	restoreGeometry(settings.value("geometry").toByteArray());
+	restoreState(settings.value("windowState").toByteArray());
 }
 
 void MainWindow::writeSettings()
 {
+	QSettings settings;
+    settings.setValue("geometry", saveGeometry());
+    settings.setValue("windowState", saveState());
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+	writeSettings();
+    QMainWindow::closeEvent(event);
 }
