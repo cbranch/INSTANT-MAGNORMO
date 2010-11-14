@@ -26,7 +26,10 @@ void ContactList::setModel(QAbstractItemModel *model)
     proxyModel->setSourceModel(model);
     contactTree->setModel(proxyModel);
     contactTree->setSortingEnabled(true);
+	contactTree->setIndentation(0);
     contactTree->sortByColumn(0, Qt::AscendingOrder);
+	contactTree->setColumnWidth(0,18);
+	contactTree->setRootIsDecorated(false);
     connect(model, SIGNAL(modelReset()), contactTree, SLOT(expandAll()));
 	connect(model, SIGNAL(modelReset()), SLOT(setGroupProperties()));
 	connect(model, SIGNAL(rowsInserted(QModelIndex,int,int)), SLOT(setGroupProperties(QModelIndex,int,int)));
