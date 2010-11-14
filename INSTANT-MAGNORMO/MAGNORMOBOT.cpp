@@ -37,6 +37,16 @@ void MAGNORMOBOT::run()
     j->connect(true);
 }
 
+static JID stringToJid(QString jid)
+{
+	return JID(jid.toStdString());
+}
+
+static QString jidToString(const JID &jid)
+{
+	return QString::fromUtf8(jid.bare().c_str());
+}
+
 void MAGNORMOBOT::sendMessage(QString jid, QString msg)
 {
     MessageStuff *ms;
