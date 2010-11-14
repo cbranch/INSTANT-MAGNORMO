@@ -22,6 +22,10 @@
 #include <gloox/rostermanager.h>
 #include <gloox/rosterlistener.h>
 #include <gloox/presence.h>
+#include <gloox/vcardmanager.h>
+#include <gloox/vcardhandler.h>
+#include <gloox/vcard.h>
+#include <gloox/stanza.h>
 
 #include <QThread>
 #include <QString>
@@ -41,10 +45,12 @@ namespace gloox {
     class Client;
     class MessageEventFilter;
     class ChatStateFilter;
+	class VCardHandler;
 }
 
 class MAGNORMOBOT : public QThread, MessageSessionHandler, ConnectionListener, LogHandler,
-                           MessageEventHandler, MessageHandler, ChatStateHandler, RosterListener
+                           MessageEventHandler, MessageHandler, ChatStateHandler, RosterListener,
+						   VCardHandler
 {
     Q_OBJECT
 
@@ -61,6 +67,7 @@ class MAGNORMOBOT : public QThread, MessageSessionHandler, ConnectionListener, L
 	static QString jidToString(const JID &jid);
     QString getNameFromJid(QString jid);
     RosterItem* getRosterItemFromJid(QString jid);
+	void getVCardFromJid(QString jid);
 
     virtual void onConnect();
     virtual void onDisconnect( ConnectionError e );
@@ -82,6 +89,8 @@ class MAGNORMOBOT : public QThread, MessageSessionHandler, ConnectionListener, L
     virtual bool handleUnsubscriptionRequest (const JID &jid, const std::string &msg);
     virtual void handleNonrosterPresence (const Presence &presence);
     virtual void handleRosterError (const IQ &iq);
+	virtual void handleVCard( const JID& jid, const VCard* vcard );
+	virtual void handleVCardResult(VCardContext context, const JID& jid, StanzaError se = StanzaErrorUndefined);
 
     Account* getAccount();
     QIcon getAccountIcon();
@@ -89,6 +98,7 @@ private:
     Client *j;
     map<QString,MessageStuff*> messageStuffMap;
     map<QString,MessageStuff*>::iterator messageStuffIterator;
+	VCardManager *vCardManager;
 
     MessageStuff* createMessageStuff(MessageSession *session);
 

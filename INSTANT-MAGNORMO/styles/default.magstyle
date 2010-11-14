@@ -16,6 +16,7 @@ QTreeView::item:hover {
     border: 0px;
 }
 QTreeView::item:selected { color: black }
+QTreeView::item:has-children { } /* Something in here to make the group names better */
 
 /* QDockWidget */
 QDockWidget::title {
