@@ -1,14 +1,21 @@
 #include "conversationwidget.h"
 #include "ui_conversationwidget.h"
 #include <QtGui/QApplication>
+#include <QTimer>
 
 ConversationWidget::ConversationWidget(QString jid, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ConversationWidget),
-    jid(jid)
+    jid(jid),
+	stoppedTypingTimer(new QTimer(this)),
+	inactiveTimer(new QTimer(this))
 {
     ui->setupUi(this);
     connect(ui->textEdit,SIGNAL(anchorClicked(QUrl)),this,SLOT(handleClickedLink(QUrl)));
+	stoppedTypingTimer->setSingleShot(true);
+	inactiveTimer->setSingleShot(true);
+	connect(stoppedTypingTimer, SIGNAL(timeout()), SLOT(userStoppedTyping()));
+	connect(inactiveTimer, SIGNAL(timeout()), SLOT(userIsInactive()));
 }
 
 ConversationWidget::~ConversationWidget()
@@ -50,6 +57,34 @@ void ConversationWidget::onVisibleChange(bool visible)
 {
     if(!visible)
         emit dissapearWindow(jid);
+}
+
+void ConversationWidget::onMessageChanged()
+{
+	lastChatState = gloox::ChatStateInvalid;
+	if (ui->textEdit->toPlainText().size() == 0) {
+		lastChatState = gloox::ChatStateActive;
+	} else {
+		lastChatState = gloox::ChatStateComposing;
+	}
+	emit chatStateChanged(jid, lastChatState);
+	stoppedTypingTimer->start(5000);
+	inactiveTimer->stop();
+}
+
+void ConversationWidget::userStoppedTyping()
+{
+	if (lastChatState == gloox::ChatStateComposing) {
+		lastChatState = gloox::ChatStatePaused;
+		emit chatStateChanged(jid, lastChatState);
+	}
+	inactiveTimer->start(10000);
+}
+
+void ConversationWidget::userIsInactive()
+{
+	lastChatState = gloox::ChatStateInactive;
+	emit chatStateChanged(jid, lastChatState);
 }
 
 void ConversationWidget::on_lineEdit_returnPressed()
