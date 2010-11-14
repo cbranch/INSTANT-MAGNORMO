@@ -31,9 +31,8 @@ void MAGNORMOBOT::run()
     StringList ca;
     ca.push_back( "/path/to/cacert.crt" );
     j->setCACerts( ca );
-
     j->logInstance().registerLogHandler( LogLevelDebug, LogAreaAll, this );
-
+	vCardManager = new VCardManager(j);
     j->connect(true);
 }
 
@@ -256,6 +255,23 @@ QIcon MAGNORMOBOT::getAccountIcon()
         return QIcon(":/icons/gtalk");
     }
     return QIcon();
+}
+
+void MAGNORMOBOT::handleVCard( const JID& jid, const VCard* vcard )
+{
+	qDebug("FUCKING HAVENT IMPLEMENTED THIS YET");
+}
+
+void MAGNORMOBOT::handleVCardResult(VCardContext context, const JID& jid, StanzaError se)
+{
+	if(se != StanzaErrorUndefined) {
+		printf("%s VCard for user %s failed with error %u", context == gloox::VCardHandler::StoreVCard ? "Storing" : "Fetching", jid.bare().c_str(), se);
+    }
+}
+
+void MAGNORMOBOT::getVCardFromJid(QString jid)
+{
+	vCardManager->fetchVCard(JID(jid.toStdString()),this);
 }
 
 void MAGNORMOBOT::disconnect()
