@@ -36,12 +36,12 @@ void MAGNORMOBOT::run()
     j->connect(true);
 }
 
-static JID stringToJid(QString jid)
+JID MAGNORMOBOT::stringToJid(QString jid)
 {
 	return JID(jid.toStdString());
 }
 
-static QString jidToString(const JID &jid)
+QString MAGNORMOBOT::jidToString(const JID &jid)
 {
 	return QString::fromUtf8(jid.bare().c_str());
 }
@@ -269,7 +269,7 @@ QIcon MAGNORMOBOT::getAccountIcon()
 
 void MAGNORMOBOT::handleVCard( const JID& jid, const VCard* vcard )
 {
-	qDebug("FUCKING HAVENT IMPLEMENTED THIS YET");
+	emit vCardReceived(jidToString(jid), vcard);
 }
 
 void MAGNORMOBOT::handleVCardResult(VCardContext context, const JID& jid, StanzaError se)
