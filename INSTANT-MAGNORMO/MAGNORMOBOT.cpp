@@ -265,7 +265,7 @@ void MAGNORMOBOT::handleVCard( const JID& jid, const VCard* vcard )
 void MAGNORMOBOT::handleVCardResult(VCardContext context, const JID& jid, StanzaError se)
 {
 	if(se != StanzaErrorUndefined) {
-		printf("%s VCard for user %s failed with error %u", context == gloox::VCardHandler::StoreVCard ? "Storing" : "Fetching", jid.bare().c_str(), se);
+		qDebug("%s VCard for user %s failed with error %u", context == gloox::VCardHandler::StoreVCard ? "Storing" : "Fetching", jid.bare().c_str(), se);
     }
 }
 
