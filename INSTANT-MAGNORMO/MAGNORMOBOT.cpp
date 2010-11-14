@@ -281,7 +281,7 @@ void MAGNORMOBOT::handleVCardResult(VCardContext context, const JID& jid, Stanza
 
 void MAGNORMOBOT::getVCardFromJid(QString jid)
 {
-	vCardManager->fetchVCard(JID(jid.toStdString()),this);
+	vCardManager->fetchVCard(stringToJid(jid), this);
 }
 
 void MAGNORMOBOT::disconnect()
