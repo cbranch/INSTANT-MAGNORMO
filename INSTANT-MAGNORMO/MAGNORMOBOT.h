@@ -109,6 +109,7 @@ signals:
 
 public slots:
     void sendMessage(QString jid, QString msg);
+	void updateChatState(QString jid, gloox::ChatStateType state);
     void dissapearedWindow(QString jid);
 };
 #include "Contact.h"

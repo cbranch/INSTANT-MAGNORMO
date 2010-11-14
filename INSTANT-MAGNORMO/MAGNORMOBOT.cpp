@@ -238,6 +238,11 @@ void MAGNORMOBOT::handleRosterError (const IQ &iq)
 {
 }
 
+void MAGNORMOBOT::updateChatState(QString jid, ChatStateType state)
+{
+	messageStuffMap[jid]->stateFilter->setChatState(state);
+}
+
 Account* MAGNORMOBOT::getAccount() { return acc; }
 
 QIcon MAGNORMOBOT::getAccountIcon()

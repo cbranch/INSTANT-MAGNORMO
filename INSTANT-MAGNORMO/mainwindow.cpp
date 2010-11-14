@@ -93,6 +93,7 @@ void MainWindow::startConversation(Contact contact)
             connect(bot, SIGNAL(spewMessage(QString,QString)), convo, SLOT(messageRevieved(QString,QString)));
             connect(dock, SIGNAL(visibilityChanged(bool)),convo,SLOT(onVisibleChange(bool)));
             connect(convo, SIGNAL(dissapearWindow(QString)),bot,SLOT(dissapearedWindow(QString)));
+			connect(convo, SIGNAL(chatStateChanged(QString, gloox::ChatStateType)), bot, SLOT(updateChatState(QString, gloox::ChatStateType)));
         }
     }
 }

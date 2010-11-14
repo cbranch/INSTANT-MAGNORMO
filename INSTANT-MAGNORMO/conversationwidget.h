@@ -19,6 +19,9 @@
 #include <QList>
 #include <QXmlStreamReader>
 #include <cstdio>
+#include <gloox/gloox.h>
+
+Q_DECLARE_METATYPE(gloox::ChatStateType)
 
 namespace Ui {
     class ConversationWidget;
@@ -38,18 +41,24 @@ protected:
 
 signals:
     void sendMessage(QString jid, QString msg);
+	void chatStateChanged(QString jid, gloox::ChatStateType state);
     void dissapearWindow(QString jid);
 
 public slots:
     void messageRevieved(QString msg, QString jid);
     void onVisibleChange(bool visible);
+	void onMessageChanged();
+	void userStoppedTyping();
+	void userIsInactive();
 
 private:
     Ui::ConversationWidget *ui;
 
 public:
     QString jid;
-
+	gloox::ChatStateType lastChatState;
+	QTimer *stoppedTypingTimer;
+	QTimer *inactiveTimer;
 
 private slots:
     void on_pushButton_clicked();
