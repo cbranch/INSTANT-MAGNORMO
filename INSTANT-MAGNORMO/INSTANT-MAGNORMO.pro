@@ -38,7 +38,8 @@ SOURCES += main.cpp \
     account.cpp \
     connectionmanger.cpp \
     QAppBar.cpp \
-    vcardcache.cpp
+    vcardcache.cpp \
+    vcard.cpp
 HEADERS += mainwindow.h \
     contactlist.h \
     conversationwidget.h \
@@ -53,7 +54,8 @@ HEADERS += mainwindow.h \
     accountmanagerdialog.h \
     connectionmanger.h \
     QAppBar.h \
-    vcardcache.h
+    vcardcache.h \
+    vcard.h
 FORMS += accountdialog.ui \
     conversationwidget.ui \
     accountmanagerdialog.ui
