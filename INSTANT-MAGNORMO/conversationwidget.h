@@ -18,6 +18,7 @@
 #include <QIODevice>
 #include <QList>
 #include <QXmlStreamReader>
+#include <qimage.h>
 #include <cstdio>
 #include <gloox/gloox.h>
 #include <gloox/vcard.h>
