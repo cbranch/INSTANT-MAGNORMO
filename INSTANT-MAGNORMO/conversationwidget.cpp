@@ -159,5 +159,8 @@ void ConversationWidget::handleClickedLink(QUrl link)
 void ConversationWidget::giveMeVCard(QString jid, const VCard *vcard)
 {
 	VCard::Photo p = vcard->photo();
+	QByteArray pba(p.binval.c_str(),p.binval.size());
+	QPixmap *mugShot = new QPixmap();
+	mugShot->loadFromData(pba);
 }
 
