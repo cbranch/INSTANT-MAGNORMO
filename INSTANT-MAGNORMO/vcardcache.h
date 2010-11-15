@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QSqlDatabase>
-#include <gloox\vcard.h>
+#include <gloox/vcard.h>
 class MAGNORMOBOT;
 
 class VCardCache : public QObject
