@@ -7,7 +7,7 @@ VCardCache::VCardCache(MAGNORMOBOT *bot, QObject *parent)
 	database(QSqlDatabase::addDatabase("QSQLITE")),
 	bot(bot)
 {
-	database.setDatabaseName(QDir::temp().relativeFilePath(QString("magnormocards")));
+	database.setDatabaseName(QDir::temp().filePath(QString("magnormocards")));
 	if (!database.open()) {
 		qWarning("VCARD CACHE CANNOT BE OPENED YOUR TEMP DIRECTORY IS DUMB");
 	}
