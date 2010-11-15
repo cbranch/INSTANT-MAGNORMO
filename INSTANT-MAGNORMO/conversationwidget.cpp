@@ -156,3 +156,8 @@ void ConversationWidget::handleClickedLink(QUrl link)
     QDesktopServices::openUrl(link);
 }
 
+void ConversationWidget::giveMeVCard(QString jid, const VCard *vcard)
+{
+	VCard::Photo p = vcard->photo();
+}
+
