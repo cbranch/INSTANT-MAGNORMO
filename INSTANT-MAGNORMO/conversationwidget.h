@@ -22,6 +22,7 @@
 #include <cstdio>
 #include <gloox/gloox.h>
 #include <gloox/vcard.h>
+#include "vcard.h"
 
 Q_DECLARE_METATYPE(gloox::ChatStateType)
 
@@ -54,7 +55,7 @@ public slots:
 	void onMessageChanged();
 	void userStoppedTyping();
 	void userIsInactive();
-	void giveMeVCard(QString jid, const VCard *vcard);
+	void giveMeVCard(QString jid, MagnormoCard vcard);
 
 private:
     Ui::ConversationWidget *ui;

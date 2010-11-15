@@ -156,12 +156,8 @@ void ConversationWidget::handleClickedLink(QUrl link)
     QDesktopServices::openUrl(link);
 }
 
-void ConversationWidget::giveMeVCard(QString jid, const VCard *vcard)
+void ConversationWidget::giveMeVCard(QString jid, MagnormoCard vcard)
 {
-	VCard::Photo p = vcard->photo();
-	QByteArray pba(p.binval.c_str(),p.binval.size());
-	QPixmap mugShot = QPixmap();
-	mugShot.loadFromData(pba);
-	ui->contactPhoto->setPixmap(mugShot);
+	ui->contactPhoto->setPixmap(vcard.photo);
 }
 

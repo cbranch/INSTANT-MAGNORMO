@@ -94,7 +94,7 @@ void MainWindow::startConversation(Contact contact)
             connect(dock, SIGNAL(visibilityChanged(bool)),convo,SLOT(onVisibleChange(bool)));
             connect(convo, SIGNAL(dissapearWindow(QString)),bot,SLOT(dissapearedWindow(QString)));
 			connect(convo, SIGNAL(chatStateChanged(QString, gloox::ChatStateType)), bot, SLOT(updateChatState(QString, gloox::ChatStateType)));
-			connect(bot, SIGNAL(vCardReceived(QString, const VCard*)), convo, SLOT(giveMeVCard(QString, const VCard*)));
+			connect(bot, SIGNAL(vCardReceived(QString, MagnormoCard)), convo, SLOT(giveMeVCard(QString, MagnormoCard)));
 
 			bot->getVCardFromJid(jid);
         }

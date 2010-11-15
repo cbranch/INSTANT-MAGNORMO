@@ -6,12 +6,14 @@
 #include "MAGNORMOBOT.h"
 #include "Contact.h"
 #include "QAppBar.h"
+#include "vcard.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 	qRegisterMetaType<Contact>("Contact");
     qRegisterMetaType<QSharedPointer<Contact> >("QSharedPointer<Contact>");
+	qRegisterMetaType<MagnormoCard>("MagnormoCard");
 
     QCoreApplication::setOrganizationName("MAGNORMO");
     QCoreApplication::setOrganizationDomain("joshfyne.com");
