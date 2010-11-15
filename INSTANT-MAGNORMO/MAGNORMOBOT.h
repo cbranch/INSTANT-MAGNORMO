@@ -120,7 +120,7 @@ signals:
     void contactRemoved(QString jid);
     void spewMessage(QString msg, QString jid);
     void openConversationWindow(Contact);
-	void vCardReceived(QString jid, const VCard *vcard);
+	void vCardReceived(QString jid, const gloox::VCard *vcard);
 
 public slots:
     void sendMessage(QString jid, QString msg);
