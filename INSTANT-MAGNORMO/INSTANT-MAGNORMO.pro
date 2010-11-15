@@ -39,7 +39,8 @@ SOURCES += main.cpp \
     connectionmanger.cpp \
     QAppBar.cpp \
     vcardcache.cpp \
-    vcard.cpp
+    vcard.cpp \
+    prettytextbrowser.cpp
 HEADERS += mainwindow.h \
     contactlist.h \
     conversationwidget.h \
@@ -55,7 +56,8 @@ HEADERS += mainwindow.h \
     connectionmanger.h \
     QAppBar.h \
     vcardcache.h \
-    vcard.h
+    vcard.h \
+    prettytextbrowser.h
 FORMS += accountdialog.ui \
     conversationwidget.ui \
     accountmanagerdialog.ui
