@@ -10,6 +10,7 @@ VCardCache::VCardCache(MAGNORMOBOT *bot, QObject *parent)
 	database.setDatabaseName(QDir::temp().filePath(QString("magnormocards")));
 	if (!database.open()) {
 		qWarning("VCARD CACHE CANNOT BE OPENED YOUR TEMP DIRECTORY IS DUMB");
+		return;
 	}
 	// If we need to fetch a vcard, we can cache and pass the vcard straight through
 	connect(bot, SIGNAL(vCardReceived(QString, const gloox::VCard *)), SLOT(cacheVCard(QString, const gloox::VCard *)));
