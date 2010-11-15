@@ -158,6 +158,8 @@ void ConversationWidget::handleClickedLink(QUrl link)
 
 void ConversationWidget::giveMeVCard(QString jid, MagnormoCard vcard)
 {
-	ui->contactPhoto->setPixmap(vcard.photo);
+	if(jid==this->jid) {
+		ui->contactPhoto->setPixmap(vcard.photo);
+	}
 }
 
