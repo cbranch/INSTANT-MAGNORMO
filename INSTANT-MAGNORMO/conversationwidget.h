@@ -20,12 +20,15 @@
 #include <QXmlStreamReader>
 #include <cstdio>
 #include <gloox/gloox.h>
+#include <gloox/vcard.h>
 
 Q_DECLARE_METATYPE(gloox::ChatStateType)
 
 namespace Ui {
     class ConversationWidget;
 }
+
+using namespace gloox;
 
 class ConversationWidget : public QWidget
 {
@@ -50,6 +53,7 @@ public slots:
 	void onMessageChanged();
 	void userStoppedTyping();
 	void userIsInactive();
+	void giveMeVCard(QString jid, const VCard *vcard);
 
 private:
     Ui::ConversationWidget *ui;
