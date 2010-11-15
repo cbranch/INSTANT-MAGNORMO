@@ -27,7 +27,7 @@ QString ConversationWidget::getRichMessage(QString original)
 {
 	QRegExp linkify("((?:http|https|ftp)://\\S*)");
 	original.replace(linkify, tr("<a href=\"\\1\">\\1</a>"));
-	QRegExp linkifyFuzzy("\b(www\.\\S*)");
+	QRegExp linkifyFuzzy("\b(www\\.\\S*)");
 	original.replace(linkifyFuzzy, tr("<a href=\"\\1\">\\1</a>"));
 
 	return original;
