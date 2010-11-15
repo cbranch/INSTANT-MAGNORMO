@@ -99,7 +99,7 @@ class MAGNORMOBOT : public QThread, MessageSessionHandler, ConnectionListener, L
 private:
     Client *j;
     map<QString,MessageStuff*> messageStuffMap;
-    map<QString,MessageStuff*>::iterator messageStuffIterator;
+    typedef map<QString,MessageStuff*>::iterator MessageStuffIterator;
 	VCardManager *vCardManager;
 	VCardCache *vCardCache;
 

@@ -51,15 +51,15 @@ QString MAGNORMOBOT::jidToString(const JID &jid)
 void MAGNORMOBOT::sendMessage(QString jid, QString msg)
 {
     MessageStuff *ms;
-    messageStuffIterator = messageStuffMap.find(jid);
-    if(messageStuffIterator==messageStuffMap.end()) {
+    MessageStuffIterator iter = messageStuffMap.find(jid);
+    if(iter==messageStuffMap.end()) {
         // We need to create a new message stuff because we havent spoken to this
         // person yet
 		JID jid2(jid.toStdString());
         MessageSession *session = new MessageSession(j,jid2);
         ms = createMessageStuff(session);
     } else {
-        ms = (*messageStuffIterator).second;
+        ms = (*iter).second;
     }
     qDebug("SENDING A FUCKING MESSAGE: %s\n",msg.toStdString().c_str());
     fflush(stdout);
@@ -70,10 +70,10 @@ void MAGNORMOBOT::sendMessage(QString jid, QString msg)
 
 void MAGNORMOBOT::dissapearedWindow(QString jid)
 {
-    messageStuffIterator = messageStuffMap.find(jid);
-	if (messageStuffIterator != messageStuffMap.end()) {
+    MessageStuffIterator iter = messageStuffMap.find(jid);
+	if (iter != messageStuffMap.end()) {
 		MessageStuff *ms;
-		ms = (*messageStuffIterator).second;
+		ms = (*iter).second;
 		ms->chatWindowOpen = false;
 	} else
 		qWarning("MAGNORMOBOT::dissapearedWindow could not find jid");
@@ -251,7 +251,9 @@ void MAGNORMOBOT::handleRosterError (const IQ &iq)
 
 void MAGNORMOBOT::updateChatState(QString jid, ChatStateType state)
 {
-	messageStuffMap[jid]->stateFilter->setChatState(state);
+	MessageStuffIterator iter = messageStuffMap.find(jid);
+	if (iter != messageStuffMap.end())
+		iter->second->stateFilter->setChatState(state);
 }
 
 Account* MAGNORMOBOT::getAccount() { return acc; }
