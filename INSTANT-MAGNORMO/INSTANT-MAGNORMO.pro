@@ -2,7 +2,8 @@
 # Project created by QtCreator 2010-09-15T16:26:59
 # -------------------------------------------------
 QT += network \
-    multimedia
+    multimedia \
+    sql
 LIBS = -lgloox
 !win32:LIBS += -lgnutls -lresolv -pthread
 win32 {
@@ -36,7 +37,8 @@ SOURCES += main.cpp \
     accountmanagerdialog.cpp \
     account.cpp \
     connectionmanger.cpp \
-    QAppBar.cpp
+    QAppBar.cpp \
+    vcardcache.cpp
 HEADERS += mainwindow.h \
     contactlist.h \
     conversationwidget.h \
@@ -50,7 +52,8 @@ HEADERS += mainwindow.h \
     account.h \
     accountmanagerdialog.h \
     connectionmanger.h \
-    QAppBar.h
+    QAppBar.h \
+    vcardcache.h
 FORMS += accountdialog.ui \
     conversationwidget.ui \
     accountmanagerdialog.ui

@@ -37,6 +37,7 @@
 #include <map>
 #include <cstdio>
 class Contact;
+class VCardCache;
 
 using namespace gloox;
 using namespace std;
@@ -99,6 +100,7 @@ private:
     map<QString,MessageStuff*> messageStuffMap;
     map<QString,MessageStuff*>::iterator messageStuffIterator;
 	VCardManager *vCardManager;
+	VCardCache *vCardCache;
 
     MessageStuff* createMessageStuff(MessageSession *session);
 

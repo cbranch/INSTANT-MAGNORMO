@@ -1,4 +1,5 @@
 #include "MAGNORMOBOT.h"
+#include "vcardcache.h"
 #include <QtGlobal>
 
 MAGNORMOBOT::MAGNORMOBOT(Account *acc) :
@@ -6,7 +7,8 @@ MAGNORMOBOT::MAGNORMOBOT(Account *acc) :
     username(acc->user.toUtf8().data()),
     password(acc->password.toUtf8().data()),
     server(acc->server.toUtf8().data()),
-    port(acc->port)
+    port(acc->port),
+	vCardCache(new VCardCache(this, this))
 {
     this->acc = acc;
 }
