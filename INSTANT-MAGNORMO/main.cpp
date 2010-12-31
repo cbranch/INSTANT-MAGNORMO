@@ -24,12 +24,14 @@ int main(int argc, char *argv[])
 
     w.show();
 
+#ifdef WIN32
 	// This code shows how to put the main window into a right-docked app bar
-	/*QAppBar sample(QAppBarEdgeRight, 250);
+	QAppBar sample(QAppBarEdgeRight, 250);
 	sample.setWindowTitle("INSTANT MAGNORMO");
 	sample.getContentArea()->addWidget(&w);
 	sample.setAttribute(Qt::WA_QuitOnClose);
-	sample.show();*/
-	
+	sample.show();
+#endif	
+
     return a.exec();
 }
