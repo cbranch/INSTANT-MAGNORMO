@@ -41,7 +41,7 @@
  * 
  * Reference: http://msdn2.microsoft.com/en-us/library/bb776821(VS.85).aspx
  */
-
+#ifdef _WIN32
 #pragma once
 
 #include <QPushButton>
@@ -145,3 +145,4 @@ public:
 	/* Returns a vertical box layout on which widgets may be placed. */
 	inline QVBoxLayout* getContentArea() { return contentArea; }
 };
+#endif
