@@ -41,7 +41,7 @@
  * 
  * Reference: http://msdn2.microsoft.com/en-us/library/bb776821(VS.85).aspx
  */
-#ifdef _WIN32
+#ifdef WIN32
 #pragma once
 
 #include <QPushButton>

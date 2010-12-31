@@ -23,7 +23,7 @@
  * Author: Joshua Foster
  * Date: January 2008
  */
-#ifdef _WIN32
+#ifdef WIN32
 #include "QAppBar.h"
 
 #include <QMouseEvent>
